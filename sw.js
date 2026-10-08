@@ -1,28 +1,23 @@
-// YHCT 15 phút – service worker: chạy offline, luôn ưu tiên bản mới khi có mạng.
-const CACHE = "yhct15-v1";
-const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
-
-self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
-});
-self.addEventListener("activate", e => {
-  e.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-    .then(() => self.clients.claim()));
-});
-self.addEventListener("fetch", e => {
-  const req = e.request;
-  if (req.method !== "GET") return;
-  const url = new URL(req.url);
-  // Trang app: lấy bản mới nhất từ mạng (để có bài mới), mất mạng thì dùng bản đã lưu.
-  if (req.mode === "navigate" || url.pathname.endsWith("/index.html")) {
-    e.respondWith(fetch(req).then(r => { const copy = r.clone(); caches.open(CACHE).then(c => c.put("./index.html", copy)); return r; })
-      .catch(() => caches.match("./index.html")));
-    return;
-  }
-  // Phông chữ Google và các file tĩnh: dùng bản đã lưu, cập nhật ngầm.
-  e.respondWith(caches.match(req).then(hit => {
-    const net = fetch(req).then(r => { if (r && (r.ok || r.type === "opaque")) { const copy = r.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return r; })
-      .catch(() => hit);
-    return hit || net;
-  }));
+// Offline support. Network first (so updates on GitHub show up), but if the network is slow the saved copy is used
+// after 2.5 s for the app page itself, so the app never hangs on a weak connection. Offline → saved copy.
+const CACHE = 'hanngu-v3';
+self.addEventListener('install', e => self.skipWaiting());
+self.addEventListener('activate', e => e.waitUntil((async () => {
+  for (const k of await caches.keys()) if (k !== CACHE) { const old = await caches.open(k), mine = await caches.open(CACHE);
+    for (const req of await old.keys()) { const r = await old.match(req); if (r) await mine.put(req, r); } await caches.delete(k); }
+  await self.clients.claim();
+})()));
+self.addEventListener('fetch', e => {
+  const u = new URL(e.request.url);
+  if (e.request.method !== 'GET' || u.origin !== location.origin) return;
+  if (u.pathname.includes('/am-thanh/')) return;            // voice packs are stored by the app itself
+  const net = fetch(e.request, { cache: 'no-cache' }).then(r => { if (r.ok) { const c = r.clone(); caches.open(CACHE).then(x => x.put(e.request, c)); } return r; });
+  const isPage = e.request.mode === 'navigate' || u.pathname.endsWith('/') || u.pathname.endsWith('.html');
+  if (!isPage) { e.respondWith(net.catch(() => caches.match(e.request, { ignoreSearch: true }))); return; }
+  e.respondWith((async () => {
+    const saved = await caches.match(e.request, { ignoreSearch: true });
+    if (!saved) return net;
+    const timer = new Promise(res => setTimeout(() => res(saved), 2500));
+    return Promise.race([net.catch(() => saved), timer]);
+  })());
 });
