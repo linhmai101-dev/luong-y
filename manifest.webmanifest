@@ -1,0 +1,16 @@
+{
+  "name": "YHCT 15 phút",
+  "short_name": "YHCT 15'",
+  "description": "Học Y học cổ truyền mỗi ngày: bài ngắn, trắc nghiệm, ca tình huống, ôn tập ngắt quãng.",
+  "lang": "vi",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#E9EFEB",
+  "theme_color": "#2F5D4E",
+  "icons": [
+    {"src": "icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
