@@ -1,6 +1,6 @@
 // YHCT 15 phút – service worker: chạy offline, ưu tiên bản mới khi có mạng,
-// ảnh từ kho luong-y-picures chỉ giữ tối đa GIOI_HAN_ANH ảnh gần nhất để không làm đầy máy.
-const CACHE = "yhct15-v2";
+// ảnh từ kho luong-y-pictures chỉ giữ tối đa GIOI_HAN_ANH ảnh gần nhất để không làm đầy máy.
+const CACHE = "yhct15-v4";
 const CACHE_ANH = "yhct15-anh";
 const GIOI_HAN_ANH = 300;
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
@@ -34,8 +34,15 @@ self.addEventListener("fetch", e => {
     return;
   }
 
+  // Danh mục kho ảnh: lấy bản mới khi có mạng, lưu riêng (không bị xóa khi dọn ảnh).
+  if (url.pathname.includes("/luong-y-pictures/") && url.pathname.endsWith(".json")) {
+    e.respondWith(fetch(req).then(r => { if (r.ok) { const copy = r.clone(); caches.open(CACHE).then(c => c.put(req, copy)); } return r; })
+      .catch(() => caches.match(req)));
+    return;
+  }
+
   // Ảnh từ kho ảnh: có sẵn thì dùng, chưa có thì tải rồi lưu, giữ tối đa 300 ảnh.
-  if (url.pathname.includes("/luong-y-picures/")) {
+  if (url.pathname.includes("/luong-y-pictures/")) {
     e.respondWith(caches.open(CACHE_ANH).then(c => c.match(req).then(hit => hit || fetch(req).then(r => {
       if (r && r.ok) { c.put(req, r.clone()).then(catBotAnh); }
       return r;

@@ -49,8 +49,9 @@ ul{padding-left:20px;margin:0 0 12px} li{margin-bottom:6px}
 /* nav */
 nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
  padding-bottom:env(safe-area-inset-bottom,0px);z-index:10}
-nav .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 nav button{background:none;border:0;padding:10px 4px 12px;font-size:.8rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
+@media (max-width:400px){nav button{font-size:.7rem;white-space:nowrap}}
 nav button .ic{font-family:var(--han);font-size:1.25rem;line-height:1}
 nav button[aria-current="page"]{color:var(--jade);font-weight:600}
 
@@ -143,6 +144,27 @@ dialog img{display:block;width:100%}
 dialog::backdrop{background:rgba(0,0,0,.6)}
 .bk{margin-top:26px;padding-top:16px;border-top:1px solid var(--line)}
 .bk h3{margin-bottom:6px}
+
+/* luyện mắt */
+.mode{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.mode button{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:12px 8px;text-align:left}
+.mode button b{display:block;font-size:.95rem}.mode button span{font-size:.8rem;color:var(--muted)}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 10px}
+.ph{position:relative;border-radius:8px;overflow:hidden;background:var(--line);margin:8px 0}
+.ph img{display:block;width:100%;height:auto}
+.phz{position:relative;transform-origin:0 0}
+.linkbtn{background:none;border:0;color:var(--jade);text-decoration:underline;padding:0;font-size:inherit}
+.bx{position:absolute;border:calc(2px * var(--k,1)) solid #FFD54A;border-radius:3px;box-shadow:0 0 0 calc(1px * var(--k,1)) rgba(0,0,0,.5)}
+.bx-t{border-color:#7FD3FF}
+.bx i{position:absolute;left:0;top:0;transform:scale(var(--k,1));transform-origin:0 0;background:#FFD54A;color:#222;font-style:normal;font-size:.68rem;padding:1px 4px;border-radius:3px;white-space:nowrap}
+.bx-t i{background:#7FD3FF;transform-origin:0 100%}
+.ck{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.ck label{display:flex;gap:6px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:7px 8px;font-size:.88rem}
+.ck label.right{border-color:var(--ok)}.ck label.miss{border-color:var(--gold);border-style:dashed}.ck label.wrong{border-color:var(--bad)}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:var(--line);cursor:pointer}
+.stat td:nth-child(n+2){text-align:right}
+.src-note{font-size:.75rem;color:var(--muted);margin-top:6px}
 .note{font-size:.85rem;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;margin-top:16px}
 @media (prefers-reduced-motion:no-preference){.seal{animation:stamp .5s ease-out}
 @keyframes stamp{from{transform:scale(1.25) rotate(-8deg);opacity:0}to{transform:rotate(-3deg);opacity:1}}}
@@ -1272,12 +1294,12 @@ function rate(k,r){const c=S.cards[k]; c.seen=Date.now();
  logToday(); save()}
 
 /* ---------- nav ---------- */
-const TABS=[["home","日","Hôm nay"],["lessons","課","Bài học"],["review","習","Ôn tập"],["lib","典","Tra cứu"]];
+const TABS=[["home","日","Hôm nay"],["lessons","課","Bài học"],["review","習","Ôn tập"],["mat","眼","Luyện mắt"],["lib","典","Tra cứu"]];
 let tab="home";
 function renderNav(){document.getElementById("nav").innerHTML=TABS.map(([id,ic,l])=>
  `<button type="button" data-tab="${id}" ${tab===id?'aria-current="page"':''}><span class="ic">${ic}</span>${l}</button>`).join("");
  document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.tab))}
-function go(t,arg){tab=t;renderNav();window.scrollTo(0,0);({home,lessons,review,lib,lesson})[t](arg)}
+function go(t,arg){tab=t;renderNav();window.scrollTo(0,0);({home,lessons,review,lib,lesson,mat})[t](arg)}
 const $=s=>document.querySelector(s); const app=()=>document.getElementById("app");
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 const norm=s=>String(s).normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/đ/g,"d").replace(/Đ/g,"D").toLowerCase();
@@ -1413,6 +1435,110 @@ function lib(){
  if(imgsReady()||IMGS_FAIL) draw();
 }
 $("#zoom").onclick=e=>e.currentTarget.close();
+$("#zoom").addEventListener("close",e=>{const d=e.currentTarget;if(!d.querySelector(":scope>img"))d.innerHTML='<img alt="Ảnh lưỡi phóng to" src="data:,">'});
+
+/* ---------- LUYỆN MẮT: kho ảnh TCM-Tongue (luong-y-pictures) ---------- */
+const KHO_URL=new URL("../luong-y-pictures/",location.href).href;
+let KHO=null,_khoP=null;
+function loadKho(){ if(KHO)return Promise.resolve(KHO); if(_khoP)return _khoP;
+ _khoP=fetch(KHO_URL+"danh-muc.json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(m=>{
+   const ma=m.ma_so, ten=c=>m.nhan[c].ten;
+   m.anh=m.anh.filter(a=>!a.xung_dot);   // ảnh trùng mà nhãn mâu thuẫn: không dùng để hỏi, chấm
+   m.anh.forEach(a=>{a.nh=[...new Set(a.khung.map(b=>ma[b[0]]).filter(Boolean))]});
+   KHO={meta:m,anh:m.anh,ma,ten,gt:c=>m.nhan[c].giao_trinh,nhom:c=>m.nhan[c].nhom,
+     codes:Object.values(ma)}; return KHO}).catch(e=>{_khoP=null;throw e});
+ return _khoP;}
+const imgUrl=id=>KHO_URL+"anh/"+id.slice(0,2)+"/"+id+".webp";
+function M(){S.mat=S.mat||{seen:{},ok:{},wrong:[],conf:{},lv:"de",vung:false};return S.mat}
+const inScope=c=>M().vung||KHO.gt(c);
+const nhanCua=a=>a.nh.filter(inScope);
+function pool(){const m=M();return KHO.anh.filter(a=>{const n=nhanCua(a).length;
+ return n>0&&(m.lv==="de"?n===1:m.lv==="vua"?n<=2:true)})}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let _ke=null;   // ảnh kế tiếp đã tải sẵn
+function layAnh(){const p=pool();let a=_ke&&p.includes(_ke)?_ke:pick(p);_ke=pick(p);
+ if(_ke){const im=new Image();im.src=imgUrl(_ke.id)} return a}
+const TOAN_THE=new Set(["toan-the","mau-luoi","hinh","mau-reu"]);   // nhãn toàn lưỡi: ghi tên ở đáy khung, xếp chồng
+function boxes(a){let g=0;return a.khung.map(b=>{const c=KHO.ma[b[0]];if(!c)return"";const [cx,cy,w,h]=b.slice(1),toan=TOAN_THE.has(KHO.nhom(c));
+ const phai=cx+w/2>.7;   // khung sát mép phải: neo chữ bên phải để không bị cắt
+ const st=(toan?`bottom:calc(${g++} * 1.5em * var(--k,1));top:auto;`:"")+(phai?`left:auto;right:0;transform-origin:${toan?"100% 100%":"100% 0"}`:"");
+ return `<div class="bx${toan?" bx-t":""}" style="left:${(cx-w/2)*100}%;top:${(cy-h/2)*100}%;width:${w*100}%;height:${h*100}%"><i style="${st}">${esc(KHO.ten(c))}</i></div>`}).join("")}
+function vungCat(a){let x0=1,y0=1,x1=0,y1=0;a.khung.forEach(([c,cx,cy,w,h])=>{x0=Math.min(x0,cx-w/2);y0=Math.min(y0,cy-h/2);x1=Math.max(x1,cx+w/2);y1=Math.max(y1,cy+h/2)});
+ const mx=(x1-x0)*.12,my=(y1-y0)*.12;x0=Math.max(0,x0-mx);y0=Math.max(0,y0-my);x1=Math.min(1,x1+mx);y1=Math.min(1,y1+my);return [x0,y0,x1-x0,y1-y0]}
+function canAnh(img){const ph=img.closest(".ph");if(!ph||ph.dataset.toan==="1"){if(ph){ph.style.aspectRatio="";ph.firstElementChild.style.transform="";ph.style.setProperty("--k",1)}return}
+ const [x,y,w,h]=JSON.parse(ph.dataset.cat),W=img.naturalWidth,H=img.naturalHeight;if(!W||w>=.98&&h>=.98)return;
+ ph.style.aspectRatio=(w*W)/(h*H);ph.firstElementChild.style.transform=`scale(${1/w}) translate(${-x*100}%,${-y*100}%)`;ph.style.setProperty("--k",w)}
+function photo(a,show){return `<div class="phw"><div class="ph" data-cat='${JSON.stringify(vungCat(a))}' data-toan="${M().full?1:0}"><div class="phz"><img src="${imgUrl(a.id)}" alt="Ảnh lưỡi ${a.id}" onload="canAnh(this)">${show?boxes(a):""}</div></div><div class="src-note">Mã ảnh ${a.id} · TCM-Tongue (Dryad). Đáp án theo nhãn của bộ dữ liệu. <button type="button" class="linkbtn" data-nut-toan>${M().full?"Phóng vào lưỡi":"Xem toàn ảnh"}</button></div></div>`}
+function mat(){
+ app().innerHTML=`<h1>Luyện mắt</h1><p class="muted" style="margin:6px 0 4px">Luyện nhìn lưỡi trên ảnh thật. Đang tải kho ảnh…</p>`;
+ loadKho().then(()=>matHome()).catch(()=>{app().innerHTML=`<h1>Luyện mắt</h1><div class="empty"><p>Chưa kết nối được kho ảnh lưỡi.</p><p style="font-size:.88rem">Kiểm tra mạng, hoặc kho <b>luong-y-pictures</b> đã được tạo chưa (Actions → Tạo kho ảnh lưỡi → Run workflow). Mục này chỉ chạy trên bản app ở GitHub.</p></div>`});}
+function matHome(){const m=M(),p=pool(),nw=m.wrong.length;
+ app().innerHTML=`<h1>Luyện mắt</h1><p class="muted" style="margin:6px 0 10px">${KHO.anh.length.toLocaleString("vi")} ảnh lưỡi thật, có nhãn do bác sĩ YHCT xác nhận.</p>
+ <div class="seg" role="group" aria-label="Độ khó">${[["de","Dễ: 1 đặc điểm"],["vua","Vừa: ≤ 2"],["kho","Khó: tất cả"]].map(([k,t])=>`<button type="button" class="chip" aria-pressed="${m.lv===k}" data-lv="${k}">${t}</button>`).join("")}</div>
+ <label style="font-size:.85rem;display:flex;gap:8px;align-items:center"><input type="checkbox" id="vung" ${m.vung?"checked":""}> Gồm nhãn vùng lõm/lồi (tham khảo, ngoài giáo trình)</label>
+ <p class="muted" style="font-size:.82rem">Số ảnh phù hợp: ${p.length.toLocaleString("vi")}</p>
+ <div class="mode">
+  <button type="button" data-m="mot"><b>Nhận diện</b><span>Chọn 1 đặc điểm có trong ảnh</span></button>
+  <button type="button" data-m="tatca"><b>Chọn tất cả</b><span>Tích mọi đặc điểm thấy được</span></button>
+  <button type="button" data-m="sai" ${nw?"":"disabled"}><b>Ôn ảnh làm sai</b><span>${nw} ảnh đang chờ</span></button>
+  <button type="button" data-m="mau"><b>Xem mẫu</b><span>Ảnh theo từng đặc điểm</span></button>
+ </div>
+ <button type="button" class="btn ghost" id="tk">Thống kê điểm yếu</button>`;
+ app().querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{m.lv=b.dataset.lv;save();matHome()});
+ $("#vung").onchange=e=>{m.vung=e.target.checked;save();matHome()};
+ app().querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>({mot:qMot,tatca:qTatCa,sai:qSai,mau:xemMau})[b.dataset.m]());
+ $("#tk").onclick=thongKe;}
+function ghiNhan(a,tested,okSet){const m=M();tested.forEach(c=>{m.seen[c]=(m.seen[c]||0)+1;if(okSet.has(c))m.ok[c]=(m.ok[c]||0)+1});
+ const sai=tested.some(c=>!okSet.has(c)); m.wrong=m.wrong.filter(x=>x!==a.id); if(sai){m.wrong.push(a.id);if(m.wrong.length>200)m.wrong.shift()}
+ logToday();save()}
+function navMat(again){return `<div style="display:flex;gap:8px;margin-top:12px"><button type="button" class="btn" id="tiep">Ảnh tiếp</button><button type="button" class="btn ghost" id="ve">Về Luyện mắt</button></div>`}
+function bindNav(fn){$("#tiep").onclick=fn;$("#ve").onclick=matHome}
+document.addEventListener("click",e=>{if(e.target.closest("[data-back]"))matHome();
+ const f=e.target.closest("[data-nut-toan]");if(f){const m=M();m.full=!m.full;save();document.querySelectorAll(".ph").forEach(ph=>{ph.dataset.toan=m.full?"1":"0";const im=ph.querySelector("img");if(im)canAnh(im)});document.querySelectorAll("[data-nut-toan]").forEach(b=>b.textContent=m.full?"Phóng vào lưỡi":"Xem toàn ảnh")}});
+function qMot(){const m=M();const a=layAnh();const dung=pick(nhanCua(a));
+ const ngoai=KHO.codes.filter(c=>!a.nh.includes(c)&&inScope(c));
+ const cung=ngoai.filter(c=>KHO.nhom(c)===KHO.nhom(dung)), khac=ngoai.filter(c=>KHO.nhom(c)!==KHO.nhom(dung));
+ const nhieu=shuffle([...shuffle(cung).slice(0,2),...shuffle(khac)]).slice(0,3);
+ const opts=shuffle([dung,...nhieu]);
+ app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Nhận diện</h1><p class="muted" style="margin:6px 0">Ảnh này có đặc điểm nào sau đây?</p>${photo(a,false)}
+ <div id="op">${opts.map(c=>`<button type="button" class="opt" data-c="${c}">${esc(KHO.ten(c))}</button>`).join("")}</div><div id="kq"></div>`;
+ app().querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const c=b.dataset.c;
+  app().querySelectorAll(".opt").forEach(x=>{x.setAttribute("aria-disabled","true");x.style.pointerEvents="none";if(x.dataset.c===dung)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
+  if(c!==dung){m.conf[dung+"|"+c]=(m.conf[dung+"|"+c]||0)+1}
+  ghiNhan(a,[dung],new Set(c===dung?[dung]:[]));
+  $(".phw").outerHTML=photo(a,true);
+  $("#kq").innerHTML=`<p class="qscore">${c===dung?"Đúng.":"Chưa đúng."} Ảnh có: ${a.nh.map(x=>esc(KHO.ten(x))+(KHO.gt(x)?"":" (tham khảo)")).join(", ")}.</p>`+navMat();bindNav(()=>qMot())});}
+function qTatCa(fixed,next){const m=M();const a=fixed||layAnh();const ds=KHO.codes.filter(inScope);const can=nhanCua(a);
+ app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Chọn tất cả</h1><p class="muted" style="margin:6px 0">Tích mọi đặc điểm chị thấy trong ảnh.</p>${photo(a,false)}
+ <div class="ck">${ds.map(c=>`<label data-c="${c}"><input type="checkbox" value="${c}"> ${esc(KHO.ten(c))}</label>`).join("")}</div>
+ <button type="button" class="btn finish" id="cham">Chấm điểm</button><div id="kq"></div>`;
+ $("#cham").onclick=()=>{const chon=new Set([...app().querySelectorAll(".ck input:checked")].map(i=>i.value));
+  let dung=0;app().querySelectorAll(".ck label").forEach(l=>{const c=l.dataset.c,co=can.includes(c),ch=chon.has(c);
+   l.querySelector("input").disabled=true; if(co&&ch){l.classList.add("right");dung++} else if(co)l.classList.add("miss"); else if(ch)l.classList.add("wrong")});
+  const thuaDs=[...chon].filter(c=>!can.includes(c)),thua=thuaDs.length;
+  thuaDs.forEach(c=>can.forEach(d=>{if(!chon.has(d))m.conf[d+"|"+c]=(m.conf[d+"|"+c]||0)+1}));
+  ghiNhan(a,can,new Set(can.filter(c=>chon.has(c))));
+  $(".phw").outerHTML=photo(a,true);$("#cham").remove();
+  $("#kq").innerHTML=`<p class="qscore">Đúng ${dung}/${can.length} đặc điểm${thua?`, chọn thừa ${thua}`:""}. Viền xanh: đúng · viền vàng nét đứt: bỏ sót · viền đỏ: chọn thừa.</p>`+navMat();bindNav(next||(()=>qTatCa()))};}
+function qSai(){const m=M();if(!m.wrong.length)return matHome();const id=m.wrong[0];const a=KHO.anh.find(x=>x.id===id);
+ if(!a||!nhanCua(a).length){m.wrong.shift();save();return qSai()} qTatCa(a,qSai);}
+function xemMau(code){const ds=KHO.codes.filter(inScope);code=code||ds[0];
+ const list=shuffle(KHO.anh.filter(a=>a.nh.includes(code))).slice(0,24);
+ app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Xem mẫu</h1><div class="chips">${ds.map(c=>`<button type="button" class="chip" aria-pressed="${c===code}" data-c="${c}">${esc(KHO.ten(c))}</button>`).join("")}</div>
+ <p class="muted" style="font-size:.85rem">${KHO.anh.filter(a=>a.nh.includes(code)).length.toLocaleString("vi")} ảnh có “${esc(KHO.ten(code))}”. Chạm ảnh để xem khung vị trí. ${KHO.gt(code)?"":"<b>Nhãn ngoài giáo trình – tham khảo.</b>"}</p>
+ <div class="gal">${list.map(a=>`<img loading="lazy" src="${imgUrl(a.id)}" alt="" data-id="${a.id}">`).join("")}</div>
+ <button type="button" class="btn ghost finish" id="ve">Về Luyện mắt</button>`;
+ app().querySelectorAll(".chip").forEach(b=>b.onclick=()=>xemMau(b.dataset.c));
+ app().querySelectorAll(".gal img").forEach(im=>im.onclick=()=>{const a=KHO.anh.find(x=>x.id===im.dataset.id);
+  const d=$("#zoom");d.innerHTML=photo(a,true);d.showModal()});
+ $("#ve").onclick=matHome;}
+function thongKe(){const m=M();const rows=KHO.codes.filter(c=>m.seen[c]).map(c=>[c,m.seen[c],m.ok[c]||0]).sort((x,y)=>(x[2]/x[1])-(y[2]/y[1]));
+ const conf=Object.entries(m.conf).sort((a,b)=>b[1]-a[1]).slice(0,6);
+ app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Thống kê</h1>${rows.length?`<div class="tbl"><table class="stat"><tr><th>Đặc điểm</th><th>Gặp</th><th>Nhận ra</th><th>%</th></tr>
+ ${rows.map(r=>`<tr><td>${esc(KHO.ten(r[0]))}</td><td>${r[1]}</td><td>${r[2]}</td><td>${Math.round(100*r[2]/r[1])}</td></tr>`).join("")}</table></div>`:`<div class="empty">Chưa có dữ liệu. Làm vài ảnh rồi quay lại.</div>`}
+ ${conf.length?`<h2>Hay nhầm</h2><ul>${conf.map(([k,n])=>{const[a,b]=k.split("|");return `<li>${esc(KHO.ten(a))} → nhầm thành ${esc(KHO.ten(b))}: ${n} lần</li>`}).join("")}</ul>`:""}
+ <button type="button" class="btn ghost finish" id="ve">Về Luyện mắt</button>`;$("#ve").onclick=matHome;}
+
 Object.keys(S.done).forEach(id=>LESSONS[id]&&addCards(id));save();
 if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
 renderNav();home();
