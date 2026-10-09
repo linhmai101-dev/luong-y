@@ -1460,18 +1460,27 @@ function loadKho(){ if(KHO)return Promise.resolve(KHO); if(_khoP)return _khoP;
      codes:Object.values(ma)}; return KHO}).catch(e=>{_khoP=null;throw e});
  return _khoP;}
 const imgUrl=id=>KHO_URL+"anh/"+id.slice(0,2)+"/"+id+".webp";
-const luoiUrl=id=>KHO_URL+"luoi/"+id.slice(0,2)+"/"+id+".webp";   // bản cắt sát lưỡi từ ảnh gốc (nét hơn)
-const dungLuoi=a=>!!a.cat&&!M().full&&!a._loiLuoi;
+const luoiUrl=id=>KHO_URL+"luoi/"+id.slice(0,2)+"/"+id+"."+((KHO&&KHO.meta.luoi_duoi)||"webp");   // bản cắt sát lưỡi từ ảnh gốc (nét hơn)
+const gocUrl=a=>KHO_URL+"goc/"+a.id.slice(0,2)+"/"+a.id+(a.gx||".jpg");
+const cheDo=()=>(KHO&&KHO.meta.che_do)||"luoi";
+// ảnh dùng để hiển thị: gốc nguyên bản (nếu kho có và không bật tiết kiệm) → bản cắt sát lưỡi → bản xem 560 px
+function nguonAnh(a){if(a._loiLuoi||M().tiet)return {url:imgUrl(a.id),cat:null};
+ if(cheDo()==="goc")return {url:gocUrl(a),cat:null};
+ if(a.cat&&!M().full)return {url:luoiUrl(a.id),cat:a.cat};
+ return {url:imgUrl(a.id),cat:null}}
+const dungLuoi=a=>nguonAnh(a).cat!==null;
 function M(){S.mat=S.mat||{seen:{},ok:{},wrong:[],conf:{},lv:"de",vung:false};return S.mat}
 const inScope=c=>M().vung||KHO.gt(c);
 const nhanCua=a=>a.nh.filter(inScope);
-function pool(){const m=M(),anMo=m.anMo!==false;return KHO.anh.filter(a=>{const n=nhanCua(a).length;
- if(anMo&&a.q!==undefined&&a.q<20)return false;   // bỏ 20% ảnh kém nét nhất
+const NGUONG_NET={tat:0,nhe:20,vua:35,chat:50};
+const mucLoc=()=>{const m=M();return m.loc||(m.anMo===false?"tat":"vua")};
+function pool(){const m=M(),ng=NGUONG_NET[mucLoc()];return KHO.anh.filter(a=>{const n=nhanCua(a).length;
+ if(ng&&a.q!==undefined&&a.q<ng)return false;   // bỏ phần ảnh kém nét nhất theo mức đã chọn
  return n>0&&(m.lv==="de"?n===1:m.lv==="vua"?n<=2:true)})}
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 let _ke=null;   // ảnh kế tiếp đã tải sẵn
 function layAnh(){const p=pool();let a=_ke&&p.includes(_ke)?_ke:pick(p);_ke=pick(p);
- if(_ke){const im=new Image();im.crossOrigin="anonymous";im.src=dungLuoi(_ke)?luoiUrl(_ke.id):imgUrl(_ke.id)} return a}
+ if(_ke){const im=new Image();im.crossOrigin="anonymous";im.src=nguonAnh(_ke).url} return a}
 
 /* Giải thích từng đặc điểm: nhìn vào đâu + ý nghĩa (theo 中医诊断学 十三五 = ZD và tài liệu thiệt chẩn Sline = TC) */
 const GIAI={
@@ -1519,8 +1528,8 @@ function canAnh(img){const ph=img.closest(".ph");if(!ph||ph.dataset.toan==="1"){
  ph.style.aspectRatio=(w*W)/(h*H);ph.firstElementChild.style.transform=`scale(${1/w}) translate(${-x*100}%,${-y*100}%)`;ph.style.setProperty("--k",w)}
 function loiLuoi(img){const ph=img.closest(".ph");if(!ph)return;const a=KHO.anh.find(x=>x.id===ph.dataset.id);if(!a)return;
  a._loiLuoi=true;ph.closest(".phw").outerHTML=photo(a,ph.dataset.show==="1")}
-function photo(a,show){const L=dungLuoi(a);
- return `<div class="phw"><div class="ph" data-id="${a.id}" data-show="${show?1:0}" data-cat='${JSON.stringify(L?[0,0,1,1]:vungCat(a))}' data-toan="${M().full?1:0}"><div class="phz"><img src="${L?luoiUrl(a.id):imgUrl(a.id)}" crossorigin="anonymous" alt="Ảnh lưỡi ${a.id}" onload="canAnh(this)" ${L?'onerror="loiLuoi(this)"':""}>${show?boxes(a,L?a.cat:null):""}</div></div><div class="src-note">Mã ảnh ${a.id} · TCM-Tongue (Dryad). Đáp án theo nhãn của bộ dữ liệu. <button type="button" class="linkbtn" data-nut-toan>${M().full?"Phóng vào lưỡi":"Xem toàn ảnh"}</button></div></div>`}
+function photo(a,show){const n=nguonAnh(a),L=n.cat!==null,du=n.url!==imgUrl(a.id);
+ return `<div class="phw"><div class="ph" data-id="${a.id}" data-show="${show?1:0}" data-cat='${JSON.stringify(L?[0,0,1,1]:(a.cat||vungCat(a)))}' data-toan="${M().full?1:0}"><div class="phz"><img src="${n.url}" crossorigin="anonymous" alt="Ảnh lưỡi ${a.id}" onload="canAnh(this)" ${du?'onerror="loiLuoi(this)"':""}>${show?boxes(a,L?a.cat:null):""}</div></div><div class="src-note">Mã ảnh ${a.id} · TCM-Tongue (Dryad). Đáp án theo nhãn của bộ dữ liệu. <button type="button" class="linkbtn" data-nut-toan>${M().full?"Phóng vào lưỡi":"Xem toàn ảnh"}</button></div></div>`}
 function mat(){
  app().innerHTML=`<h1>Luyện mắt</h1><p class="muted" style="margin:6px 0 4px">Luyện nhìn lưỡi trên ảnh thật. Đang tải kho ảnh…</p>`;
  loadKho().then(()=>matHome()).catch(()=>{app().innerHTML=`<h1>Luyện mắt</h1><div class="empty"><p>Chưa kết nối được kho ảnh lưỡi.</p><p style="font-size:.88rem">Kiểm tra kết nối mạng rồi mở lại tab này. Lần đầu cần có mạng để tải danh mục ảnh; sau đó ảnh đã xem dùng được cả khi offline.</p></div>`});}
@@ -1528,7 +1537,8 @@ function matHome(){const m=M(),p=pool(),nw=m.wrong.length;
  app().innerHTML=`<h1>Luyện mắt</h1><p class="muted" style="margin:6px 0 10px">${KHO.anh.length.toLocaleString("vi")} ảnh lưỡi thật, có nhãn do bác sĩ YHCT xác nhận.</p>
  <div class="seg" role="group" aria-label="Độ khó">${[["de","Dễ: 1 đặc điểm"],["vua","Vừa: ≤ 2"],["kho","Khó: tất cả"]].map(([k,t])=>`<button type="button" class="chip" aria-pressed="${m.lv===k}" data-lv="${k}">${t}</button>`).join("")}</div>
  <label style="font-size:.85rem;display:flex;gap:8px;align-items:center"><input type="checkbox" id="vung" ${m.vung?"checked":""}> Gồm nhãn vùng lõm/lồi (tham khảo, ngoài giáo trình)</label>
- <label style="font-size:.85rem;display:flex;gap:8px;align-items:center;margin-top:4px"><input type="checkbox" id="anmo" ${m.anMo!==false?"checked":""}> Ẩn ảnh kém nét (20% ảnh mờ nhất)</label>
+ <label style="font-size:.85rem;display:flex;gap:8px;align-items:center;margin-top:4px"><input type="checkbox" id="tiet" ${m.tiet?"checked":""}> Tiết kiệm dữ liệu di động (ảnh nhẹ, kém nét hơn)</label>
+ <p style="font-size:.85rem;margin:8px 0 2px">Lọc ảnh mờ:</p><div class="seg" role="group" aria-label="Lọc ảnh mờ">${[["tat","Không lọc"],["nhe","Nhẹ"],["vua","Vừa"],["chat","Chỉ ảnh nét"]].map(([k,t])=>`<button type="button" class="chip" aria-pressed="${mucLoc()===k}" data-loc="${k}">${t}</button>`).join("")}</div>
  <p class="muted" style="font-size:.82rem">Số ảnh phù hợp: ${p.length.toLocaleString("vi")}</p>
  <div class="mode">
   <button type="button" data-m="mot"><b>Nhận diện</b><span>Chọn 1 đặc điểm có trong ảnh</span></button>
@@ -1539,7 +1549,8 @@ function matHome(){const m=M(),p=pool(),nw=m.wrong.length;
  <button type="button" class="btn ghost" id="tk">Thống kê điểm yếu</button>`;
  app().querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{m.lv=b.dataset.lv;save();matHome()});
  $("#vung").onchange=e=>{m.vung=e.target.checked;save();matHome()};
- $("#anmo").onchange=e=>{m.anMo=e.target.checked;save();matHome()};
+ app().querySelectorAll("[data-loc]").forEach(b=>b.onclick=()=>{m.loc=b.dataset.loc;save();matHome()});
+ $("#tiet").onchange=e=>{m.tiet=e.target.checked;save();matHome()};
  app().querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>({mot:qMot,tatca:qTatCa,sai:qSai,mau:xemMau})[b.dataset.m]());
  $("#tk").onclick=thongKe;}
 function ghiNhan(a,tested,okSet){const m=M();tested.forEach(c=>{m.seen[c]=(m.seen[c]||0)+1;if(okSet.has(c))m.ok[c]=(m.ok[c]||0)+1});
