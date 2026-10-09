@@ -182,6 +182,9 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 .gt-k{color:var(--jade);font-weight:600}
 .ck label.right{border-color:var(--ok)}.ck label.miss{border-color:var(--gold);border-style:dashed}.ck label.wrong{border-color:var(--bad)}
 .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.bt{margin:14px 0;padding-top:10px;border-top:1px solid var(--line)}.bt h3{font-size:1rem;margin:0 0 4px}.bt-gy{margin:0 0 6px}.xem-that{margin-top:8px}
+#zoom{max-height:92vh;overflow:auto}
+#zoom .giai{margin:10px 12px 12px;max-width:520px}
 .gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:var(--line);cursor:pointer}
 .stat td:nth-child(n+2){text-align:right}
 .src-note{font-size:.75rem;color:var(--muted);margin-top:6px}
@@ -2349,6 +2352,134 @@ terms:[["Hư chứng / Thực chứng","虚证 / 实证","xū zhèng / shí zhè
 flags:["⚠️ Giáo trình Lý luận (tr.122) lấy ví dụ chân hàn giả nhiệt là “hư hàn gây tiêu chảy, mất tân dịch kéo dài gây âm hư nội nhiệt (khát, da khô, môi đỏ, mạch sác)”. Hình ảnh kinh điển trong 中医诊断学 là dương suy âm hàn thịnh đẩy hư dương nổi ra ngoài (mặt hồng nhạt ở gò má lúc ẩn lúc hiện, muốn đắp, khát thích uống nóng, mạch ấn vô lực). Bài dạy theo 中医诊断学; ví dụ của giáo trình không đưa vào câu hỏi.","🔍 Bài này khớp với ghi chú ở bài 2.27: “tay chân lạnh mà ngực bụng nóng” là chân nhiệt giả hàn (giáo trình CĐ tr.235 ghi ngược tên)."]}
 });
 
+// Tầng 2 – Biện chứng khí huyết (2.30), tân dịch – đàm ẩm (2.31). Nguồn: 中医诊断学 chương 病性辨证 (气血辨证, 津液辨证); CĐ tr.257.
+Object.assign(LESSONS,{
+"2.30":{id:"2.30",tang:2,title:"Biện chứng khí huyết",han:"气血辨证",src:"中医诊断学 (十三五), chương 病性辨证 mục 气血辨证; "+SRC_CD+", tr.257",
+hook:"Một phụ nữ sau sinh mệt, hụt hơi, da xanh, hoa mắt, kinh ít, lại hay chảy máu chân răng, bầm tím dưới da. Là khí hư, huyết hư, hay khí không nhiếp huyết? Và vì sao gọi tên cho đúng lại quyết định cả bài thuốc?",
+reading:`
+<p><b>Vị trí trong quy trình</b> <span class="pg">CĐ tr.257</span>: sau bát cương (ví dụ “lý hư”), dùng biện chứng khí huyết tân dịch để biết hư cái gì (khí hư, huyết hư…) hay ứ cái gì (khí trệ, huyết ứ…); rồi dùng tạng phủ để biết ở đâu (can huyết hư hay tâm huyết hư). Ôn lại sinh lý khí, huyết ở bài 1.06–1.07.</p>
+<p><b>Bệnh của khí</b> (ZD): hai nhóm: <b>khí bất túc</b> (hư, hãm, bất cố, thoát) và <b>khí cơ thất điều</b> (trệ, nghịch, bế).</p>
+<table><tr><th>Chứng</th><th>Then chốt</th><th>Biểu hiện chính</th></tr>
+<tr><td><b>Khí hư</b></td><td>Mệt, ít hơi, mạch hư</td><td>Mệt mỏi, ngại nói, hụt hơi, choáng, <b>tự hãn</b>, <b>vận động thì nặng hơn</b>; lưỡi nhạt non, mạch hư</td></tr>
+<tr><td><b>Khí hãm</b></td><td>Cảm giác sa xuống, tạng sa</td><td>Bụng dưới sa trệ, tiêu chảy lỵ lâu ngày, <b>sa tạng, sa trực tràng, sa tử cung</b>; kèm khí hư</td></tr>
+<tr><td><b>Khí bất cố</b></td><td>Không giữ được</td><td>Tự hãn không dứt, chảy dãi; đái dầm, tiểu không tự chủ; đại tiện không tự chủ; <b>xuất huyết</b>, kinh nhiều, rong huyết; sảy thai liên tiếp; di tinh, hoạt tinh</td></tr>
+<tr><td><b>Khí thoát</b></td><td>Nguy, sắp thoát</td><td>Thở yếu không đều, mồ hôi ra không ngừng, miệng há mắt nhắm, tay buông, lơ mơ, mặt trắng, đại tiểu tiện không tự chủ, mạch vi: <b>cấp cứu</b></td></tr>
+<tr><td><b>Khí trệ</b> (khí uất, khí kết)</td><td>Trướng, đau, mạch huyền</td><td>Ngực sườn thượng vị bụng <b>trướng đau, lúc nặng lúc nhẹ, chạy chỗ</b>, thay đổi theo cảm xúc, <b>đỡ khi ợ, trung tiện, thở dài</b>; mạch huyền; lưỡi ít thay đổi</td></tr>
+<tr><td><b>Khí nghịch</b></td><td>Đi ngược lên</td><td>Phế: ho, suyễn. Vị: nấc, ợ, buồn nôn, nôn. Can: đau đầu, choáng, thậm chí ngất, nôn ra máu. Phần lớn là thực, nhưng cũng có khí nghịch do hư</td></tr>
+<tr><td><b>Khí bế</b></td><td>Bế tắc đột ngột</td><td>Đột ngột hôn mê, ngất; hoặc đau quặn tạng phủ; bí đại tiểu tiện; thở thô, tiếng to; mạch trầm thực có lực</td></tr></table>
+<p><b>Bệnh của huyết</b> (ZD)</p>
+<table><tr><th>Chứng</th><th>Biểu hiện chính</th></tr>
+<tr><td><b>Huyết hư</b></td><td>Mặt trắng nhợt hoặc vàng úa; <b>mi mắt, môi, móng nhợt</b>; hoa mắt, hồi hộp, mất ngủ mơ nhiều, hay quên, tê chân tay; kinh ít nhạt, chậm, bế kinh; lưỡi nhạt; <b>mạch tế vô lực</b>. Hay gặp tâm huyết hư, can huyết hư</td></tr>
+<tr><td><b>Huyết thoát</b></td><td>Sau mất máu nhiều hoặc kéo dài: mặt trắng bệch, choáng, hồi hộp; lưỡi nhạt trắng khô; <b>mạch vi hoặc khâu</b></td></tr>
+<tr><td><b>Huyết ứ</b></td><td>Bốn dấu: <b>đau</b> (như kim châm, cự án, cố định, nặng về đêm), <b>khối</b> (ngoài da tím xanh; trong bụng cứng, không di động), <b>xuất huyết</b> (tái phát, tím sẫm, có cục), <b>sắc mạch</b> (mặt sạm đen, môi móng tím, da khô ráp như vảy cá, mạng mạch, bầm dưới da, nổi gân xanh bụng; lưỡi tím, điểm ứ, tĩnh mạch dưới lưỡi giãn; mạch sáp, kết, đại)</td></tr>
+<tr><td><b>Huyết nhiệt</b></td><td>Xuất huyết (ho, nôn, chảy máu cam, tiểu, đại tiện ra máu, rong kinh, kinh nhiều hoặc sớm), <b>máu đỏ tươi, đặc</b>; kèm thực nhiệt; lưỡi đỏ thẫm, mạch huyền sác</td></tr>
+<tr><td><b>Huyết hàn</b></td><td>Tay chân hoặc tại chỗ <b>lạnh đau, da tím sẫm</b>, ấm thì đỡ; bụng dưới co thắt lạnh đau; thống kinh, kinh muộn, tím sẫm có cục; lưỡi nhạt tím, mạch trầm trì, huyền khẩn hoặc sáp</td></tr></table>
+<p><b>Khí huyết đồng bệnh</b> (ZD): <b>khí huyết lưỡng hư</b> (cả hai nhóm triệu chứng); <b>khí hư huyết ứ</b> (khí không đủ đẩy huyết: mệt, ngại nói + đau như châm cố định, lưỡi nhạt tím, mạch sáp); <b>khí không nhiếp huyết</b> (các loại xuất huyết + khí hư; lưỡi nhạt, mạch nhược); <b>khí tùy huyết thoát</b> (mất máu nhiều rồi mặt trắng, thở yếu, mồ hôi đầm đìa, chân tay lạnh, ngất; mạch vi, khâu hoặc tán: <b>cấp cứu</b>); <b>khí trệ huyết ứ</b> (trướng đau chạy chỗ rồi đau như châm cố định, khối, cảm xúc uất; mạch huyền hoặc sáp).</p>
+<p class="muted">Phân biệt xuất huyết: <b>huyết nhiệt</b> máu đỏ tươi, đặc, kèm thực nhiệt; <b>khí không nhiếp huyết</b> máu nhạt, kèm mệt, hụt hơi, lưỡi nhạt; <b>huyết ứ</b> máu tím sẫm có cục, tái đi tái lại, kèm đau cố định.</p>`,
+checkTitle:"Khi nghĩ đến khí hay huyết",
+checklist:["Mệt, hụt hơi, tự hãn, vận động nặng thêm? (khí hư)","Có cảm giác sa xuống, sa tạng, tiêu chảy lâu? (khí hãm) Có rỉ, chảy, mất kiểm soát? (khí bất cố)","Trướng đau chạy chỗ, theo cảm xúc, đỡ khi ợ hay trung tiện? (khí trệ) Ho, nôn, nấc, choáng? (khí nghịch)","Môi, mi mắt, móng có nhợt? Hoa mắt, tê, kinh ít? (huyết hư)","Đau như châm cố định, có khối, môi lưỡi tím? (huyết ứ)","Xuất huyết: màu gì, đặc hay loãng, có cục không, kèm nhiệt hay kèm mệt?"],
+quiz:[
+{q:"Theo 中医诊断学, then chốt của khí hư là:",o:[["Trướng đau chạy chỗ","Sai: đó là khí trệ."],["Mệt mỏi, ngại nói, hụt hơi, tự hãn, vận động thì nặng hơn, mạch hư","Đúng."],["Đau như kim châm","Sai: đó là huyết ứ."],["Môi móng nhợt","Sai: đó là huyết hư."]],a:1,p:"ZD 气虚证"},
+{q:"Sa trực tràng, sa tử cung, bụng dưới sa trệ, tiêu chảy lâu ngày kèm mệt, hụt hơi:",o:[["Khí trệ","Sai."],["Khí hãm","Đúng."],["Huyết ứ","Sai."],["Khí nghịch","Sai."]],a:1,p:"ZD 气陷证"},
+{q:"Theo 中医诊断学, khí bất cố KHÔNG bao gồm biểu hiện nào?",o:[["Tự hãn không dứt","Sai: có."],["Đái dầm, tiểu không tự chủ","Sai: có."],["Trướng đau chạy chỗ theo cảm xúc","Đúng: đó là khí trệ."],["Kinh nhiều, rong huyết, sảy thai liên tiếp","Sai: có."]],a:2,p:"ZD 气不固证"},
+{q:"Trướng đau ngực sườn lúc nặng lúc nhẹ, chạy chỗ, thay đổi theo cảm xúc, đỡ khi ợ hoặc thở dài, mạch huyền:",o:[["Khí trệ","Đúng."],["Khí hư","Sai."],["Huyết ứ","Sai: huyết ứ đau cố định như châm."],["Khí thoát","Sai."]],a:0,p:"ZD 气滞证"},
+{q:"Theo 中医诊断学, huyết hư có biểu hiện then chốt:",o:[["Mặt, mi mắt, môi, móng, lưỡi nhợt; mạch tế","Đúng."],["Môi lưỡi tím, mạch sáp","Sai: đó là huyết ứ."],["Máu đỏ tươi, đặc","Sai: đó là huyết nhiệt."],["Lạnh đau, da tím","Sai: đó là huyết hàn."]],a:0,p:"ZD 血虚证"},
+{q:"Bốn nhóm dấu hiệu của huyết ứ theo 中医诊断学:",o:[["Đau, khối, xuất huyết, dấu hiệu ứ ở sắc và mạch","Đúng."],["Sốt, khát, táo, tiểu vàng","Sai."],["Mệt, hụt hơi, tự hãn, mạch hư","Sai."],["Phù, tiểu ít, nặng mình","Sai."]],a:0,p:"ZD 血瘀证"},
+{q:"Xuất huyết máu đỏ tươi, đặc, kèm sốt, khát, lưỡi đỏ thẫm, mạch huyền sác:",o:[["Khí không nhiếp huyết","Sai: khí không nhiếp huyết thì máu nhạt, kèm mệt."],["Huyết nhiệt","Đúng."],["Huyết hàn","Sai."],["Huyết ứ","Sai."]],a:1,p:"ZD 血热证"},
+{q:"Chảy máu cam, chảy máu chân răng, bầm dưới da, kinh nhiều; kèm mặt nhợt, mệt, ngại nói, lưỡi nhạt, mạch nhược:",o:[["Huyết nhiệt","Sai."],["Khí không nhiếp huyết","Đúng."],["Khí trệ huyết ứ","Sai."],["Âm hư hỏa vượng","Sai."]],a:1,p:"ZD 气不摄血证"},
+{q:"Đang mất máu nhiều, đột nhiên mặt trắng bệch, thở yếu, mồ hôi đầm đìa, chân tay lạnh, ngất, mạch vi hoặc khâu:",o:[["Khí hư thông thường","Sai."],["Khí tùy huyết thoát: cấp cứu","Đúng."],["Huyết hư","Sai."],["Khí trệ","Sai."]],a:1,p:"ZD 气随血脱证"}
+],
+case:{v:`Nữ 30 tuổi, sau sinh 3 tháng. Mệt, hụt hơi, ngại nói, đi lại nhiều thì vã mồ hôi. Da xanh, môi và móng tay nhợt, hoa mắt, hồi hộp, ngủ kém. Mấy tuần nay hay chảy máu chân răng, bầm tím dưới da khi va nhẹ, kinh nguyệt trở lại thì ra nhiều, màu nhạt. Lưỡi nhạt, mạch tế nhược.`,
+qs:["Những triệu chứng nào thuộc khí hư, triệu chứng nào thuộc huyết hư?","Các biểu hiện xuất huyết thuộc chứng gì? Vì sao không phải huyết nhiệt?","Kết luận chứng tổng hợp. Cần lưu ý gì về Tây y?"],
+ans:`<p><b>1.</b> Khí hư: mệt, hụt hơi, ngại nói, vận động vã mồ hôi (tự hãn). Huyết hư: da xanh, môi móng nhợt, hoa mắt, hồi hộp, ngủ kém, lưỡi nhạt, mạch tế. <span class="pg">ZD 气虚证, 血虚证</span></p>
+<p><b>2.</b> <b>Khí không nhiếp huyết</b>: xuất huyết nhiều nơi, máu nhạt, kèm khí hư. Không phải huyết nhiệt vì không có máu đỏ tươi đặc, không sốt khát, lưỡi nhạt chứ không đỏ, mạch nhược chứ không sác. <span class="pg">ZD 气不摄血证, 血热证</span></p>
+<p><b>3.</b> <b>Khí huyết lưỡng hư kèm khí không nhiếp huyết</b> (sau sinh). Chảy máu chân răng và bầm tím dễ dàng cần xét nghiệm máu (công thức máu, đông máu) để loại trừ bệnh máu trước khi điều trị. <span class="pg">ZD 气血两虚证</span></p>`},
+cards:[["Khí bất túc: 4 chứng?","Khí hư, khí hãm, khí bất cố, khí thoát."],["Khí cơ thất điều: 3 chứng?","Khí trệ, khí nghịch, khí bế."],["Khí hư: then chốt?","Mệt, ngại nói, hụt hơi, tự hãn, vận động nặng thêm, mạch hư."],["Khí bất cố gồm gì?","Tự hãn, chảy dãi, tiểu đại tiện không tự chủ, xuất huyết, rong kinh, sảy thai, di tinh."],["Khí trệ: then chốt?","Trướng đau lúc nặng lúc nhẹ, chạy chỗ, theo cảm xúc, đỡ khi ợ, trung tiện, thở dài; mạch huyền."],["Khí nghịch ở phế, vị, can?","Phế: ho suyễn. Vị: nấc, ợ, nôn. Can: đau đầu, choáng, ngất, nôn máu."],["Huyết hư: then chốt?","Mặt, mi mắt, môi, móng, lưỡi nhợt; hoa mắt, hồi hộp, tê; kinh ít; mạch tế."],["Huyết ứ: 4 nhóm dấu?","Đau như châm cố định nặng về đêm; khối; xuất huyết tím có cục; sắc mạch ứ (môi lưỡi tím, mạch sáp)."],["Xuất huyết: huyết nhiệt / khí không nhiếp / huyết ứ?","Đỏ tươi đặc, kèm nhiệt / nhạt, kèm mệt / tím sẫm có cục, kèm đau cố định."]],
+terms:[["Khí hư / Khí hãm / Khí bất cố / Khí thoát","气虚 / 气陷 / 气不固 / 气脱","qì xū / qì xiàn / qì bù gù / qì tuō"],["Khí trệ / Khí nghịch / Khí bế","气滞 / 气逆 / 气闭","qì zhì / qì nì / qì bì"],["Huyết hư / Huyết thoát / Huyết ứ","血虚 / 血脱 / 血瘀","xuè xū / xuè tuō / xuè yū"],["Huyết nhiệt / Huyết hàn","血热 / 血寒","xuè rè / xuè hán"],["Khí không nhiếp huyết","气不摄血","qì bù shè xuè"],["Khí tùy huyết thoát","气随血脱","qì suí xuè tuō"]],
+flags:["🔍 Giáo trình CĐ chỉ có phần tổng quan (tr.257); danh mục chứng và biểu hiện theo 中医诊断学. Một số giáo trình Việt Nam gọi khí bất cố là “khí không cố nhiếp”; nội dung tương đương."]},
+
+"2.31":{id:"2.31",tang:2,title:"Biện chứng tân dịch, đàm ẩm, thủy thũng",han:"津液辨证",src:"中医诊断学 (十三五), chương 病性辨证 mục 津液辨证; "+SRC_CD+", tr.257",
+hook:"“Bách bệnh đa nhân đàm tác túy”, “quái bệnh đa đàm”: trăm bệnh phần nhiều do đàm, bệnh lạ phần nhiều có đàm. Nhưng đàm, ẩm, thủy, thấp khác nhau ở đâu, và vì sao phân biệt được lại quan trọng?",
+reading:`
+<p>Bệnh tân dịch chủ yếu có hai loại: <b>tân dịch hư thiếu</b> và <b>tân dịch phân bố, vận hành trở ngại</b> (sinh đàm, ẩm, thủy). Ôn lại sinh lý tân dịch ở bài 1.08. (ZD)</p>
+<p><b>Tân dịch hư (tân dịch khuy hư)</b>: miệng, mũi, môi, lưỡi, họng, da <b>khô</b>; da nhăn mất đàn hồi, <b>mắt trũng</b>; khát muốn uống; <b>tiểu ít vàng, táo bón</b>; lưỡi đỏ ít tân, mạch tế sác vô lực. Do sốt cao, mồ hôi nhiều, nôn nhiều, tiêu chảy nhiều, bỏng; thời tiết khô; uống ít. Nhẹ gọi là <b>thương tân</b>, nặng gọi là <b>dịch thoát</b>. (ZD) Ở trẻ nhỏ, người già tiêu chảy nôn nhiều, mắt trũng, tiểu ít: cần bù nước, khám Tây y.</p>
+<table><tr><th></th><th>Đàm</th><th>Ẩm</th><th>Thủy</th></tr>
+<tr><td>Tính chất</td><td><b>Đặc, dính</b></td><td><b>Loãng</b>, đọng ở khoang, chỗ trống</td><td>Loãng nhất, <b>tràn ra cơ phu</b></td></tr>
+<tr><td>Then chốt (ZD)</td><td>Ho đờm nhiều, tức ngực, buồn nôn, choáng, người béo, <b>khối tròn mềm dưới da</b>; rêu nhớt, mạch hoạt</td><td>Tức ngực, đầy thượng vị, <b>nôn nước trong</b>, ho đờm trong loãng, <b>sườn căng đầy</b>; rêu trắng trơn (hoạt), mạch huyền</td><td><b>Phù</b> (ấn lõm không đầy lên), cổ trướng, <b>tiểu ít</b>, nặng mình; lưỡi nhạt bệu, rêu trắng trơn, mạch nhu hoặc hoãn</td></tr></table>
+<p><b>Đàm chứng</b> (ZD): đàm đi khắp nơi nên biểu hiện đa dạng: ở <b>phế</b>: ho đờm; ở <b>vị</b>: đầy thượng vị, buồn nôn, nôn ra đàm dãi; che <b>thanh khiếu</b>: choáng; tràn cơ phu: béo; che <b>tâm thần</b>: hôn mê, điên, cuồng, si ngốc, động kinh; kết dưới da: <b>tràng nhạc, bướu cổ</b> (cổ), <b>đàm hạch</b> (chi), <b>nhũ tích</b> (vú); ở họng: <b>mai hạch khí</b> (cảm giác vướng như hạt mận); ở kinh lạc: tê, liệt nửa người. Phân loại: hàn đàm, nhiệt đàm, thấp đàm, táo đàm, phong đàm, ứ đàm.</p>
+<p><b>Ẩm chứng: bốn loại theo vị trí</b> (ZD):</p>
+<ul><li><b>Đàm ẩm</b> (nghĩa hẹp): ẩm ở vị trường: đầy bụng, <b>bụng óc ách tiếng nước</b>, nôn nước trong.</li>
+<li><b>Huyền ẩm</b>: ẩm ở ngực sườn: sườn căng đầy, <b>ho, thở, xoay người thì đau kéo</b>.</li>
+<li><b>Chi ẩm</b>: ẩm ở tâm phế: tức ngực, hồi hộp, <b>thở gấp không nằm được</b>.</li>
+<li><b>Dật ẩm</b>: ẩm tràn ra tứ chi: người và khớp nặng đau.</li></ul>
+<p><b>Thủy đình (thủy thũng)</b> (ZD): phân <b>dương thủy</b> (thực: phát nhanh, <b>bắt đầu từ mi mắt, mặt, nửa trên nặng hơn</b>; thường do phong tà, phế mất tuyên giáng) và <b>âm thủy</b> (hư: phát từ từ, <b>bắt đầu từ chân, từ thắt lưng trở xuống nặng hơn</b>; do tỳ thận dương hư không khí hóa). Các thể: phong thủy tương bác, tỳ hư thủy đình, thận hư thủy phiếm, thủy khí lăng tâm (bài 2.15). Ứ huyết cũng làm thủy đình (huyết ứ thủy đình).</p>
+<p class="muted">Liên hệ: mạch hoạt (đàm), mạch huyền (ẩm), rêu nhớt hoặc trơn ướt, lưỡi bệu có dấu răng (bài 2.07–2.09, 2.25). Phù ấn lõm là thủy thũng, ấn đầy lên ngay là khí thũng (bài 2.27).</p>`,
+checkTitle:"Khi nghi đàm, ẩm, thủy hoặc thiếu tân dịch",
+checklist:["Khô miệng mũi da, mắt trũng, khát, tiểu ít, táo? Có nôn, tiêu chảy, sốt, mồ hôi nhiều trước đó?","Đờm: đặc hay loãng, màu gì, nhiều không? Rêu nhớt hay trơn ướt? Mạch hoạt hay huyền?","Có khối tròn mềm dưới da, vướng họng, tê nửa người, choáng nặng đầu?","Bụng óc ách tiếng nước? Sườn đau khi ho, thở? Thở gấp không nằm được?","Phù: bắt đầu từ mặt hay từ chân? Nhanh hay từ từ? Ấn có lõm?","Tiểu nhiều hay ít? Có tiền sử tim, thận? (phù cần khám Tây y)"],
+quiz:[
+{q:"Theo 中医诊断学, tân dịch hư có biểu hiện:",o:[["Phù, tiểu ít, nặng mình","Sai: đó là thủy đình."],["Khô miệng mũi môi da, mắt trũng, khát, tiểu ít vàng, táo bón, lưỡi đỏ ít tân","Đúng."],["Đờm nhiều, rêu nhớt","Sai: đó là đàm."],["Nôn nước trong","Sai: đó là ẩm."]],a:1,p:"ZD 津液亏虚证"},
+{q:"Theo 中医诊断学, câu “bách bệnh đa nhân đàm tác túy, quái bệnh đa đàm” nói về:",o:[["Ẩm chứng","Sai."],["Đàm chứng: biểu hiện rất đa dạng","Đúng."],["Thủy thũng","Sai."],["Huyết ứ","Sai."]],a:1,p:"ZD 痰证"},
+{q:"Cảm giác vướng ở họng như có hạt mận, nuốt không trôi khạc không ra (mai hạch khí) theo 中医诊断学 là do:",o:[["Đàm trở ở họng","Đúng."],["Ẩm ở vị","Sai."],["Huyết hư","Sai."],["Thủy đình","Sai."]],a:0,p:"ZD 痰证"},
+{q:"Ẩm đọng ở ngực sườn: sườn căng đầy, ho, thở, xoay người thì đau kéo, gọi là:",o:[["Đàm ẩm","Sai: đàm ẩm (hẹp) là ẩm ở vị trường."],["Huyền ẩm","Đúng."],["Chi ẩm","Sai: chi ẩm ở tâm phế."],["Dật ẩm","Sai: dật ẩm tràn ra tứ chi."]],a:1,p:"ZD 饮证"},
+{q:"Đầy bụng, bụng óc ách tiếng nước, nôn nước trong là:",o:[["Đàm ẩm (ẩm ở vị trường)","Đúng."],["Huyền ẩm","Sai."],["Tân dịch hư","Sai."],["Khí trệ","Sai."]],a:0,p:"ZD 饮证"},
+{q:"Tức ngực, hồi hộp, thở gấp không nằm được do ẩm ở tâm phế gọi là:",o:[["Dật ẩm","Sai."],["Chi ẩm","Đúng."],["Huyền ẩm","Sai."],["Đàm ẩm","Sai."]],a:1,p:"ZD 饮证"},
+{q:"Theo 中医诊断学, dương thủy có đặc điểm:",o:[["Phát từ từ, bắt đầu từ chân, từ thắt lưng trở xuống nặng hơn","Sai: đó là âm thủy."],["Phát nhanh, bắt đầu từ mi mắt, mặt, nửa trên nặng hơn","Đúng."],["Không phù","Sai."],["Chỉ gặp ở người già","Sai."]],a:1,p:"ZD 水停证"},
+{q:"Âm thủy theo 中医诊断学 thuộc:",o:[["Thực, do phong tà","Sai."],["Hư, do tỳ thận dương hư không khí hóa thủy","Đúng."],["Nhiệt","Sai."],["Huyết nhiệt","Sai."]],a:1,p:"ZD 水停证"},
+{q:"Phân biệt đàm và ẩm theo tính chất:",o:[["Đàm loãng, ẩm đặc","Sai: ngược lại."],["Đàm đặc dính; ẩm loãng, đọng ở khoang","Đúng."],["Như nhau","Sai."],["Đàm chỉ ở phế, ẩm chỉ ở thận","Sai."]],a:1,p:"ZD 痰证, 饮证"}
+],
+case:{v:`A: nữ 50 tuổi, béo, hay choáng nặng đầu, ngực bứt rứt, buồn nôn, khạc đờm dính; gần đây thấy vướng họng như có hạt mận, khạc không ra nuốt không trôi, nặng khi buồn bực; rêu trắng nhớt, mạch huyền hoạt. B: nam 65 tuổi, phù hai chân mấy tháng, từ từ lan lên, ấn lõm lâu mới đầy, tiểu ít, sợ lạnh, lưng gối lạnh mỏi; lưỡi nhạt bệu, rêu trắng trơn, mạch trầm.`,
+qs:["A: đàm hay ẩm? Những biểu hiện nào thuộc đàm?","Vướng họng của A gọi là gì? Liên quan khí gì?","B: dương thủy hay âm thủy? Gốc ở đâu? Cần làm gì thêm?"],
+ans:`<p><b>1.</b> A: <b>đàm</b>: người béo, choáng nặng đầu, buồn nôn, đờm dính, rêu nhớt, mạch hoạt. <span class="pg">ZD 痰证</span></p>
+<p><b>2.</b> <b>Mai hạch khí</b> (đàm trở ở họng), nặng khi buồn bực: đàm kèm <b>khí uất</b> (mạch huyền). Nên khám tai mũi họng để loại trừ nguyên nhân thực thể. <span class="pg">ZD 痰证; bài 2.30</span></p>
+<p><b>3.</b> B: <b>âm thủy</b>: phát từ từ, bắt đầu từ chân, ấn lõm, tiểu ít, kèm sợ lạnh, lưng gối lạnh: <b>thận (tỳ thận) dương hư, thủy phiếm</b>. Phù kéo dài ở người lớn tuổi cần khám tim, thận, gan (Tây y). <span class="pg">ZD 水停证</span></p>`},
+cards:[["Hai loại bệnh tân dịch?","Tân dịch hư thiếu; tân dịch phân bố, vận hành trở ngại (đàm, ẩm, thủy)."],["Tân dịch hư: then chốt?","Khô (miệng mũi môi da), mắt trũng, khát, tiểu ít vàng, táo, lưỡi đỏ ít tân."],["Đàm / ẩm / thủy: tính chất?","Đàm đặc dính; ẩm loãng đọng ở khoang; thủy tràn ra cơ phu thành phù."],["Đàm chứng: then chốt?","Đờm nhiều, tức ngực, buồn nôn, choáng, béo, khối tròn mềm dưới da; rêu nhớt, mạch hoạt."],["Đàm che tâm thần / kết dưới da / ở họng?","Hôn mê, điên cuồng, động kinh / tràng nhạc, bướu cổ, đàm hạch, nhũ tích / mai hạch khí."],["Bốn loại ẩm?","Đàm ẩm (vị trường), huyền ẩm (ngực sườn), chi ẩm (tâm phế), dật ẩm (tứ chi)."],["Ẩm: then chốt?","Nôn nước trong, đờm loãng, sườn căng, bụng óc ách; rêu trắng trơn, mạch huyền."],["Dương thủy / âm thủy?","Dương thủy: nhanh, từ mặt, nửa trên (thực, phong). Âm thủy: từ từ, từ chân, nửa dưới (hư, tỳ thận dương hư)."],["Bách bệnh đa nhân đàm tác túy?","Trăm bệnh phần nhiều do đàm; quái bệnh đa đàm."]],
+terms:[["Tân dịch khuy hư","津液亏虚","jīn yè kuī xū"],["Đàm / Ẩm / Thủy","痰 / 饮 / 水","tán / yǐn / shuǐ"],["Huyền ẩm / Chi ẩm / Dật ẩm","悬饮 / 支饮 / 溢饮","xuán yǐn / zhī yǐn / yì yǐn"],["Mai hạch khí","梅核气","méi hé qì"],["Dương thủy / Âm thủy","阳水 / 阴水","yáng shuǐ / yīn shuǐ"],["Bách bệnh đa nhân đàm tác túy","百病多因痰作祟","bǎi bìng duō yīn tán zuò suì"]],
+flags:["🔍 “Đàm ẩm” có hai nghĩa: nghĩa rộng chỉ chung đàm và ẩm; nghĩa hẹp chỉ ẩm đọng ở vị trường (một trong bốn loại ẩm). Khi đọc sách cần xem văn cảnh."]}
+});
+
+// Tầng 2 – Biện chứng tạng phủ. Nguồn: 中医诊断学 chương 病位辨证 mục 脏腑辨证; CĐ tr.257–258.
+Object.assign(LESSONS,{
+"2.32":{id:"2.32",tang:2,title:"Biện chứng tạng phủ: Tâm, Tiểu trường",han:"心与小肠病辨证",src:"中医诊断学 (十三五), chương 病位辨证 mục 心与小肠病辨证; "+SRC_CD+", tr.257–258",
+hook:"Ba người cùng than “hồi hộp, mất ngủ”. Một người da xanh, môi nhợt, hay quên; một người gò má đỏ, ra mồ hôi trộm; một người miệng lở loét, tiểu buốt đỏ. Cùng là bệnh Tâm, ba hướng điều trị khác hẳn nhau.",
+reading:`
+<p><b>Cách làm biện chứng tạng phủ</b> <span class="pg">CĐ tr.257–258</span>: ghép <b>vị trí</b> (tạng nào: dựa vào chức năng tạng, bài 1.10) với <b>tính chất</b> (hư hay thực; khí, huyết, âm, dương; hàn, nhiệt, đàm, ứ: bài 2.28–2.31). Ví dụ: “huyết hư” + triệu chứng tâm = tâm huyết hư.</p>
+<p><b>Triệu chứng của Tâm</b> (tâm chủ huyết mạch, tàng thần): <b>hồi hộp, chinh xung, đau ngực tức ngực, mất ngủ mơ nhiều, hay quên, thần chí bất thường</b> (cuồng, mê), lưỡi lở, mạch kết đại.</p>
+<table><tr><th>Chứng</th><th>Triệu chứng Tâm</th><th>Kèm theo (tính chất)</th></tr>
+<tr><td><b>Tâm khí hư</b></td><td>Hồi hộp, chinh xung, hụt hơi tức ngực</td><td>Mệt, tự hãn, <b>vận động thì nặng</b>, mặt nhợt; lưỡi nhạt; mạch hư</td></tr>
+<tr><td><b>Tâm dương hư</b></td><td>Hồi hộp, tức ngực, có thể đau ngực</td><td>Như khí hư + <b>sợ lạnh, chân tay lạnh</b>; mặt trắng hoặc môi tím; lưỡi nhạt bệu hoặc tím, rêu trắng trơn; mạch nhược hoặc kết đại</td></tr>
+<tr><td><b>Tâm dương hư thoát</b></td><td>Đau ngực dữ dội, hồi hộp</td><td>Đột ngột <b>mồ hôi lạnh đầm đìa, chân tay lạnh giá</b>, mặt trắng, thở yếu, lơ mơ hoặc hôn mê, môi lưỡi tím; mạch vi muốn tuyệt: <b>cấp cứu</b></td></tr>
+<tr><td><b>Tâm huyết hư</b></td><td>Hồi hộp, mất ngủ, mơ nhiều, hay quên</td><td>Choáng, hoa mắt, mặt trắng nhợt hoặc vàng úa, <b>môi lưỡi nhợt</b>; mạch tế vô lực</td></tr>
+<tr><td><b>Tâm âm hư</b></td><td>Hồi hộp, <b>phiền</b>, mất ngủ, mơ nhiều</td><td>Miệng họng khô, gầy, <b>gò má đỏ, lòng bàn tay chân nóng, sốt về chiều, mồ hôi trộm</b>; lưỡi đỏ ít rêu; mạch tế sác</td></tr>
+<tr><td><b>Tâm hỏa kháng thịnh</b></td><td>Phiền, mất ngủ; nặng thì cuồng, mê sảng</td><td><b>Lưỡi lở loét đau</b>; hoặc nôn ra máu, chảy máu cam; hoặc tiểu ngắn đỏ, nóng rát; sốt, khát, táo, mặt đỏ; lưỡi đỏ, rêu vàng, mạch sác</td></tr>
+<tr><td><b>Tâm mạch tý trở</b></td><td>Hồi hộp, chinh xung, <b>ngực tức đau lan vai lưng, mặt trong cánh tay</b>, lúc có lúc không</td><td>Bốn kiểu theo nguyên nhân: <b>ứ huyết</b> (đau như châm, lưỡi tím, mạch sáp, kết, đại); <b>đàm trọc</b> (tức nặng, béo, nhiều đờm, rêu nhớt, mạch trầm hoạt); <b>hàn ngưng</b> (gặp lạnh đau dữ, ấm thì đỡ, mạch trầm trì hoặc khẩn); <b>khí trệ</b> (đau trướng, theo cảm xúc, hay thở dài, mạch huyền)</td></tr>
+<tr><td><b>Đàm mông tâm thần</b></td><td>Đần độn, ý thức mơ hồ, nặng thì hôn mê; hoặc trầm uất, lẩm bẩm, cử chỉ bất thường; hoặc đột ngột ngã, sùi bọt, họng có tiếng đờm</td><td>Mặt tối, tức ngực buồn nôn; rêu trắng nhớt; mạch hoạt</td></tr>
+<tr><td><b>Đàm hỏa nhiễu thần</b></td><td>Phiền, mất ngủ, nặng thì mê sảng; hoặc <b>cuồng</b>: đập phá, nói bậy, khóc cười thất thường</td><td>Đờm vàng, họng khò khè, sốt, khát, mặt đỏ mắt đỏ; lưỡi đỏ rêu vàng nhớt; mạch hoạt sác</td></tr>
+<tr><td><b>Ứ trở não lạc</b></td><td>Choáng mãi không hết, <b>đau đầu như châm, cố định</b>, lâu không khỏi; hay quên, mất ngủ; hoặc sau chấn thương đầu</td><td>Mặt tối; lưỡi tím, điểm ứ; mạch tế sáp</td></tr>
+<tr><td><b>Tiểu trường thực nhiệt</b></td><td>(tâm hỏa chuyển xuống tiểu trường)</td><td><b>Tiểu ngắn đỏ, nóng rát buốt</b>, có thể tiểu ra máu; phiền khát, <b>lưỡi lở</b>; lưỡi đỏ rêu vàng, mạch sác</td></tr></table>
+<p class="muted">Ba cặp dễ nhầm: <b>tâm khí hư / tâm dương hư</b> (dương hư thêm lạnh); <b>tâm huyết hư / tâm âm hư</b> (cùng mất ngủ, hồi hộp; huyết hư thì <b>nhợt</b>, âm hư thì <b>đỏ, nóng, mồ hôi trộm</b>); <b>tâm hỏa / tâm âm hư</b> (cùng phiền, lưỡi đỏ; tâm hỏa là thực: rêu vàng, mạch sác có lực; âm hư: ít rêu, mạch tế sác). Đau ngực lan vai, cánh tay trái cần loại trừ nhồi máu cơ tim (bài 2.14).</p>`,
+checkTitle:"Khi nghĩ bệnh ở Tâm",
+checklist:["Có hồi hộp, đau tức ngực, mất ngủ, hay quên, thần chí bất thường?","Hư hay thực? Mệt, tự hãn, vận động nặng (khí hư); lạnh (dương hư)?","Nhợt (huyết hư) hay đỏ, nóng, mồ hôi trộm (âm hư)?","Lưỡi lở, phiền, tiểu đỏ rát (tâm hỏa, tiểu trường thực nhiệt)?","Đau ngực: như châm, tức nặng, gặp lạnh, hay theo cảm xúc (bốn kiểu tâm mạch tý trở)?","Dấu hiệu nguy: đau ngực dữ dội, mồ hôi lạnh, chân tay lạnh, mạch vi → cấp cứu"],
+quiz:[
+{q:"Theo 中医诊断学, tâm khí hư khác tâm dương hư ở chỗ tâm dương hư có thêm:",o:[["Mất ngủ","Sai."],["Sợ lạnh, chân tay lạnh","Đúng."],["Lưỡi lở","Sai."],["Tiểu đỏ","Sai."]],a:1,p:"ZD 心阳虚证"},
+{q:"Hồi hộp, mất ngủ, hay quên, hoa mắt, mặt và môi lưỡi nhợt, mạch tế vô lực:",o:[["Tâm âm hư","Sai: âm hư có gò má đỏ, mồ hôi trộm, lưỡi đỏ."],["Tâm huyết hư","Đúng."],["Tâm hỏa","Sai."],["Tâm dương hư","Sai."]],a:1,p:"ZD 心血虚证"},
+{q:"Hồi hộp, phiền, mất ngủ, gò má đỏ, lòng bàn tay chân nóng, mồ hôi trộm, lưỡi đỏ ít rêu, mạch tế sác:",o:[["Tâm âm hư","Đúng."],["Tâm hỏa kháng thịnh","Sai: tâm hỏa là thực, rêu vàng."],["Tâm huyết hư","Sai."],["Tâm khí hư","Sai."]],a:0,p:"ZD 心阴虚证"},
+{q:"Lưỡi lở loét đau, phiền mất ngủ, tiểu ngắn đỏ nóng rát, sốt khát, rêu vàng, mạch sác:",o:[["Tâm âm hư","Sai."],["Tâm hỏa kháng thịnh","Đúng."],["Đàm mông tâm thần","Sai."],["Tâm dương hư","Sai."]],a:1,p:"ZD 心火亢盛证"},
+{q:"Tiểu ngắn đỏ, nóng rát buốt, lưỡi lở, phiền khát được giải thích là:",o:[["Tâm hỏa chuyển xuống tiểu trường (tiểu trường thực nhiệt)","Đúng."],["Thận âm hư","Sai."],["Tỳ hư","Sai."],["Can khí uất","Sai."]],a:0,p:"ZD 小肠实热证"},
+{q:"Ngực tức đau lan vai lưng, mặt trong cánh tay, đau như châm, lưỡi tím, mạch sáp kết:",o:[["Tâm mạch tý trở do ứ huyết","Đúng."],["Tâm mạch tý trở do khí trệ","Sai: khí trệ thì đau trướng theo cảm xúc, mạch huyền."],["Tâm huyết hư","Sai."],["Đàm hỏa nhiễu thần","Sai."]],a:0,p:"ZD 心脉痹阻证"},
+{q:"Đột ngột ngã, sùi bọt, họng có tiếng đờm, mặt tối, rêu trắng nhớt, mạch hoạt:",o:[["Đàm hỏa nhiễu thần","Sai: đàm hỏa có sốt, đờm vàng, rêu vàng."],["Đàm mông tâm thần","Đúng."],["Tâm dương hư thoát","Sai."],["Ứ trở não lạc","Sai."]],a:1,p:"ZD 痰蒙心神证"},
+{q:"Cuồng loạn, đập phá, nói bậy, đờm vàng, mặt đỏ, lưỡi đỏ rêu vàng nhớt, mạch hoạt sác:",o:[["Đàm hỏa nhiễu thần","Đúng."],["Đàm mông tâm thần","Sai."],["Tâm âm hư","Sai."],["Tâm khí hư","Sai."]],a:0,p:"ZD 痰火扰神证"},
+{q:"Đột ngột mồ hôi lạnh đầm đìa, chân tay lạnh giá, đau ngực dữ dội, môi tím, mạch vi muốn tuyệt:",o:[["Tâm khí hư","Sai."],["Tâm dương hư thoát: cấp cứu","Đúng."],["Tâm huyết hư","Sai."],["Tâm hỏa","Sai."]],a:1,p:"ZD 心阳虚脱证"}
+],
+case:{v:`A: nữ 35 tuổi, sau sinh mất máu nhiều; hồi hộp, mất ngủ, hay quên, hoa mắt, môi nhợt; lưỡi nhạt, mạch tế. B: nữ 50 tuổi, tiền mãn kinh; hồi hộp, phiền, khó ngủ, bốc hỏa về chiều, gò má đỏ, ra mồ hôi trộm; lưỡi đỏ ít rêu, mạch tế sác. C: nam 22 tuổi, thức khuya nhiều tuần; lưỡi lở loét đau, phiền, khó ngủ, tiểu vàng đỏ nóng rát; đầu lưỡi đỏ, rêu vàng mỏng, mạch sác.`,
+qs:["Gọi tên chứng của từng người.","A và B cùng hồi hộp mất ngủ: phân biệt dựa vào đâu?","C: vì sao lưỡi lở và tiểu rát lại cùng một gốc?"],
+ans:`<p><b>1.</b> A: <b>tâm huyết hư</b>. B: <b>tâm âm hư</b> (thường kèm thận âm hư, tâm thận bất giao). C: <b>tâm hỏa kháng thịnh, kèm tiểu trường thực nhiệt</b>. <span class="pg">ZD 心血虚证, 心阴虚证, 心火亢盛证</span></p>
+<p><b>2.</b> A <b>nhợt</b> (môi, lưỡi nhạt, mạch tế); B <b>đỏ, nóng</b> (gò má đỏ, bốc hỏa, mồ hôi trộm, lưỡi đỏ ít rêu, mạch tế sác). Huyết hư là thiếu nuôi dưỡng; âm hư có thêm hư nhiệt. <span class="pg">ZD</span></p>
+<p><b>3.</b> Tâm khai khiếu ra lưỡi (lưỡi lở), tâm và tiểu trường biểu lý: tâm hỏa chuyển xuống tiểu trường gây tiểu đỏ rát (bài 1.10). <span class="pg">ZD 小肠实热证</span></p>`},
+cards:[["Triệu chứng chung của Tâm?","Hồi hộp, chinh xung, đau tức ngực, mất ngủ, hay quên, thần chí bất thường, lưỡi lở."],["Tâm khí hư / tâm dương hư?","Khí hư: hồi hộp, hụt hơi, mệt, tự hãn, vận động nặng. Dương hư: thêm sợ lạnh, chân tay lạnh, môi tím."],["Tâm huyết hư / tâm âm hư?","Huyết hư: nhợt, mạch tế. Âm hư: phiền, gò má đỏ, nóng, mồ hôi trộm, lưỡi đỏ ít rêu, mạch tế sác."],["Tâm hỏa kháng thịnh?","Phiền mất ngủ, lưỡi lở, tiểu đỏ rát, sốt khát; rêu vàng, mạch sác."],["Tâm mạch tý trở: 4 kiểu?","Ứ huyết (như châm, lưỡi tím); đàm trọc (tức nặng, rêu nhớt); hàn ngưng (gặp lạnh đau); khí trệ (trướng, theo cảm xúc)."],["Đàm mông tâm thần / đàm hỏa nhiễu thần?","Đàm mông: đần, mê, ngã sùi bọt, rêu trắng nhớt. Đàm hỏa: cuồng, mê sảng, đờm vàng, rêu vàng nhớt, mạch hoạt sác."],["Ứ trở não lạc?","Đau đầu như châm cố định, choáng lâu, sau chấn thương đầu; lưỡi tím, mạch tế sáp."],["Tiểu trường thực nhiệt?","Tâm hỏa chuyển xuống: tiểu ngắn đỏ rát, có thể ra máu, lưỡi lở."],["Tâm dương hư thoát?","Mồ hôi lạnh, chân tay lạnh giá, đau ngực dữ, mạch vi muốn tuyệt: cấp cứu."]],
+terms:[["Tâm khí hư / Tâm dương hư","心气虚 / 心阳虚","xīn qì xū / xīn yáng xū"],["Tâm huyết hư / Tâm âm hư","心血虚 / 心阴虚","xīn xuè xū / xīn yīn xū"],["Tâm hỏa kháng thịnh","心火亢盛","xīn huǒ kàng shèng"],["Tâm mạch tý trở","心脉痹阻","xīn mài bì zǔ"],["Đàm mông tâm thần / Đàm hỏa nhiễu thần","痰蒙心神 / 痰火扰神","tán méng xīn shén / tán huǒ rǎo shén"],["Tiểu trường thực nhiệt","小肠实热","xiǎo cháng shí rè"]],
+flags:["🔍 Giáo trình CĐ chỉ có phần tổng quan về tạng phủ biện chứng (tr.257–258); danh mục chứng theo 中医诊断学. Một số sách Việt Nam gọi đàm mông tâm thần là “đàm mê tâm khiếu”, đàm hỏa nhiễu thần là “đàm hỏa nhiễu tâm”."]}
+});
+
 let IMGS={}, IMGS_FAIL=false, _imgP=null;
 const imgsReady=()=>Object.keys(IMGS).length>0;
 function loadImgs(){ if(imgsReady())return Promise.resolve(); if(_imgP)return _imgP;
@@ -2565,18 +2696,58 @@ function review(){
 
 /* ---------- library ---------- */
 let libG="Tất cả",libQ="";
+// Tra cứu thiệt chẩn nối với kho ảnh thật: mỗi tượng lưỡi có thêm ảnh thật xếp theo biến thể (đặc điểm đi kèm)
+const KHO_CUA={4:"binh-thuong",6:"hong-thiet",8:"tu-thiet",9:"tu-thiet",26:"bac-thai",34:"bach-thai",36:"hoang-thai",39:"hoang-thai",40:"hac-thai"};
+const KHO_GHI={9:"Bộ dữ liệu không tách đạm tử và thanh tử: ảnh là lưỡi tím nói chung.",39:"Bộ dữ liệu không gán riêng rêu nhớt: ảnh là rêu vàng nói chung, chị tự xét độ nhớt.",26:"Ảnh là bác thai nói chung (bong một phần hoặc loang lổ)."};
+const CHI_KHO=[["ban-dai","Hình thái","胖大舌"],["sau-bac","Hình thái","瘦薄舌"],["liet-van","Hình thái","裂纹舌"],["xi-ngan","Hình thái","齿痕舌"],["diem-do","Hình thái","点刺舌"],["hoat-thai","Rêu lưỡi","滑苔"]];
+let LIB_KHO=false;
+function dsTraCuu(){const a=TONGUES.map(t=>Object.assign({k:"t"+t.p,c:KHO_CUA[t.p]},t));
+ if(LIB_KHO)CHI_KHO.forEach(([c,g,han])=>{if(!GIAI[c])return;const l=LA[c]||["",""];a.push({k:"k"+c,c,g,vi:KHO.ten(c),han,d:l[0],m:GIAI[c].nghia,s:GIAI[c].nguon+"; ảnh thật từ bộ TCM-Tongue"})});return a}
+const soAnh=c=>LIB_KHO&&c?KHO.anh.filter(a=>a.nh.includes(c)).length:0;
+function libChiTiet(k){const t=dsTraCuu().find(x=>x.k===k);if(!t){lib();return}const c=t.c,g=GIAI[c],l=LA[c]||["",""];
+ const ng=NGUONG_NET[mucLoc()]||0;
+ const tat=KHO.anh.filter(a=>a.nh.includes(c)&&!(a.q<ng)).sort((x,y)=>(y.q||0)-(x.q||0));
+ const nhom=new Map();tat.forEach(a=>{const kem=a.nh.filter(x=>x!==c&&KHO.gt(x)).sort();const key=kem.join("+");if(!nhom.has(key))nhom.set(key,[]);nhom.get(key).push(a)});
+ let ds=[...nhom.entries()].sort((x,y)=>(x[0]===""?-1:y[0]===""?1:y[1].length-x[1].length));
+ // gọn trang: giữ các biến thể phổ biến (≥5 ảnh, tối đa 10 nhóm); biến thể hiếm gộp thành một nhóm
+ const chinh=ds.filter(([k,a],i)=>k===""||(a.length>=5&&i<10)),hiem=ds.filter(x=>!chinh.includes(x));
+ if(hiem.length)ds=[...chinh,["__hiem",hiem.flatMap(x=>x[1]).sort((x,y)=>(y.q||0)-(x.q||0)),hiem.length]];
+ const the=(key,arr,i,soNhom)=>{if(key==="__hiem")return `<div class="bt" data-i="${i}"><h3>Các biến thể ít gặp khác <small class="muted">· ${soNhom} kiểu kết hợp, ${arr.length} ảnh</small></h3><p class="src-note bt-gy">Chạm từng ảnh để xem ảnh đó có những đặc điểm gì.</p>
+  <div class="gal">${arr.slice(0,4).map(a=>anhNho(a)).join("")}</div>${arr.length>4?`<button type="button" class="linkbtn" data-them="${i}">Xem thêm</button>`:""}</div>`;
+  const kem=key?key.split("+"):[];const ten=kem.length?`${esc(KHO.ten(c))} + ${kem.map(x=>esc(KHO.ten(x))).join(" + ")}`:`Chỉ có ${esc(KHO.ten(c))}`;
+  const gy=goiYKH([c,...kem]);
+  return `<div class="bt" data-i="${i}"><h3>${ten} <small class="muted">· ${arr.length} ảnh</small></h3>${gy.length?`<p class="src-note bt-gy">${esc(gy.join(" "))}</p>`:""}
+  <div class="gal">${arr.slice(0,4).map(a=>anhNho(a)).join("")}</div>${arr.length>4?`<button type="button" class="linkbtn" data-them="${i}">Xem thêm</button>`:""}</div>`};
+ app().innerHTML=`<button type="button" class="back" id="bk">‹ Tra cứu</button><h1>${esc(t.vi)} <span class="han">${t.han}</span></h1>
+ ${IMGS[t.p]?`<div class="tg"><img src="${IMGS[t.p]}" alt="${esc(t.vi)}, hình minh họa" data-p="${t.p}"><div><div class="ds">${esc(t.d)}</div><div class="mn"><b>Chủ:</b> ${esc(t.m)}</div><div class="src">Nguồn: ${esc(t.s)}</div></div></div>`:""}
+ ${g?`<div class="giai">${IMGS[t.p]?"":`<p><span class="gt-k">Là gì:</span> ${esc(l[0])}</p>`}<p><span class="gt-k">Nhìn vào đâu:</span> ${esc(g.nhin)}</p><p><span class="gt-k">Ý nghĩa:</span> ${esc(g.nghia)}</p>${l[1]?`<p><span class="gt-k">Dễ nhầm với:</span> ${esc(l[1])}</p>`:""}<p class="src-note">Nguồn: ${esc(g.nguon)}</p></div>`:""}
+ <h2>Ảnh thật theo biến thể</h2>
+ <p class="src-note">${tat.length.toLocaleString("vi")} ảnh có đặc điểm này${ng?` (đã lọc ảnh mờ ở mức “${({nhe:"nhẹ",vua:"vừa",chat:"chỉ nét"})[mucLoc()]}”)`:""}, xếp theo những đặc điểm đi kèm. Mỗi nhóm là một kiểu biến thể; ảnh nét nhất đứng đầu. Chạm ảnh để xem khung vị trí và cách đọc.${KHO_GHI[t.p]?" "+KHO_GHI[t.p]:""}</p>
+ ${ds.length?ds.map(([key,arr,n],i)=>the(key,arr,i,n)).join(""):'<div class="empty">Chưa có ảnh đủ nét cho đặc điểm này ở mức lọc hiện tại.</div>'}
+ <button type="button" class="btn finish" id="luyen">Luyện nhận diện đặc điểm này</button>`;
+ $("#bk").onclick=()=>lib();
+ const gan=()=>app().querySelectorAll(".gal img[data-id]").forEach(im=>im.onclick=()=>{const a=KHO.anh.find(x=>x.id===im.dataset.id);const d=$("#zoom");d.innerHTML=photo(a,true)+giaiThich(a)+'<p class="src-note" style="text-align:center;margin:0 0 10px">Chạm để đóng</p>';d.showModal()});gan();
+ app().querySelectorAll("[data-them]").forEach(b=>b.onclick=()=>{const i=+b.dataset.them,arr=ds[i][1],gal=b.previousElementSibling,co=gal.querySelectorAll("img").length;
+  gal.insertAdjacentHTML("beforeend",arr.slice(co,co+8).map(a=>anhNho(a)).join(""));if(co+8>=arr.length)b.remove();gan()});
+ app().querySelectorAll(".tg img").forEach(im=>im.onclick=()=>{const d=$("#zoom");d.innerHTML='<img alt="" src="'+IMGS[im.dataset.p]+'">';d.showModal()});
+ $("#luyen").onclick=()=>{go("mat");loadKho().then(()=>{TAP=c;qMot()}).catch(()=>{})};
+ window.scrollTo(0,0)}
+const anhNho=a=>`<img loading="lazy" crossorigin="anonymous" src="${imgUrl(a.id)}" style="${tamLuoi(a)}" alt="Ảnh lưỡi ${a.id}${a.nh.length>1?": "+esc(a.nh.map(x=>KHO.ten(x)).join(", ")):""}. Chạm để phóng to" tabindex="0" role="button" data-id="${a.id}">`;
 function lib(){
- const groups=["Tất cả",...new Set(TONGUES.map(t=>t.g))];
- app().innerHTML=`<h1>Tra cứu</h1><p class="muted" style="margin:6px 0 14px">Tượng lưỡi. Chạm vào ảnh để phóng to. Sau này thêm vị thuốc, bài thuốc, mạch.</p>
+ if(!LIB_KHO)loadKho().then(()=>{LIB_KHO=true;if(tab==="lib")lib()}).catch(()=>{});
+ const groups=["Tất cả",...new Set(dsTraCuu().map(t=>t.g))];
+ app().innerHTML=`<h1>Tra cứu</h1><p class="muted" style="margin:6px 0 14px">Tượng lưỡi. Chạm vào hình để phóng to; bấm “Ảnh thật” để xem nhiều trường hợp thật và các biến thể. ${LIB_KHO?"":"<span class=\"src-note\">(Đang kết nối kho ảnh thật…)</span>"}</p>
  <input class="search" id="sq" type="search" placeholder="Tìm: đỏ, ứ huyết, 腻, âm hư…" value="${esc(libQ)}">
  <div class="chips">${groups.map(g=>`<button type="button" class="chip" aria-pressed="${g===libG}" data-g="${g}">${g}</button>`).join("")}</div><div id="tl"></div>`;
  const draw=()=>{const q=norm(libQ.trim());
-  const list=TONGUES.filter(t=>(libG==="Tất cả"||t.g===libG)&&(!q||norm([t.vi,t.han,t.d,t.m,t.g].join(" ")).includes(q)));
-  $("#tl").innerHTML=(IMGS_FAIL&&!imgsReady()?'<p class="note" style="margin-top:0">Chưa tải được ảnh lưỡi (kiểm tra mạng, hoặc file anh-luoi.js trên repo). Phần chữ vẫn xem được.</p>':'')+(list.length?list.map(t=>`<div class="tg">${IMGS[t.p]?`<img src="${IMGS[t.p]}" alt="${esc(t.vi)}" loading="lazy" data-p="${t.p}">`:`<div class="noimg"></div>`}
+  const list=dsTraCuu().filter(t=>(libG==="Tất cả"||t.g===libG)&&(!q||norm([t.vi,t.han,t.d,t.m,t.g].join(" ")).includes(q)));
+  $("#tl").innerHTML=(IMGS_FAIL&&!imgsReady()?'<p class="note" style="margin-top:0">Chưa tải được ảnh lưỡi (kiểm tra mạng, hoặc file anh-luoi.js trên repo). Phần chữ vẫn xem được.</p>':'')+(list.length?list.map(t=>`<div class="tg">${IMGS[t.p]?`<img src="${IMGS[t.p]}" alt="${esc(t.vi)}" loading="lazy" data-p="${t.p}">`:(t.c&&LIB_KHO?(()=>{const a=KHO.anh.filter(x=>x.nh.includes(t.c)&&x.nh.length===1).sort((x,y)=>(y.q||0)-(x.q||0))[0];return a?`<img loading="lazy" crossorigin="anonymous" src="${imgUrl(a.id)}" style="${tamLuoi(a)}" alt="${esc(t.vi)}, ảnh thật">`:`<div class="noimg"></div>`})():`<div class="noimg"></div>`)}
   <div><div class="nm">${esc(t.vi)}<span class="han">${t.han}</span></div><div class="ds">${esc(t.d)}</div><div class="mn"><b>Chủ:</b> ${esc(t.m)}</div>
-  ${t.f?`<div class="fl">Đã hiệu đính: ${esc(t.f)}</div>`:""}<div class="src">Nguồn: ${esc(t.s)}</div></div></div>`).join(""):
+  ${t.f?`<div class="fl">Đã hiệu đính: ${esc(t.f)}</div>`:""}<div class="src">Nguồn: ${esc(t.s)}</div>${soAnh(t.c)?`<button type="button" class="chip xem-that" data-k="${t.k}">Ảnh thật · ${soAnh(t.c).toLocaleString("vi")} trường hợp ›</button>`:""}</div></div>`).join(""):
   `<div class="empty">Không có tượng lưỡi nào khớp “${esc(libQ)}”. Thử từ khác, hoặc chọn “Tất cả”.</div>`);
-  document.querySelectorAll(".tg img").forEach(im=>im.onclick=()=>{const d=$("#zoom");d.querySelector("img").src=IMGS[im.dataset.p];d.showModal()})};
+  document.querySelectorAll(".tg img[data-p]").forEach(im=>im.onclick=()=>{const d=$("#zoom");d.querySelector("img").src=IMGS[im.dataset.p];d.showModal()});
+  document.querySelectorAll(".tg img:not([data-p])").forEach(im=>{const b=im.closest(".tg").querySelector(".xem-that");if(b)im.onclick=()=>b.click()});
+  document.querySelectorAll(".xem-that").forEach(b=>b.onclick=()=>libChiTiet(b.dataset.k))};
  $("#sq").oninput=e=>{libQ=e.target.value;draw()};
  if(!imgsReady()){ $("#tl").innerHTML='<div class="empty">Đang tải ảnh lưỡi…</div>'; loadImgs().then(draw).catch(()=>{$("#tl").innerHTML='<div class="empty">Chưa tải được ảnh lưỡi. Kiểm tra mạng, hoặc file anh-luoi.js đã có trên repo chưa. Phần chữ vẫn xem bình thường bên dưới.</div>';IMGS_FAIL=true;draw()}); }
  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{libG=b.dataset.g;lib()});
@@ -2644,16 +2815,30 @@ const GIAI={
 "hac-thai":{nhin:"Rêu tro đến đen, thường đậm ở cuống, nhạt dần ra đầu lưỡi. Quan trọng là khô hay ướt.",nghia:"Âm hàn nội thịnh (thường ướt trơn) hoặc lý nhiệt sí thịnh (thường khô). Thường xuất hiện khi bệnh đã kéo dài, nặng.",nguon:"ZD 灰黑苔; TC"},
 "hoat-thai":{nhin:"Mặt lưỡi nhiều nước, bóng ướt, có khi như sắp nhỏ giọt.",nghia:"Thủy thấp, đàm ẩm: hàn thấp xâm nhập hoặc dương khí hư không vận hóa thủy dịch.",nguon:"ZD 滑苔"}
 };
-function giaiThich(a){const ds=a.nh;const dong=ds.map(c=>{const g=GIAI[c];
-  if(!g)return `<li><b>${esc(KHO.ten(c))}</b> <span class="muted">(nhãn ngoài giáo trình – tham khảo; vị trí lõm/lồi theo phân vùng tạng phủ trên lưỡi)</span></li>`;
-  return `<li><b>${esc(KHO.ten(c))}</b><br><span class="gt-k">Nhìn:</span> ${esc(g.nhin)}<br><span class="gt-k">Ý nghĩa:</span> ${esc(g.nghia)} <span class="pg">${esc(g.nguon)}</span></li>`}).join("");
- const co=c=>ds.includes(c),goi=[];
+function goiYKH(ds){const co=c=>ds.includes(c),goi=[];
  if(co("bac-thai")&&co("hong-thiet"))goi.push("Lưỡi đỏ kèm bong rêu → hướng âm hư.");
  if(co("liet-van")&&co("hong-thiet"))goi.push("Lưỡi đỏ có vết nứt → nhiệt thịnh thương âm.");
  if(co("liet-van")&&(co("ban-dai")||co("xi-ngan")))goi.push("Nứt kèm bệu, dấu răng → tỳ hư thấp xâm.");
  if((co("ban-dai")||co("xi-ngan"))&&co("hoat-thai"))goi.push("Bệu, dấu răng, rêu trơn ướt → hàn thấp hoặc dương hư thủy thấp.");
  if(co("hong-thiet")&&co("hoang-thai"))goi.push("Lưỡi đỏ rêu vàng → thực nhiệt.");
  if(co("diem-do")&&co("hong-thiet"))goi.push("Lưỡi đỏ có điểm đỏ → nhiệt thịnh; xem điểm đỏ nằm ở đầu (tâm), rìa (can đởm) hay giữa (vị trường).");
+ if(co("bach-thai")&&co("hoat-thai"))goi.push("Rêu trắng trơn ướt → hàn, thấp.");
+ if(co("ban-dai")&&co("hoang-thai"))goi.push("Lưỡi bệu rêu vàng → thấp nhiệt, đàm nhiệt.");
+ if(co("xi-ngan")&&co("bach-thai"))goi.push("Dấu răng rêu trắng → tỳ hư, hàn thấp.");
+ if(co("sau-bac")&&co("hong-thiet"))goi.push("Lưỡi gầy mỏng mà đỏ → âm hư hỏa vượng.");
+ if(co("sau-bac")&&co("bac-thai"))goi.push("Gầy mỏng, bong rêu → âm huyết hư, vị âm hư.");
+ if(co("tu-thiet")&&co("hoang-thai"))goi.push("Lưỡi tím rêu vàng → nhiệt kèm ứ.");
+ if(co("tu-thiet")&&co("bach-thai"))goi.push("Lưỡi tím rêu trắng → hàn ngưng huyết ứ.");
+ if(co("hac-thai")&&co("hoat-thai"))goi.push("Rêu đen trơn ướt → hàn cực (dương hư).");
+ if(co("hoang-thai")&&co("liet-van"))goi.push("Rêu vàng kèm lưỡi nứt → nhiệt làm tổn thương tân dịch; xem thêm màu chất lưỡi.");
+ if(co("hoang-thai")&&co("diem-do"))goi.push("Rêu vàng kèm điểm đỏ → nhiệt thịnh.");
+ if(co("hoang-thai")&&co("xi-ngan"))goi.push("Dấu răng rêu vàng → tỳ hư sinh thấp, thấp hóa nhiệt.");
+ if(co("bach-thai")&&co("liet-van")&&!co("hong-thiet"))goi.push("Nứt mà rêu trắng, lưỡi không đỏ → thường do huyết hư hoặc tỳ hư; nứt bẩm sinh không có ý nghĩa bệnh.");
+ return goi}
+function giaiThich(a){const ds=a.nh;const dong=ds.map(c=>{const g=GIAI[c];
+  if(!g)return `<li><b>${esc(KHO.ten(c))}</b> <span class="muted">(nhãn ngoài giáo trình – tham khảo; vị trí lõm/lồi theo phân vùng tạng phủ trên lưỡi)</span></li>`;
+  return `<li><b>${esc(KHO.ten(c))}</b><br><span class="gt-k">Nhìn:</span> ${esc(g.nhin)}<br><span class="gt-k">Ý nghĩa:</span> ${esc(g.nghia)} <span class="pg">${esc(g.nguon)}</span></li>`}).join("");
+ const goi=goiYKH(ds);
  return `<div class="giai"><h3>Đọc ảnh này</h3><ul>${dong}</ul>${goi.length?`<p><b>Gợi ý kết hợp:</b> ${goi.join(" ")}</p>`:""}
  <p class="src-note">Bộ dữ liệu chỉ gán những đặc điểm nổi bật; ảnh có thể còn đặc điểm khác chưa gán nhãn (ví dụ rêu trắng). Một tấm ảnh chưa đủ để kết luận: cần đối chiếu vấn chẩn và mạch.</p></div>`}
 // Cặp đặc điểm loại trừ nhau: chỉ khi đó mới chắc chắn "sai"
