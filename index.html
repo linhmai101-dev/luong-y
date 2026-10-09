@@ -170,6 +170,8 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 .gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:var(--line);cursor:pointer}
 .stat td:nth-child(n+2){text-align:right}
 .src-note{font-size:.75rem;color:var(--muted);margin-top:6px}
+.anh-kho{margin:10px 0}.anh-kho .ph{max-width:420px}
+.atl{display:inline-block;margin:2px 4px 2px 0;padding:3px 10px;border:1px solid var(--jade);border-radius:14px;background:none;color:var(--jade);font-size:.85rem}
 .note{font-size:.85rem;color:var(--muted);background:var(--card);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;margin-top:16px}
 @media (prefers-reduced-motion:no-preference){.seal{animation:stamp .5s ease-out}
 @keyframes stamp{from{transform:scale(1.25) rotate(-8deg);opacity:0}to{transform:rotate(-3deg);opacity:1}}}
@@ -1268,6 +1270,240 @@ terms:[["Vọng chỉ văn","望指纹","wàng zhǐ wén"],["Phong quan, khí qu
 flags:["⚠️ Tr.57: sách ghi chỉ văn “xanh tím: biểu chứng phong nhiệt”. Giáo trình 中医诊断学 ghi màu xanh chủ đau, kinh phong; tím đỏ chủ lý nhiệt; không có ý “xanh tím là phong nhiệt”. Em không đưa ý này vào câu hỏi.","⚠️ Tr.65: bảng kinh nguyệt của sách ghi “sắc kinh nhạt: hư nhiệt”, “sắc đỏ tía: thực hàn”. Hai ý này khác cách hiểu phổ biến (kinh nhạt thường do huyết hư, khí hư). Em chỉ giữ hai ý chắc chắn: đỏ sậm là huyết nhiệt, đen tối là ứ huyết; phần kinh nguyệt sẽ học kỹ ở bài 2.20.","🔍 Tr.66: dịch âm đạo vàng hoặc đỏ có mủ trắng sau mãn kinh, bảng ghi “thấp nhiệt”, phần tóm tắt cùng trang lại ghi “nhiệt độc”. Em không đưa vào câu hỏi."]}
 });
 
+// Tầng 2 – Thiệt chẩn 2.05–2.10. Nguồn chính: Chẩn đoán YHCT (ĐHYD TP.HCM 2021) tr.69–83; đối chiếu 中医诊断学 (十三五) mục 望舌 (ghi "ZD").
+// Ảnh: <div class="anh-kho" data-id="…"> lấy từ kho TCM-Tongue, đã chọn bằng nhãn khớp chính xác và xem tận mắt.
+const ATL=(c,t)=>`<button type="button" class="atl" data-atlas="${c}">Atlas: ${t} ›</button>`;
+const ANH=(id,khung)=>`<div class="anh-kho" data-id="${id}" data-khung="${khung?1:0}"></div>`;
+Object.assign(LESSONS,{
+"2.05":{id:"2.05",tang:2,title:"Thiệt chẩn (1): đại cương, phân vùng lưỡi, lưỡi bình thường",han:"舌诊概论",src:SRC_CD+", tr.69–71, 77; 中医诊断学 mục 望舌",
+hook:"Buổi chiều, phòng khám bật đèn vàng, bệnh nhân vừa uống cà phê sữa. Chị nhìn thấy rêu lưỡi vàng nhạt, dày. Có nên ghi vào bệnh án là “rêu vàng dày” không?",
+reading:`
+<p><b>Vì sao thiệt chẩn quan trọng?</b> Lưỡi cho thấy dấu hiệu bất thường <b>ngay khi bên trong có tổn thương</b>, nên được xem là một phương pháp đáng tin cậy. <span class="pg">tr.69</span></p>
+<p><b>Phân vùng lưỡi</b> <span class="pg">tr.69</span>: <b>đầu (chót) lưỡi – Tâm, Phế</b>; <b>giữa lưỡi – Tỳ, Vị</b>; <b>hai rìa – Can, Đởm</b>; <b>gốc lưỡi – Thận, Bàng quang</b>. Kết hợp vị trí với đặc điểm bất thường để định vị tạng phủ. (Khớp với Lý luận YHCT tr.42, bài 1.08.)</p>
+<p><b>Quan sát những gì?</b> Giáo trình CĐ nêu 4 yếu tố: <b>màu chất lưỡi, hình thái lưỡi, rêu lưỡi, độ ẩm</b> <span class="pg">tr.70</span>. 中医诊断学 chia thành <b>chất lưỡi</b> (thần, sắc, hình, thái) và <b>rêu</b> (chất rêu, màu rêu), cộng <b>lạc mạch dưới lưỡi</b>. Hai cách chia cùng nội dung; các bài 2.06–2.09 đi theo cách chia của 中医诊断学.</p>
+<p><b>Cách khám</b> <span class="pg">tr.70</span></p>
+<ul><li>Người bệnh ngồi hoặc nằm ngửa, há miệng, <b>thè lưỡi tự nhiên, không gắng sức</b>.</li>
+<li>Trình tự: <b>thân lưỡi</b> (màu, hình thái) → <b>rêu</b> → <b>độ ẩm</b>; nhìn <b>từ ngoài vào trong</b>: đầu → giữa → hai rìa → gốc.</li>
+<li><b>Ánh sáng tự nhiên, vừa đủ</b>; tránh nguồn sáng có màu.</li></ul>
+<p><b>Lưỡi bình thường</b> <span class="pg">tr.70–71</span>: chất lưỡi <b>hồng</b>; kích thước vừa, mềm, không to bè không gầy, cân đối, không lệch, cử động linh hoạt; <b>rêu trắng mỏng phủ đều, bám chặt như cỏ bám rễ</b> (phân biệt với “rêu giả”); <b>ẩm ướt nhẹ</b>. 中医诊断学 tóm gọn: <b>“đạm hồng thiệt, bạc bạch thai”</b>.</p>
+${ANH("ccd855929f31",false)}${ATL("binh-thuong","Lưỡi bình thường")}
+<p><b>Yếu tố làm thay đổi lưỡi bình thường</b> <span class="pg">tr.71, 77</span></p>
+<table><tr><th>Yếu tố</th><th>Ảnh hưởng</th></tr>
+<tr><td>Mùa</td><td>Hè: rêu hơi vàng, hơi dày. Thu: rêu mỏng, khô hơn. Đông: lưỡi ẩm hơn</td></tr>
+<tr><td>Trong ngày</td><td>Sáng trước bữa ăn rêu dày hơn; vừa ngủ dậy chất lưỡi hơi nhạt</td></tr>
+<tr><td>Ăn uống, thuốc</td><td>Trà, cà phê, bữa ăn gần đó làm rêu vàng; kẹo, phẩm màu đổi màu rêu; thuốc kháng acid chứa bismuth gây <b>rêu đen giả</b></td></tr>
+<tr><td>Tuổi (ZD)</td><td>Trẻ em lưỡi nhạt, non, rêu ít, dễ bong; người già lưỡi thường đỏ sẫm</td></tr></table>
+<p><b>Rêu nói lên điều gì?</b> <span class="pg">tr.77</span> Rêu do <b>Vị khí</b> sinh ra. <b>Rêu dày là có tà</b>, càng dày tà càng mạnh; rêu còn cho biết bệnh nông hay sâu, và tình trạng phủ Vị.</p>`,
+checkTitle:"Trước khi xem lưỡi",
+checklist:["Ánh sáng: tự nhiên, đủ, không có màu","Hỏi: vừa ăn uống gì (trà, cà phê, sữa, kẹo màu)? Đang dùng thuốc gì?","Thời điểm: sáng sớm trước ăn hay sau ăn?","Bảo người bệnh thè lưỡi tự nhiên, không gắng; không để thè quá lâu","Nhìn theo trình tự: thân lưỡi → rêu → độ ẩm; đầu → giữa → rìa → gốc"],
+quiz:[
+{q:"Theo giáo trình, gốc lưỡi tương ứng với:",o:[["Tâm, Phế","Sai: đó là đầu lưỡi."],["Tỳ, Vị","Sai: đó là giữa lưỡi."],["Can, Đởm","Sai: đó là hai rìa lưỡi."],["Thận, Bàng quang","Đúng."]],a:3,p:"69"},
+{q:"Hai rìa lưỡi tương ứng với:",o:[["Can, Đởm","Đúng."],["Thận, Bàng quang","Sai: đó là gốc lưỡi."],["Tâm, Phế","Sai."],["Tỳ, Vị","Sai."]],a:0,p:"69"},
+{q:"Bốn yếu tố chính khi quan sát lưỡi theo giáo trình CĐ:",o:[["Màu chất lưỡi, hình thái lưỡi, rêu lưỡi, độ ẩm","Đúng."],["Màu, mùi, vị, độ ẩm","Sai."],["Thần, sắc, hình, thái","Sai: đây là các mục của chất lưỡi theo 中医诊断学, chưa gồm rêu."],["Rêu, mạch, mồ hôi, đờm","Sai."]],a:0,p:"70"},
+{q:"Trình tự quan sát từ ngoài vào trong là:",o:[["Gốc → giữa → rìa → đầu","Sai: ngược lại."],["Đầu → giữa → hai rìa → gốc","Đúng."],["Rìa → gốc → giữa → đầu","Sai."],["Không cần theo thứ tự","Sai."]],a:1,p:"70"},
+{q:"Nguồn sáng tốt nhất để khám lưỡi:",o:[["Đèn vàng ấm","Sai: nguồn sáng có màu làm sai màu lưỡi, rêu."],["Ánh sáng tự nhiên, cường độ vừa đủ","Đúng."],["Đèn pin chiếu mạnh","Sai."],["Ánh sáng nào cũng được","Sai."]],a:1,p:"70"},
+{q:"Rêu bình thường được mô tả là:",o:[["Trắng mỏng, phủ đều, bám chặt như cỏ bám rễ","Đúng: phân biệt với rêu giả không có gốc."],["Vàng dày, dễ cạo sạch","Sai."],["Không có rêu","Sai."],["Trắng dày như bột","Sai."]],a:0,p:"71"},
+{q:"Theo giáo trình, mùa hè rêu lưỡi bình thường:",o:[["Mỏng và khô hơn","Sai: đó là mùa thu."],["Ẩm hơn","Sai: đó là mùa đông."],["Hơi vàng và hơi dày hơn","Đúng."],["Không thay đổi","Sai."]],a:2,p:"71"},
+{q:"Rêu dày nói lên điều gì?",o:[["Có yếu tố gây bệnh; càng dày tà càng mạnh","Đúng."],["Chính khí mạnh","Sai."],["Luôn là bình thường","Sai."],["Huyết hư","Sai."]],a:0,p:"77"},
+{q:"Thuốc kháng acid chứa muối bismuth có thể gây:",o:[["Rêu vàng giả","Sai: trà, cà phê, bữa ăn mới làm rêu vàng."],["Rêu đen giả","Đúng."],["Lưỡi đỏ","Sai."],["Lưỡi bệu","Sai."]],a:1,p:"77"}
+],
+case:{v:`Buổi chiều, phòng khám bật đèn vàng. Bệnh nhân vừa uống một ly cà phê sữa trước khi vào. Chị thấy rêu lưỡi vàng nhạt, khá dày.`,
+qs:["Có những yếu tố gây nhiễu nào?","Chị nên làm gì trước khi ghi nhận rêu lưỡi?","Ảnh mẫu trong phần đáp án là lưỡi bình thường: hãy mô tả theo 4 yếu tố của giáo trình."],
+ans:`<p><b>1.</b> <b>Đèn vàng</b> (nguồn sáng có màu làm sai màu rêu); <b>cà phê</b> (làm rêu vàng); <b>sữa</b> (làm rêu trắng, dày); khám <b>buổi chiều</b> khác buổi sáng. <span class="pg">CĐ tr.70–71, 77; ZD 染苔</span></p>
+<p><b>2.</b> Khám dưới ánh sáng tự nhiên; hỏi rõ ăn uống, thuốc; loại bỏ yếu tố gây nhiễu (súc miệng, chờ một lúc, hoặc hẹn xem lại). Chưa ghi “rêu vàng dày” khi chưa loại trừ rêu nhuộm. <span class="pg">CĐ tr.77</span></p>
+<p><b>3.</b> Màu: chất lưỡi hồng nhạt, tươi. Hình thái: vừa phải, không bệu, không gầy, cân đối. Rêu: trắng mỏng, đều, nhìn thấy chất lưỡi qua rêu. Độ ẩm: ẩm nhẹ. <span class="pg">CĐ tr.70–71</span></p>${ANH("ccd855929f31",true)}`},
+cards:[["Phân vùng lưỡi?","Đầu: Tâm, Phế. Giữa: Tỳ, Vị. Hai rìa: Can, Đởm. Gốc: Thận, Bàng quang."],["4 yếu tố quan sát (CĐ)?","Màu chất lưỡi, hình thái, rêu, độ ẩm."],["Cách chia của 中医诊断学?","Chất lưỡi (thần, sắc, hình, thái); rêu (chất, màu); lạc mạch dưới lưỡi."],["Trình tự xem lưỡi?","Thân lưỡi → rêu → độ ẩm; đầu → giữa → rìa → gốc."],["Lưỡi bình thường?","Đạm hồng thiệt, bạc bạch thai: hồng, mềm, vừa, linh hoạt; rêu trắng mỏng đều, có gốc; ẩm nhẹ."],["Mùa ảnh hưởng rêu thế nào?","Hè hơi vàng dày; thu mỏng khô; đông ẩm hơn."],["Rêu nhuộm thường gặp?","Trà, cà phê: vàng. Sữa: trắng dày. Bismuth, thuốc lá: đen."],["Rêu do đâu sinh ra? Rêu dày nghĩa là gì?","Vị khí. Rêu dày: có tà, càng dày tà càng mạnh."],["Biến đổi theo tuổi?","Trẻ em: nhạt, non, rêu ít dễ bong. Người già: đỏ sẫm."]],
+terms:[["Thiệt chẩn","舌诊","shé zhěn"],["Chất lưỡi","舌质","shé zhì"],["Rêu lưỡi","舌苔","shé tāi"],["Đạm hồng thiệt, bạc bạch thai","淡红舌，薄白苔","dàn hóng shé, bó bái tāi"],["Đầu, giữa, rìa, gốc lưỡi","舌尖 舌中 舌边 舌根","shé jiān, shé zhōng, shé biān, shé gēn"],["Rêu nhuộm","染苔","rǎn tāi"]],
+flags:["🔍 Giáo trình CĐ chia 4 yếu tố (màu, hình thái, rêu, độ ẩm); 中医诊断学 chia chất lưỡi (thần, sắc, hình, thái) và rêu (chất, màu). Nội dung giống nhau, chỉ khác cách xếp."]},
+
+"2.06":{id:"2.06",tang:2,title:"Thiệt chẩn (2): thần lưỡi và màu chất lưỡi",han:"舌神 · 舌色",src:SRC_CD+", tr.71–74; 中医诊断学 mục 望舌",
+hook:"Hai người cùng có lưỡi đỏ. Một người rêu vàng dày, một người gần như không có rêu. Cùng là “lưỡi đỏ”, hai người có cùng một chứng không?",
+reading:`
+<p><b>Thần lưỡi</b> (ZD 舌神): <b>vinh thiệt</b> (có thần): chất lưỡi tươi nhuận, hồng hoạt, có sinh khí, cử động linh hoạt; khí huyết đầy đủ, có bệnh cũng là dấu hiệu tốt. <b>Khô thiệt</b> (không thần): khô, cứng đờ, không sinh khí, mất bóng, cử động kém; khí huyết suy bại, bệnh nặng. Giáo trình CĐ không có mục này.</p>
+${ATL("binh-thuong","Lưỡi bình thường")}
+<p><b>Màu chất lưỡi</b> phản ánh khí huyết, ngũ tạng; cho biết <b>hàn hay nhiệt</b>, <b>âm hay dương</b> bị hư tổn. Màu bệnh lý có 5 loại <span class="pg">tr.71</span>:</p>
+<table><tr><th>CĐ gọi</th><th>ZD gọi</th><th>Ý nghĩa</th></tr>
+<tr><td><b>Hồng nhợt (nhạt)</b></td><td>淡白 đạm bạch</td><td><b>Dương hư</b> (lưỡi mềm, ẩm) hoặc <b>huyết hư</b> (hơi khô). Hai rìa đặc biệt nhợt, nặng thì màu cam nhạt: <b>Can huyết hư</b> <span class="pg">tr.72</span></td></tr>
+<tr><td><b>Đỏ</b></td><td>红 hồng</td><td><b>Nhiệt</b>: có rêu là <b>thực nhiệt</b>, không rêu là <b>hư nhiệt</b> <span class="pg">tr.72</span></td></tr>
+<tr><td><b>Đỏ thẫm</b></td><td>绛 giáng</td><td>Như lưỡi đỏ nhưng <b>nặng hơn</b> <span class="pg">tr.73</span></td></tr>
+<tr><td><b>Tím</b></td><td>紫 tử</td><td><b>Huyết ứ</b>. Tím đỏ: nhiệt + ứ (tiến triển từ lưỡi đỏ). Tím xanh: hàn + ứ (tiến triển từ lưỡi nhợt) <span class="pg">tr.73</span></td></tr>
+<tr><td><b>Xanh lam</b></td><td>青 thanh</td><td>Như tím xanh: <b>hàn ngưng</b> gây huyết ứ <span class="pg">tr.74</span></td></tr></table>
+<p><b>Đọc màu theo vị trí</b> <span class="pg">tr.72–73</span></p>
+<ul><li><b>Đầu lưỡi đỏ:</b> Tâm hỏa (có rêu) hoặc Tâm âm hư (không rêu).</li>
+<li><b>Hai rìa đỏ:</b> có rêu là Can hỏa, Đởm nhiệt; không rêu là hư nhiệt ở Can.</li>
+<li><b>Giữa lưỡi đỏ:</b> nhiệt ở Vị (thực hay hư tùy có rêu không).</li>
+<li><b>Nốt đỏ</b> trên nền đỏ: luôn là nhiệt; dày thành đốm còn gợi ý huyết ứ. Ở đầu lưỡi: Tâm hỏa; rìa: Can hỏa; gốc: nhiệt hạ tiêu; quanh giữa lưỡi: Vị nhiệt.</li>
+<li><b>Tím ở rìa:</b> Can huyết ứ; ở phụ nữ có thể là huyết ứ bào cung (thường tím xanh). <b>Tím ở giữa:</b> huyết ứ tại Vị.</li></ul>
+${ATL("hong-thiet","Hồng thiệt")} ${ATL("tu-thiet","Tử thiệt")} ${ATL("diem-do","Điểm đỏ")}
+<p class="muted">Mẹo nhớ: <b>màu lưỡi nói hàn nhiệt, có rêu hay không nói thực hay hư.</b></p>`,
+checkTitle:"Khi xem màu chất lưỡi",
+checklist:["Nhìn chỗ không có rêu (đầu, rìa) để đánh giá màu chất lưỡi","Nhạt hay đỏ? Đỏ tươi hay đỏ thẫm? Có ánh tím hay xanh?","Màu bất thường ở đâu: đầu, rìa, giữa, gốc?","Có rêu hay không (để phân thực, hư)?","Có nốt đỏ, đốm đỏ, chấm tím? Ở vùng nào?","Lưỡi tươi nhuận, linh hoạt (có thần) hay khô cứng (không thần)?"],
+quiz:[
+{q:"Lưỡi đỏ có rêu theo giáo trình là:",o:[["Hư nhiệt","Sai: lưỡi đỏ không rêu mới là hư nhiệt."],["Thực nhiệt","Đúng."],["Huyết hư","Sai."],["Dương hư","Sai."]],a:1,p:"72"},
+{q:"Sắc lưỡi hồng nhợt, mềm và ẩm gợi ý:",o:[["Huyết hư","Sai: huyết hư thì lưỡi nhợt nhưng hơi khô."],["Dương hư","Đúng: dương khí suy không vận hóa được tân dịch."],["Thực nhiệt","Sai."],["Huyết ứ","Sai."]],a:1,p:"72"},
+{q:"Hai rìa lưỡi đặc biệt nhợt, nặng thì màu cam nhạt là dấu hiệu của:",o:[["Can huyết hư","Đúng."],["Can hỏa","Sai: Can hỏa thì rìa đỏ, có rêu."],["Tỳ hư","Sai."],["Tâm âm hư","Sai."]],a:0,p:"72"},
+{q:"Đầu lưỡi đỏ, không có rêu gợi ý:",o:[["Tâm hỏa","Sai: Tâm hỏa thì có rêu."],["Tâm âm hư","Đúng."],["Can hỏa","Sai."],["Vị nhiệt","Sai."]],a:1,p:"72"},
+{q:"Hai rìa lưỡi đỏ, có rêu là chỉ điểm của:",o:[["Can hỏa hoặc Đởm nhiệt","Đúng."],["Hư nhiệt ở Can","Sai: đó là khi không có rêu."],["Vị nhiệt","Sai."],["Can huyết hư","Sai."]],a:0,p:"72"},
+{q:"Lưỡi tím xanh theo giáo trình phản ánh:",o:[["Nhiệt và ứ huyết","Sai: đó là tím đỏ."],["Hàn và ứ huyết","Đúng: tiến triển từ lưỡi nhợt sang tím xanh."],["Âm hư","Sai."],["Thực nhiệt","Sai."]],a:1,p:"73"},
+{q:"Ở phụ nữ, chất lưỡi tím ở rìa có thể là:",o:[["Huyết ứ tại bào cung","Đúng: thường có màu tím xanh."],["Can hỏa","Sai."],["Tỳ khí hư","Sai."],["Phế nhiệt","Sai."]],a:0,p:"73"},
+{q:"Theo 中医诊断学, “khô thiệt” (lưỡi không thần) có ý nghĩa:",o:[["Bình thường","Sai: đó là vinh thiệt."],["Khí huyết suy bại, bệnh nặng","Đúng."],["Biểu chứng mới mắc","Sai."],["Đàm thấp","Sai."]],a:1,p:"ZD 舌神"},
+{q:"Sắc lưỡi đỏ thẫm (giáng) so với lưỡi đỏ:",o:[["Bệnh nhẹ hơn","Sai."],["Cùng loại bệnh cảnh nhưng mức độ nặng hơn","Đúng."],["Chủ hàn","Sai."],["Chủ huyết hư","Sai."]],a:1,p:"73"}
+],
+case:{v:`Hai bệnh nhân cùng có lưỡi đỏ. A: rêu vàng phủ phần giữa và gốc lưỡi, sốt, khát, táo bón. B: lưỡi đỏ, gần như không có rêu, nóng trong về chiều, ra mồ hôi trộm. Đáp án có ảnh minh họa lưỡi của A.`,
+qs:["A và B khác nhau ở điểm nào trên lưỡi? Mỗi người nghiêng về chứng gì?","Nếu A có thêm nhiều nốt đỏ ở hai rìa lưỡi thì sao?","Nếu B là nữ, kinh có cục, đau bụng kinh, và rìa lưỡi ánh tím xanh, chị nghĩ thêm gì?"],
+ans:`${ANH("ec361198aa28",true)}<p><b>1.</b> Cùng lưỡi đỏ (nhiệt), khác nhau ở <b>rêu</b>: A có rêu là <b>thực nhiệt</b> (rêu vàng: nhiệt ở lý, xem bài 2.09); B không rêu là <b>hư nhiệt</b> (âm hư). <span class="pg">CĐ tr.72</span></p>
+<p><b>2.</b> Nốt đỏ luôn là nhiệt; ở hai rìa là <b>Can hỏa</b>. <span class="pg">CĐ tr.73</span></p>
+<p><b>3.</b> Rìa lưỡi tím ở phụ nữ: <b>huyết ứ tại bào cung</b>, thường tím xanh, tức hàn + ứ. <span class="pg">CĐ tr.73</span> Khi màu và các dấu hiệu khác chỉ về hai hướng (âm hư nhiệt với hàn ứ), cần tứ chẩn kỹ để phân chính phụ (bài 2.10).</p>`},
+cards:[["5 màu lưỡi bệnh lý (CĐ)?","Hồng nhợt, đỏ, đỏ thẫm, tím, xanh lam."],["Hồng nhợt: ẩm / khô?","Mềm ẩm: dương hư. Hơi khô: huyết hư."],["Lưỡi đỏ: có rêu / không rêu?","Có rêu: thực nhiệt. Không rêu: hư nhiệt."],["Đầu lưỡi đỏ?","Có rêu: Tâm hỏa. Không rêu: Tâm âm hư."],["Rìa lưỡi đỏ / rìa nhợt cam?","Đỏ có rêu: Can hỏa, Đởm nhiệt; không rêu: Can hư nhiệt. Nhợt cam: Can huyết hư."],["Tím đỏ / tím xanh?","Tím đỏ: nhiệt + ứ. Tím xanh: hàn + ứ."],["Tím ở rìa / ở giữa?","Rìa: Can huyết ứ (nữ: bào cung). Giữa: huyết ứ tại Vị."],["Nốt đỏ theo vị trí?","Đầu: Tâm hỏa. Rìa: Can hỏa. Gốc: hạ tiêu. Quanh giữa: Vị nhiệt."],["Vinh thiệt / khô thiệt?","Vinh: tươi nhuận, linh hoạt, khí huyết đủ. Khô: khô cứng, không sinh khí, bệnh nặng."]],
+terms:[["Vinh thiệt / Khô thiệt","荣舌 / 枯舌","róng shé / kū shé"],["Đạm bạch thiệt","淡白舌","dàn bái shé"],["Hồng thiệt","红舌","hóng shé"],["Giáng thiệt","绛舌","jiàng shé"],["Thanh tử thiệt","青紫舌","qīng zǐ shé"]],
+flags:["🔍 Giáo trình CĐ dùng “hồng” cho lưỡi bình thường và “hồng nhợt” cho lưỡi nhạt bệnh lý; 中医诊断学 gọi là 淡红 (đạm hồng, bình thường) và 淡白 (đạm bạch). Khi đọc tài liệu khác, chị đối chiếu theo bảng trong bài.","🔍 Mục “thần lưỡi” lấy từ 中医诊断学; giáo trình CĐ không có mục này."]},
+
+"2.07":{id:"2.07",tang:2,title:"Thiệt chẩn (3): hình thể, động thái, lạc mạch dưới lưỡi",han:"舌形 · 舌态 · 舌下络脉",src:SRC_CD+", tr.74–76; 中医诊断学 mục 望舌",
+hook:"Một lưỡi to bè, nhợt, rìa có dấu răng; một lưỡi gầy, đỏ, có vết nứt sâu giữa lưỡi. Hình dáng lưỡi đang nói gì về hư hay thực?",
+reading:`
+<p><b>Hình thể lưỡi</b> cho biết tình trạng khí huyết, phản ánh <b>hư hay thực</b>. <span class="pg">tr.74</span></p>
+<table><tr><th>Hình thể</th><th>Ý nghĩa (CĐ)</th><th>Đối chiếu ZD</th></tr>
+<tr><td><b>Gầy, teo</b></td><td>Nhợt: huyết hư. Đỏ, không rêu: âm hư nội nhiệt. Đều là bệnh mạn tính <span class="pg">tr.74</span></td><td>Khớp</td></tr>
+<tr><td><b>Trướng, bệu</b></td><td>Phần nhiều là <b>thấp, đàm</b>. Bệu, đỏ đầu lưỡi: Tâm hỏa; đỏ hai rìa: Can hỏa. Bệu bè, nhợt: Tỳ hư <span class="pg">tr.74</span></td><td>Nhạt bệu: tỳ thận dương hư; đỏ bệu: thấp nhiệt, đàm nhiệt</td></tr>
+<tr><td><b>Có vết nứt</b></td><td>Thực nhiệt hoặc âm hư. Nứt ngắn ngang: Vị âm hư <span class="pg">tr.75</span></td><td>Đỏ có nứt: nhiệt thịnh thương âm; nhạt: huyết hư; nhạt bệu dấu răng: tỳ hư thấp xâm; có nứt bẩm sinh</td></tr>
+<tr><td><b>Dấu ấn răng</b></td><td><b>Thấp</b> hoặc <b>Tỳ hư</b> <span class="pg">tr.76</span></td><td>Khớp</td></tr></table>
+${ATL("sau-bac","Lưỡi gầy")} ${ATL("ban-dai","Lưỡi bệu")} ${ATL("liet-van","Lưỡi nứt")} ${ATL("xi-ngan","Dấu răng")}
+<p><b>Động thái lưỡi</b>: bình thường cử động tự nhiên, linh hoạt. Đây là phần <b>hai giáo trình khác nhau nhiều</b>:</p>
+<table><tr><th>Động thái</th><th>Giáo trình CĐ</th><th>中医诊断学</th></tr>
+<tr><td><b>Mềm nhũn (nuy)</b></td><td>Tân dịch thiếu hụt <span class="pg">tr.75</span></td><td>Khí huyết đều hư, âm hao kiệt</td></tr>
+<tr><td><b>Cứng chắc</b></td><td>Nội phong, huyết ứ <span class="pg">tr.75</span></td><td>Nhiệt vào tâm bào, nhiệt thịnh thương tân, phong đàm trở lạc; cứng kèm nói ngọng, tê chân tay là dấu hiệu báo trước trúng phong</td></tr>
+<tr><td><b>Run</b></td><td>Tỳ khí hư <span class="pg">tr.76</span></td><td><b>Can phong nội động</b>: huyết hư sinh phong, nhiệt cực sinh phong, âm hư động phong</td></tr>
+<tr><td><b>Lệch</b></td><td>Trúng phong <span class="pg">tr.76</span></td><td>Trúng phong hoặc dấu báo trước trúng phong</td></tr>
+<tr><td><b>Rụt ngắn</b></td><td>Nhợt, ẩm: hàn. Đỏ: âm hư tổn <span class="pg">tr.75</span></td><td>Hàn ngưng, đàm trở, huyết hư, tân thương; gặp trong bệnh là nặng. Phân biệt với dây hãm lưỡi ngắn bẩm sinh</td></tr>
+<tr><td><b>Dài, thè ra</b></td><td>Lưỡi dài: nhiệt, nhất là ở Tâm <span class="pg">tr.75</span></td><td>Thổ lộng thiệt (thè ra không thu về, liếm môi): Tâm Tỳ có nhiệt</td></tr></table>
+<p><b>Lạc mạch dưới lưỡi</b> (ZD; giáo trình CĐ không có): bảo người bệnh cong lưỡi chạm nhẹ hàm trên. Bình thường hai tĩnh mạch hai bên dây hãm lưỡi màu đỏ sẫm, không phồng, không phân nhánh. <b>Ngắn, nhỏ, lưỡi nhạt:</b> khí huyết bất túc. <b>Phồng to, phân nhánh, màu tím đen, hoặc có nốt tím như hạt châu:</b> <b>huyết ứ</b>. Lạc mạch thay đổi có khi <b>sớm hơn</b> màu lưỡi.</p>`,
+checkTitle:"Khi xem hình thể và động thái",
+checklist:["To hay nhỏ, dày hay mỏng so với khoang miệng?","Rìa có dấu răng không?","Vết nứt: ở đâu, dài hay ngắn, sâu hay nông, ngang hay dọc? Có rêu phủ không (bẩm sinh)?","Thè ra có lệch, run, cứng, rụt không? Nói có ngọng không?","Nhìn mặt dưới lưỡi: lạc mạch có phồng, tím, phân nhánh không?","Luôn xem kèm màu chất lưỡi: cùng một hình thể, màu khác thì nghĩa khác"],
+quiz:[
+{q:"Lưỡi gầy, đỏ, không rêu theo giáo trình là:",o:[["Huyết hư","Sai: lưỡi gầy mà nhợt mới là huyết hư."],["Âm hư nội nhiệt","Đúng."],["Thực nhiệt","Sai."],["Đàm thấp","Sai."]],a:1,p:"74"},
+{q:"Lưỡi trướng, bệu phần nhiều thuộc:",o:[["Thấp hoặc đàm","Đúng."],["Âm hư","Sai."],["Huyết ứ","Sai."],["Phong","Sai."]],a:0,p:"74"},
+{q:"Lưỡi bệu, bè ra hai bên, sắc nhợt nhạt phản ánh:",o:[["Tâm hỏa","Sai."],["Tỳ suy yếu","Đúng."],["Can hỏa","Sai."],["Thực nhiệt","Sai."]],a:1,p:"74"},
+{q:"Theo giáo trình CĐ, vết nứt ngắn theo đường ngang thường gặp trong:",o:[["Vị âm hư","Đúng."],["Tâm hỏa","Sai."],["Thận dương hư","Sai."],["Can khí uất","Sai."]],a:0,p:"75"},
+{q:"Lưỡi có dấu ấn răng theo giáo trình là dấu chứng của:",o:[["Thấp hoặc Tỳ hư","Đúng."],["Nhiệt thịnh","Sai."],["Huyết ứ","Sai."],["Âm hư","Sai."]],a:0,p:"76"},
+{q:"Lưỡi lệch sang một bên khi thè ra thường là biểu hiện của:",o:[["Tỳ khí hư","Sai."],["Trúng phong","Đúng: hai giáo trình đều thống nhất."],["Huyết hư","Sai."],["Thấp","Sai."]],a:1,p:"76"},
+{q:"Theo 中医诊断学, lưỡi run (颤动舌) chủ yếu là:",o:[["Can phong nội động","Đúng: huyết hư, nhiệt cực hoặc âm hư sinh phong."],["Tỳ khí hư","Sai theo 中医诊断学; đây là cách giải thích của giáo trình CĐ."],["Đàm thấp","Sai."],["Thực tích","Sai."]],a:0,p:"ZD 颤动舌"},
+{q:"Theo 中医诊断学, lạc mạch dưới lưỡi phồng to, phân nhánh, màu tím đen là dấu hiệu của:",o:[["Khí huyết bất túc","Sai: đó là lạc mạch ngắn nhỏ, lưỡi nhạt."],["Huyết ứ","Đúng."],["Âm hư","Sai."],["Biểu chứng","Sai."]],a:1,p:"ZD 舌下络脉"},
+{q:"Lưỡi rụt ngắn, sắc nhợt, ẩm theo giáo trình gợi ý:",o:[["Hàn","Đúng."],["Âm hư","Sai: rụt ngắn kèm đỏ mới là âm hư."],["Thực nhiệt","Sai."],["Phong","Sai."]],a:0,p:"75"}
+],
+case:{v:`Ca A: nữ 45 tuổi, ăn kém, người nặng nề, phân lỏng. Lưỡi to bè, nhợt, rìa có dấu răng, rêu trắng. Ca B: nam 60 tuổi, nóng trong, khát, mất ngủ. Lưỡi đỏ thẫm, có vết nứt sâu chạy dọc giữa lưỡi. Đáp án có ảnh minh họa cho từng ca.`,
+qs:["Ca A: phân tích hình thể lưỡi, kết luận hướng chứng.","Ca B: phân tích; vì sao phải xem màu lưỡi kèm vết nứt?","Ca B thêm: khi thè lưỡi thấy lưỡi run nhẹ, nói hơi ngọng, tê nửa người bên phải. Chị lo ngại điều gì?"],
+ans:`${ANH("6aafb74e3d80",true)}<p><b>1. Ca A.</b> Bệu, bè, nhợt: <b>Tỳ suy yếu</b>; dấu răng: <b>thấp, Tỳ hư</b>; rêu trắng: hàn thấp (bài 2.09). Hướng: <b>tỳ hư thấp thịnh</b>, có thể kèm dương hư. <span class="pg">CĐ tr.74, 76; ZD 胖大舌, 齿痕舌</span></p>
+${ANH("dc0be233b133",true)}<p><b>2. Ca B.</b> Lưỡi đỏ thẫm có vết nứt: <b>nhiệt thịnh thương âm</b> (ZD). Cùng là vết nứt, lưỡi nhạt thì là huyết hư, nhạt bệu dấu răng thì là tỳ hư thấp xâm, nên phải xem màu mới biết ý nghĩa. <span class="pg">CĐ tr.75; ZD 裂纹舌</span></p>
+<p><b>3.</b> Lưỡi run (ZD: can phong nội động), lưỡi cứng, nói ngọng kèm tê chân tay là <b>dấu hiệu báo trước trúng phong</b>: cần khám cấp cứu, phối hợp Tây y ngay. <span class="pg">ZD 强硬舌, 颤动舌</span></p>`},
+cards:[["Lưỡi gầy: nhợt / đỏ không rêu?","Nhợt: huyết hư. Đỏ không rêu: âm hư nội nhiệt. Đều mạn tính."],["Lưỡi bệu nói chung? Bệu bè nhợt?","Thấp, đàm. Bệu bè nhợt: Tỳ hư."],["Dấu răng?","Thấp hoặc Tỳ hư."],["Vết nứt theo màu (ZD)?","Đỏ: nhiệt thịnh thương âm. Nhạt: huyết hư. Nhạt bệu dấu răng: tỳ hư thấp xâm."],["Lưỡi lệch?","Trúng phong (hai giáo trình thống nhất)."],["Lưỡi run: CĐ / ZD?","CĐ: Tỳ khí hư. ZD: can phong nội động."],["Lưỡi cứng: CĐ / ZD?","CĐ: nội phong, huyết ứ. ZD: nhiệt vào tâm bào, nhiệt thương tân, phong đàm trở lạc."],["Lưỡi rụt ngắn?","Nhợt ẩm: hàn. Đỏ: âm hư. ZD: gặp trong bệnh là nặng."],["Lạc mạch dưới lưỡi bất thường?","Ngắn nhỏ, lưỡi nhạt: khí huyết hư. Phồng, phân nhánh, tím đen: huyết ứ."]],
+terms:[["Bàn đại thiệt (lưỡi bệu)","胖大舌","pàng dà shé"],["Sấu bạc thiệt (lưỡi gầy)","瘦薄舌","shòu bó shé"],["Liệt văn thiệt (lưỡi nứt)","裂纹舌","liè wén shé"],["Xỉ ngân thiệt (dấu răng)","齿痕舌","chǐ hén shé"],["Nuy nhuyễn, cường ngạnh, oa tà, chiến động, đoản súc","痿软 强硬 歪斜 颤动 短缩","wěi ruǎn, qiáng yìng, wāi xié, chàn dòng, duǎn suō"],["Lạc mạch dưới lưỡi","舌下络脉","shé xià luò mài"]],
+flags:["⚠️ Phần động thái lưỡi, giáo trình CĐ lấy theo sách phương Tây (Maciocia): “lưỡi run là Tỳ khí hư”, “lưỡi cứng là nội phong hoặc huyết ứ”, “lưỡi mềm nhũn là thiếu tân dịch”, “lưỡi dài là nhiệt ở Tâm”. 中医诊断学 giải thích khác (bảng trong bài). Khi thi K01, theo giáo trình được dùng; khi khám, nhớ cả hai, nhất là lưỡi run có thể là phong.","🔍 Giáo trình CĐ còn nêu “vết nứt của Tâm” (dài, sâu, dọc giữa tới đầu lưỡi) và “vết nứt của Vị” (nông, rộng, dọc giữa, không tới đầu lưỡi) theo Maciocia; 中医诊断学 không phân loại như vậy. Em chưa đưa vào câu hỏi."]},
+
+"2.08":{id:"2.08",tang:2,title:"Thiệt chẩn (4): chất rêu",han:"苔质",src:SRC_CD+", tr.77, 80; 中医诊断学 mục 望舌",
+hook:"Rêu lưỡi dày cả lớp, nhưng cạo nhẹ là sạch trơn, bên dưới nhẵn bóng. Đó là tà mạnh, hay là điều đáng lo hơn?",
+reading:`
+<p><b>Chất rêu</b> cho biết tính chất tà, tình trạng tân dịch và <b>vị khí</b>. Bài này đi theo 中医诊断学 (ZD), kèm các ý của giáo trình CĐ.</p>
+<table><tr><th>Chất rêu</th><th>Nhận ra</th><th>Ý nghĩa</th></tr>
+<tr><td><b>Mỏng / dày</b></td><td>Thấy / không thấy chất lưỡi qua rêu</td><td>Dày: có tà, càng dày tà càng mạnh <span class="pg">CĐ tr.77</span>. Mỏng thành dày: tà vào lý; dày thành mỏng: tà lui</td></tr>
+<tr><td><b>Nhuận / hoạt / táo</b></td><td>Ẩm vừa / ướt trơn như muốn nhỏ giọt / khô</td><td>Độ ẩm phản ánh <b>tân dịch</b> <span class="pg">CĐ tr.80</span>. Quá ẩm: dương khí suy, thủy thấp. Khô: thực nhiệt hoặc hư nhiệt (âm hư). Lưỡi đỏ mà khô: nhiệt đã hao tân dịch</td></tr>
+<tr><td><b>Nị (nhớt)</b></td><td>Hạt mịn, sít, liền mảng như phủ dầu, lau không sạch</td><td>Đàm trọc, thực tích, thấp. Dính nhớt hoặc trơn: thấp, đàm <span class="pg">CĐ tr.80</span></td></tr>
+<tr><td><b>Hủ (bã đậu)</b></td><td>Hạt thô, xốp, dày như bã đậu, lau dễ sạch</td><td>Thực tích, đàm trọc (dương nhiệt hữu dư)</td></tr>
+<tr><td><b>Bác (bong)</b></td><td>Rêu vốn có rồi bong, chỗ bong nhẵn</td><td>Vị khí bất túc, vị âm tổn thương, khí huyết lưỡng hư. Bong một phần: Vị âm hư; <b>không rêu toàn bộ: Thận âm hư hoặc Vị âm hư</b> <span class="pg">CĐ tr.77</span></td></tr>
+<tr><td><b>Có gốc / không gốc</b></td><td>Bám chặt như mọc từ lưỡi / như trát lên, cạo là sạch, bên dưới nhẵn</td><td><b>Rêu giả</b> (không gốc): <b>Vị khí suy yếu</b>, không sinh được rêu mới <span class="pg">CĐ tr.77</span></td></tr></table>
+${ATL("hoat-thai","Rêu trơn ướt")} ${ATL("bac-thai","Bác thai")}
+<p><b>Vị khí trên lưỡi</b> (ZD): rêu mỏng đều có gốc, hoặc dày mà cạo vẫn còn dấu rêu, hoặc bong rồi mọc lại: <b>vị khí còn</b>. Rêu như có như không, nổi không gốc, cạo là sạch, nhẵn như gương: <b>vị khí suy bại</b>. Bệnh đang có rêu mục mà rêu tróc dần, mọc lớp rêu trắng mỏng mới: chính thắng tà, bệnh lui.</p>
+<p class="muted">Rêu lệch (偏苔) khác rêu bong: rêu dày mỏng không đều theo phía, không phải bong ra; mất răng một bên cũng làm rêu bên đó dày hơn.</p>`,
+checkTitle:"Khi xem chất rêu",
+checklist:["Thấy được chất lưỡi qua rêu không (mỏng hay dày)?","Ướt hay khô? Có trơn ướt như sắp nhỏ giọt?","Hạt rêu mịn sít như phủ dầu (nị) hay thô xốp như bã đậu (hủ)?","Có chỗ bong không? Ở đâu? Nhẵn hay còn hạt rêu mới?","Cạo nhẹ: rêu có gốc hay sạch trơn bên dưới?","So với lần khám trước: rêu dày lên hay mỏng đi, có mọc lại không?"],
+quiz:[
+{q:"Độ ẩm của lưỡi phản ánh:",o:[["Tình trạng tân dịch","Đúng."],["Tình trạng huyết ứ","Sai."],["Can khí","Sai."],["Vị trí bệnh","Sai."]],a:0,p:"80"},
+{q:"Lưỡi ẩm quá mức bình thường theo giáo trình là do:",o:[["Thực nhiệt","Sai."],["Dương khí suy, không chuyển hóa vận chuyển tân dịch, tích trệ thành thấp","Đúng."],["Âm hư","Sai."],["Huyết hư","Sai."]],a:1,p:"80"},
+{q:"Lưỡi đỏ hoặc đỏ thẫm mà khô ráo chứng tỏ:",o:[["Nhiệt đã bắt đầu làm hao tân dịch","Đúng."],["Hàn thấp","Sai."],["Bình thường","Sai."],["Khí trệ","Sai."]],a:0,p:"80"},
+{q:"Rêu dính nhớt hoặc trơn theo giáo trình là biểu hiện của:",o:[["Thấp hoặc đàm","Đúng."],["Âm hư","Sai."],["Huyết hư","Sai."],["Phong","Sai."]],a:0,p:"80"},
+{q:"Rêu giả (không gốc) là biểu hiện của:",o:[["Tà khí rất mạnh","Sai: rêu dày có gốc mới là tà mạnh."],["Vị khí suy yếu, không sinh được rêu mới","Đúng."],["Bình thường","Sai."],["Biểu chứng","Sai."]],a:1,p:"77"},
+{q:"Theo giáo trình, toàn bộ lưỡi không có rêu là dấu chứng của:",o:[["Thận âm hư hoặc Vị âm hư, hoặc cả hai","Đúng."],["Tỳ dương hư","Sai."],["Thực nhiệt","Sai."],["Biểu hàn","Sai."]],a:0,p:"77"},
+{q:"Theo 中医诊断学, rêu hạt mịn, sít, liền mảng như phủ dầu, lau không sạch là:",o:[["Hủ thai","Sai: hủ thai thô xốp như bã đậu, lau dễ sạch."],["Nị thai","Đúng: chủ đàm trọc, thực tích."],["Bác thai","Sai."],["Hoạt thai","Sai."]],a:1,p:"ZD 腻腐苔"},
+{q:"Theo 中医诊断学, lưỡi đỏ mà bong rêu đa phần là:",o:[["Âm hư","Đúng."],["Dương hư","Sai."],["Huyết ứ","Sai."],["Biểu chứng","Sai."]],a:0,p:"ZD 剥苔"},
+{q:"Đang có rêu mục, rêu tróc dần và mọc lớp rêu trắng mỏng mới, theo 中医诊断学 nghĩa là:",o:[["Vị khí suy bại","Sai: đó là khi rêu tróc mà không mọc lại."],["Chính thắng tà, bệnh lui","Đúng."],["Tà vào sâu","Sai."],["Không có ý nghĩa","Sai."]],a:1,p:"ZD 腻腐苔"}
+],
+case:{v:`Nữ 50 tuổi, bệnh kéo dài, miệng khô, nóng về chiều, ăn kém. Lưỡi đỏ, rêu bong thành nhiều mảng loang lổ, chỗ bong nhẵn. Đáp án có ảnh minh họa.`,
+qs:["Gọi tên đặc điểm rêu. Kết hợp với màu lưỡi, nghiêng về chứng gì?","Nếu sau vài tuần điều trị, chỗ bong bắt đầu có lớp rêu trắng mỏng mọc lại, chị đánh giá thế nào?","Nếu thay vào đó rêu bong hết, lưỡi đỏ nhẵn bóng như gương thì sao?"],
+ans:`${ANH("1906170be3e6",true)}<p><b>1.</b> Rêu bong nhiều chỗ, loang lổ: <b>hoa bác</b>. Lưỡi đỏ mà bong rêu: <b>âm hư</b>, vị âm tổn thương (kèm miệng khô, nóng chiều, ăn kém). <span class="pg">CĐ tr.77; ZD 剥苔</span></p>
+<p><b>2.</b> Rêu mọc lại: <b>vị khí đang hồi phục</b>, chính thắng tà, tiên lượng tốt. <span class="pg">ZD</span></p>
+<p><b>3.</b> <b>Kính diện</b> (lưỡi gương), đỏ giáng: <b>vị âm khô kiệt</b>, âm hư nặng; không rêu toàn bộ còn có thể là Thận âm hư. Bệnh nặng, cần theo dõi sát. <span class="pg">CĐ tr.77; ZD 镜面舌</span></p>`},
+cards:[["Rêu mỏng / dày?","Mỏng: thấy chất lưỡi. Dày: có tà, càng dày tà càng mạnh."],["Độ ẩm phản ánh gì?","Tân dịch. Quá ẩm: dương suy, thấp. Khô: thực hoặc hư nhiệt."],["Nị thai / hủ thai?","Nị: mịn sít như dầu, lau không sạch (đàm, thấp, tích). Hủ: thô xốp như bã đậu, lau dễ sạch (tích, đàm trọc)."],["Bong một phần / không rêu toàn bộ (CĐ)?","Một phần: Vị âm hư. Toàn bộ: Thận âm hư hoặc Vị âm hư."],["Lưỡi đỏ bong rêu / nhạt bong rêu (ZD)?","Đỏ: âm hư. Nhạt: huyết hư, khí huyết hư."],["Rêu giả?","Không gốc, cạo sạch, bên dưới nhẵn: Vị khí suy yếu."],["Dấu hiệu vị khí còn?","Rêu mỏng có gốc; dày mà cạo còn dấu; bong rồi mọc lại."],["Rêu lệch khác rêu bong?","Lệch: dày mỏng không đều theo phía (mất răng một bên cũng gây ra). Bong: rêu có rồi tróc."]],
+terms:[["Bạc thai / Hậu thai","薄苔 / 厚苔","bó tāi / hòu tāi"],["Nhuận thai / Hoạt thai / Táo thai","润苔 / 滑苔 / 燥苔","rùn tāi / huá tāi / zào tāi"],["Nị thai / Hủ thai","腻苔 / 腐苔","nì tāi / fǔ tāi"],["Bác thai","剥苔","bō tāi"],["Kính diện thiệt","镜面舌","jìng miàn shé"],["Hữu căn / Vô căn","有根苔 / 无根苔","yǒu gēn tāi / wú gēn tāi"]],
+flags:[]},
+
+"2.09":{id:"2.09",tang:2,title:"Thiệt chẩn (5): màu rêu",han:"苔色",src:SRC_CD+", tr.78–80; 中医诊断学 mục 望舌",
+hook:"Rêu đen: có người bảo là nhiệt cực, có người bảo là hàn cực. Vậy dựa vào đâu để phân biệt?",
+reading:`
+<p>Màu rêu chủ bệnh có <b>trắng, vàng, xám, đen</b>. Phải xem kèm <b>khô hay ướt</b>, <b>màu chất lưỡi</b> và các chứng khác mới phân được hàn, nhiệt, hư, thực. <span class="pg">tr.78</span></p>
+<table><tr><th>Màu rêu</th><th>Chủ</th><th>Các dạng thường gặp</th></tr>
+<tr><td><b>Trắng</b></td><td>Phong hàn thấp (hàn là chính); biểu chứng</td><td>Trắng mỏng, lưỡi hồng nhuận: bình thường, bệnh nhẹ, giai đoạn sớm; ngoại tà phong hàn, phong thấp, hàn thấp. <b>Trắng dày nhờn</b>: Tỳ Vị dương hư, đàm thấp tích trệ. <b>Trắng mỏng khô</b>: tân dịch Phế đã hao. <b>Trắng dày khô</b>: giai đoạn sớm bệnh nhiệt <span class="pg">tr.78</span></td></tr>
+<tr><td><b>Vàng</b></td><td>Bệnh ở <b>lý</b>, chủ <b>nhiệt</b></td><td><b>Vàng nhờn</b>: thấp nhiệt, đàm nhiệt, ăn uống tích trệ. <b>Mỏng hơi vàng</b>: phong hàn chuyển phong nhiệt, chưa hao tân dịch. <b>Vàng dày khô</b>: vị nhiệt thương tân; vàng khô nứt: nhiệt cực. <b>Vàng bóng, chất lưỡi nhợt</b>: dương hư, thủy dịch sinh đàm lâu ngày hóa nhiệt <span class="pg">tr.78</span></td></tr>
+<tr><td><b>Xám</b></td><td>Bệnh ở lý; nhiệt hoặc hàn thấp</td><td>Xám bóng: hàn thấp. Xám khô: âm hư nội nhiệt. Hầu như không gặp ở biểu chứng hay hư hàn <span class="pg">tr.79</span></td></tr>
+<tr><td><b>Đen</b></td><td>Bệnh nặng, kéo dài, đã vào lý</td><td><b>Đen trơn nhuận, lưỡi nhợt</b>: dương hư hàn. <b>Đen khô, nứt, lưỡi đỏ</b>: hỏa nhiệt làm âm dịch khô kiệt, rất nguy <span class="pg">tr.79</span></td></tr></table>
+${ATL("bach-thai","Rêu trắng")} ${ATL("hoang-thai","Rêu vàng")} ${ATL("hac-thai","Rêu đen")}
+<p><b>Chìa khóa phân hàn nhiệt của rêu xám đen: khô hay ướt.</b> 中医诊断学: trong bệnh hàn thấp, rêu xám đen chuyển từ rêu trắng và <b>ướt nhiều nước</b>; trong bệnh nhiệt, chuyển từ rêu vàng và <b>khô không có nước</b>. Dù hàn hay nhiệt đều là bệnh nặng; đen càng đậm bệnh càng nặng. Cũng có rêu đen do <b>hút thuốc nhiều (rêu nhuộm)</b>, không có triệu chứng tương ứng.</p>
+<p><b>Rêu vàng theo vị trí</b> (ZD): đầu lưỡi vàng: nhiệt thượng tiêu; giữa: nhiệt ở vị trường; gốc: nhiệt hạ tiêu. Rêu chuyển từ trắng sang vàng, hoặc vàng trắng lẫn nhau: tà đang hóa nhiệt vào lý.</p>`,
+checkTitle:"Khi xem màu rêu",
+checklist:["Đã loại trừ rêu nhuộm chưa (cà phê, trà, thuốc, thuốc lá)?","Màu gì, ở vùng nào (đầu, giữa, gốc)?","Khô hay ướt? Mỏng hay dày? Có nhờn không?","Màu chất lưỡi bên dưới: nhợt hay đỏ?","Diễn biến: rêu chuyển từ trắng sang vàng, hay từ vàng sang đen?"],
+quiz:[
+{q:"Rêu trắng theo giáo trình chủ yếu chủ về:",o:[["Phong hàn thấp, trong đó hàn là chính; và biểu chứng","Đúng."],["Thực nhiệt","Sai."],["Âm hư","Sai."],["Huyết ứ","Sai."]],a:0,p:"78"},
+{q:"Rêu trắng dày, nhờn là biểu hiện của:",o:[["Tỳ hoặc Vị dương hư, đàm thấp tích trệ","Đúng."],["Phế nhiệt","Sai."],["Âm hư","Sai."],["Bình thường","Sai."]],a:0,p:"78"},
+{q:"Rêu vàng nhờn theo giáo trình là:",o:[["Thấp nhiệt, đàm nhiệt hoặc ăn uống tích trệ","Đúng."],["Biểu hàn","Sai."],["Dương hư","Sai."],["Huyết hư","Sai."]],a:0,p:"78"},
+{q:"Rêu mỏng hơi vàng gợi ý:",o:[["Nhiệt cực","Sai."],["Phong hàn chuyển thành phong nhiệt, chưa hao tân dịch","Đúng."],["Hàn thấp","Sai."],["Vị khí suy","Sai."]],a:1,p:"78"},
+{q:"Rêu vàng bóng kèm chất lưỡi nhợt nhạt là:",o:[["Thực nhiệt đơn thuần","Sai."],["Dương suy, thủy dịch ứ đọng sinh đàm, đàm lâu ngày hóa nhiệt","Đúng."],["Âm hư","Sai."],["Biểu nhiệt","Sai."]],a:1,p:"78"},
+{q:"Rêu xám khô ráo theo giáo trình là biểu hiện của:",o:[["Hàn thấp","Sai: xám bóng mới là hàn thấp."],["Âm hư nội nhiệt","Đúng."],["Biểu chứng","Sai."],["Hư hàn","Sai."]],a:1,p:"79"},
+{q:"Rêu đen trơn nhuận, chất lưỡi hồng nhợt là:",o:[["Hỏa nhiệt cực","Sai: đó là đen khô, nứt, lưỡi đỏ."],["Dương hư (hàn)","Đúng."],["Bình thường","Sai."],["Biểu chứng","Sai."]],a:1,p:"79"},
+{q:"Theo 中医诊断学, dấu hiệu quan trọng nhất để phân rêu xám đen thuộc hàn hay nhiệt:",o:[["Độ dày","Sai."],["Khô hay ướt","Đúng: hàn thấp thì ướt nhiều nước, nhiệt thì khô."],["Vị trí","Sai."],["Kích thước lưỡi","Sai."]],a:1,p:"ZD 灰黑苔"},
+{q:"Theo 中医诊断学, rêu vàng ở gốc lưỡi gợi ý:",o:[["Nhiệt thượng tiêu","Sai: đó là đầu lưỡi."],["Nhiệt ở vị trường","Sai: đó là giữa lưỡi."],["Nhiệt hạ tiêu","Đúng."],["Biểu nhiệt","Sai."]],a:2,p:"ZD 黄苔"}
+],
+case:{v:`Nam 70 tuổi, bệnh nhiều tháng, mệt lả, sợ lạnh, chân tay lạnh, ăn kém. Rêu lưỡi xám đen. Người nhà kể ông không hút thuốc, không dùng thuốc gì đặc biệt. Đáp án có ảnh minh họa rêu xám đen.`,
+qs:["Trước khi kết luận, chị cần kiểm tra thêm điều gì trên lưỡi?","Nếu rêu ướt, chất lưỡi nhợt: kết luận gì?","Nếu rêu khô, nứt, chất lưỡi đỏ, người nóng, khát: kết luận gì? Tiên lượng?"],
+ans:`${ANH("e55df7462393",true)}<p><b>1.</b> Rêu <b>khô hay ướt</b>, và <b>màu chất lưỡi</b> bên dưới; đã loại trừ rêu nhuộm (không hút thuốc, không dùng thuốc). <span class="pg">CĐ tr.79; ZD 灰黑苔</span></p>
+<p><b>2.</b> Rêu đen trơn nhuận, lưỡi nhợt: <b>dương hư hàn</b>, phù hợp với sợ lạnh, chân tay lạnh. <span class="pg">CĐ tr.79</span></p>
+<p><b>3.</b> Rêu đen khô nứt, lưỡi đỏ: <b>hỏa nhiệt làm âm dịch khô kiệt</b>, chân thủy sắp kiệt, <b>rất nguy</b>. Dù hàn hay nhiệt, rêu đen đều là bệnh nặng; cần phối hợp Tây y. <span class="pg">CĐ tr.79</span></p>`},
+cards:[["4 màu rêu bệnh lý?","Trắng, vàng, xám, đen."],["Rêu trắng chủ?","Phong hàn thấp (hàn là chính), biểu chứng; trắng mỏng hồng nhuận là bình thường."],["Trắng dày nhờn / trắng mỏng khô / trắng dày khô?","Tỳ Vị dương hư, đàm thấp / tân dịch Phế hao / sớm của bệnh nhiệt."],["Rêu vàng chủ?","Lý, nhiệt."],["Vàng nhờn / mỏng hơi vàng / vàng dày khô?","Thấp nhiệt, đàm nhiệt, tích / phong hàn hóa nhiệt / vị nhiệt thương tân."],["Vàng bóng + lưỡi nhợt?","Dương hư, đàm lâu ngày hóa nhiệt."],["Xám bóng / xám khô?","Hàn thấp / âm hư nội nhiệt."],["Đen nhuận lưỡi nhợt / đen khô nứt lưỡi đỏ?","Dương hư hàn / hỏa nhiệt làm âm dịch khô kiệt, rất nguy."],["Phân hàn nhiệt rêu xám đen?","Khô hay ướt: ướt là hàn thấp, khô là nhiệt."]],
+terms:[["Bạch thai","白苔","bái tāi"],["Hoàng thai","黄苔","huáng tāi"],["Hôi hắc thai","灰黑苔","huī hēi tāi"],["Hoàng nị thai","黄腻苔","huáng nì tāi"],["Tích phấn thai (rêu như bột)","积粉苔","jī fěn tāi"]],
+flags:["🔍 中医诊断学 ghi thêm: rêu trắng như bột phủ, sờ không khô (积粉苔) gặp trong ôn dịch, nội ung (thấp trọc kết với nhiệt độc), tức rêu trắng cũng có thể chủ nhiệt."]},
+
+"2.10":{id:"2.10",tang:2,title:"Thiệt chẩn (6): kết hợp chất lưỡi và rêu",han:"舌质舌苔合参",src:SRC_CD+", tr.71–80; 中医诊断学 mục 舌象分析要点",
+hook:"Lưỡi nhạt nhưng rêu vàng nhớt. Màu lưỡi nói hàn, màu rêu nói nhiệt. Tin bên nào?",
+reading:`
+<p><b>Nguyên tắc</b> (ZD): <b>chất lưỡi</b> chủ yếu phản ánh <b>tạng phủ, khí huyết, tân dịch</b> (chính khí, hư thực); <b>rêu</b> chủ yếu phản ánh <b>tà khí</b> (tính chất, nông sâu, tiến thoái) và <b>vị khí</b>. “Xem chất lưỡi biết âm dương hư thực; xem rêu biết hàn nhiệt nông sâu của tà.”</p>
+<p><b>Ba tình huống</b></p>
+<table><tr><th>Tình huống</th><th>Ý nghĩa</th><th>Ví dụ</th></tr>
+<tr><td><b>Chỉ một bên bất thường</b></td><td>Bệnh còn đơn giản. Chỉ rêu đổi: tà là chính, chính khí chưa tổn, chữa thiên về <b>khu tà</b>. Chỉ chất lưỡi đổi: thiên về <b>điều hòa khí huyết, phù chính</b></td><td>Lưỡi hồng, rêu vàng dày</td></tr>
+<tr><td><b>Hai bên cùng hướng</b></td><td>Bệnh cơ thống nhất, đơn giản</td><td>Đỏ + vàng khô: thực nhiệt. Đỏ giáng có nứt + vàng cháy khô: nhiệt cực tân thương. Đỏ gầy, ít hoặc không rêu: âm hư nội nhiệt. Nhạt non + trắng nhuận: hư hàn. Tím + trắng nhớt: khí huyết ứ trở, đàm thấp nội đình</td></tr>
+<tr><td><b>Hai bên ngược hướng</b></td><td>Bệnh phức tạp, thường có <b>hai bệnh cơ cùng lúc</b>: phân tiêu bản, hoãn cấp</td><td><b>Nhạt + vàng nhớt</b>: vốn tỳ vị hư hàn, nay cảm thấp nhiệt (hàn nhiệt lẫn lộn, bản hư tiêu thực). <b>Đỏ giáng + trắng trơn nhớt</b>: dinh phận có nhiệt mà khí phận có thấp; hoặc người âm hư hỏa vượng cảm thêm hàn thấp</td></tr></table>
+<p><b>Xem lưỡi theo diễn biến</b> (ZD): rêu mỏng thành dày: tà từ biểu vào lý; trắng thành vàng: tà hóa nhiệt; lưỡi từ hồng thành đỏ giáng, rêu khô: nhiệt tràn khí doanh; rêu bong, lưỡi đỏ giáng: nhiệt vào doanh huyết, khí âm đều tổn. Ngược lại, lưỡi từ tím, đỏ sẫm trở về hồng nhạt, rêu dần mỏng: bệnh đang ổn định.</p>
+<p><b>Thần và vị khí trên lưỡi</b> (ZD): lưỡi có thần, rêu có gốc: chính khí còn, tiên lượng tốt dù bệnh nặng. Lưỡi khô, không thần; rêu nổi không gốc, nhẵn như gương: tiên lượng xấu.</p>
+<p class="muted">Áp dụng: dùng phần “Đọc ảnh này” trong tab Luyện mắt (chế độ Chọn tất cả, mức Khó) để luyện kết hợp trên ảnh thật nhiều đặc điểm.</p>`,
+checkTitle:"Trình tự phân tích một chiếc lưỡi",
+checklist:["Thần lưỡi: tươi nhuận có thần hay khô cứng?","Chất lưỡi: màu, hình thể, động thái → chính khí, hư thực, hàn nhiệt của tạng phủ","Rêu: chất (dày mỏng, khô ướt, nhớt, bong, có gốc) và màu → tà khí, nông sâu","Hai bên cùng hướng hay ngược hướng?","Nếu ngược hướng: bệnh cơ nào là bản, nào là tiêu; cái nào cấp?","So với lần trước: tiến hay lui?","Đối chiếu vấn chẩn và mạch trước khi kết luận"],
+quiz:[
+{q:"Theo 中医诊断学, chất lưỡi chủ yếu phản ánh:",o:[["Tính chất tà khí","Sai: đó chủ yếu là rêu."],["Tạng phủ, khí huyết, tân dịch (chính khí)","Đúng."],["Chỉ vị khí","Sai."],["Thời tiết","Sai."]],a:1,p:"ZD 舌象分析要点"},
+{q:"Rêu lưỡi chủ yếu phản ánh:",o:[["Tính chất, nông sâu, tiến thoái của tà khí và vị khí","Đúng."],["Khí huyết của tạng phủ","Sai: đó chủ yếu là chất lưỡi."],["Thần chí","Sai."],["Tuổi tác","Sai."]],a:0,p:"ZD 舌象分析要点"},
+{q:"Lưỡi hồng nhạt bình thường nhưng rêu vàng dày: chữa nên thiên về:",o:[["Phù chính","Sai."],["Khu tà","Đúng: chỉ rêu đổi, chính khí chưa tổn rõ."],["Bổ huyết","Sai."],["Không cần chữa","Sai."]],a:1,p:"ZD 舌象分析要点"},
+{q:"Lưỡi đỏ gầy, ít hoặc không rêu chủ:",o:[["Thực nhiệt","Sai."],["Âm hư nội nhiệt","Đúng."],["Hư hàn","Sai."],["Đàm thấp","Sai."]],a:1,p:"ZD 舌象分析要点"},
+{q:"Lưỡi nhạt non, rêu trắng nhuận chủ:",o:[["Hư hàn","Đúng."],["Thực nhiệt","Sai."],["Âm hư","Sai."],["Huyết ứ","Sai."]],a:0,p:"ZD 舌象分析要点"},
+{q:"Lưỡi nhạt mà rêu vàng nhớt theo 中医诊断学 có thể là:",o:[["Thực nhiệt đơn thuần","Sai."],["Vốn tỳ vị hư hàn, nay cảm thấp nhiệt: hàn nhiệt lẫn lộn, bản hư tiêu thực","Đúng."],["Bình thường","Sai."],["Âm hư","Sai."]],a:1,p:"ZD 舌象分析要点"},
+{q:"Trong bệnh ngoại cảm, rêu chuyển từ trắng sang vàng nghĩa là:",o:[["Tà đã lui","Sai."],["Tà hóa nhiệt","Đúng."],["Vị khí suy","Sai."],["Chuyển thành hàn","Sai."]],a:1,p:"ZD 舌象分析要点"},
+{q:"Lưỡi đỏ có rêu theo giáo trình CĐ là:",o:[["Thực nhiệt","Đúng."],["Hư nhiệt","Sai: không rêu mới là hư nhiệt."],["Hàn","Sai."],["Huyết hư","Sai."]],a:0,p:"72"},
+{q:"Lưỡi tím, rêu trắng nhớt theo 中医诊断学 là:",o:[["Khí huyết ứ trở, đàm thấp nội đình","Đúng."],["Âm hư","Sai."],["Thực nhiệt","Sai."],["Bình thường","Sai."]],a:0,p:"ZD 舌象分析要点"}
+],
+case:{v:`Nữ 48 tuổi (ảnh trong đáp án là ảnh chị đã gặp trong Luyện mắt): rêu trắng dày ở nhiều chỗ, mảng giữa và cuống lưỡi bị bong để lộ chất lưỡi đỏ sẫm nhẵn, nhiều chấm đỏ ở nửa trước và hai rìa. Người bệnh miệng khô nhưng không muốn uống, bụng đầy, bứt rứt, khó ngủ.`,
+qs:["Phân tích chất lưỡi và rêu riêng từng bên.","Hai bên cùng hướng hay ngược hướng? Kết luận bệnh cơ.","Chị cần hỏi, khám thêm gì để xác định bệnh cơ nào là chính?"],
+ans:`${ANH("a25a607196b3",true)}<p><b>1.</b> <b>Chất lưỡi</b>: chỗ bong lộ đỏ sẫm, nhiều chấm đỏ ở nửa trước và hai rìa: <b>nhiệt</b> (chấm đỏ: đầu lưỡi Tâm hỏa, rìa Can hỏa), có dấu hiệu âm hư. <b>Rêu</b>: bong vùng giữa – cuống (vị âm tổn thương, có thể cả thận âm), phần còn lại trắng dày: <b>thấp, đàm trọc chưa hóa</b>. <span class="pg">CĐ tr.72–73, 77; ZD 剥苔, 点刺舌</span></p>
+<p><b>2.</b> <b>Ngược hướng</b>: âm hư có nhiệt (chất lưỡi, chỗ bong) cùng thấp trọc (rêu dày còn lại). 中医诊断学 viết đúng kiểu này: rêu bong một phần mà chỗ còn lại là rêu nhớt là <b>chính khí hư mà đàm trọc chưa hóa, bệnh phức tạp</b>. Miệng khô mà không muốn uống, bụng đầy cũng gợi ý có thấp. <span class="pg">ZD 剥苔</span></p>
+<p class="src-note">Bộ dữ liệu chỉ gán nhãn “bác thai” cho ảnh này; rêu trắng dày và chấm đỏ được mô tả từ quan sát trực tiếp trên ảnh.</p><p><b>3.</b> Hỏi thêm nóng chiều, mồ hôi trộm, ăn uống, đại tiện; xem mạch (tế sác nghiêng âm hư nhiệt, hoạt nghiêng đàm thấp); theo dõi lưỡi theo thời gian (rêu có mọc lại không). Khi lập pháp phải tính cả hai: thanh nhiệt dưỡng âm mà không làm thấp nặng thêm, hóa thấp mà không làm hao âm.</p>`},
+cards:[["Chất lưỡi / rêu phản ánh gì?","Chất lưỡi: tạng phủ, khí huyết, tân dịch (chính khí). Rêu: tà khí (tính chất, nông sâu, tiến thoái) và vị khí."],["Chỉ rêu đổi / chỉ chất lưỡi đổi?","Rêu đổi: khu tà là chính. Chất lưỡi đổi: điều hòa khí huyết, phù chính."],["Đỏ + vàng khô?","Thực nhiệt."],["Đỏ gầy, ít rêu?","Âm hư nội nhiệt."],["Nhạt non + trắng nhuận?","Hư hàn."],["Tím + trắng nhớt?","Khí huyết ứ trở, đàm thấp nội đình."],["Nhạt + vàng nhớt?","Tỳ vị hư hàn cảm thấp nhiệt: hàn nhiệt lẫn lộn, bản hư tiêu thực."],["Đỏ giáng + trắng trơn nhớt?","Dinh có nhiệt, khí có thấp; hoặc âm hư hỏa vượng cảm hàn thấp."],["Diễn biến xấu / tốt của lưỡi?","Xấu: rêu mỏng thành dày, trắng thành vàng, lưỡi thành giáng, rêu bong. Tốt: lưỡi về hồng nhạt, rêu mỏng dần, rêu mọc lại."]],
+terms:[["Thiệt chất thiệt thai hợp tham","舌质舌苔合参","shé zhì shé tāi hé cān"],["Bản hư tiêu thực","本虚标实","běn xū biāo shí"],["Hàn nhiệt hiệp tạp","寒热夹杂","hán rè jiā zá"],["Vị khí","胃气","wèi qì"]],
+flags:[]}
+});
+
 let IMGS={}, IMGS_FAIL=false, _imgP=null;
 const imgsReady=()=>Object.keys(IMGS).length>0;
 function loadImgs(){ if(imgsReady())return Promise.resolve(); if(_imgP)return _imgP;
@@ -1365,7 +1601,15 @@ function lessons(){
 }
 
 /* ---------- lesson ---------- */
-function lesson({id,toCase}){
+function dienAnhKho(goc){goc=goc||app();const o=[...goc.querySelectorAll(".anh-kho:not([data-xong])")];
+ o.forEach(el=>{el.dataset.xong="1";el.innerHTML='<p class="src-note">Đang tải ảnh lưỡi…</p>'});
+ const baiDangHoc=tab==="lesson"?curLesson:null;
+ goc.querySelectorAll("[data-atlas]").forEach(b=>b.onclick=()=>{go("mat");loadKho().then(()=>{TAP=null;VE_BAI=baiDangHoc;hocMot(b.dataset.atlas)}).catch(()=>{})});
+ if(!o.length)return; loadKho().then(()=>o.forEach(el=>{const a=KHO.anh.find(x=>x.id===el.dataset.id);
+   el.innerHTML=a?photo(a,el.dataset.khung==="1")+'<p class="src-note">Ảnh minh họa đặc điểm, không phải ảnh của người bệnh trong ca.</p>':'<p class="src-note">Không tìm thấy ảnh trong kho.</p>'}))
+  .catch(()=>o.forEach(el=>{el.innerHTML='<p class="src-note">Chưa tải được ảnh lưỡi (cần mạng ở lần đầu).</p>'}))}
+let curLesson=null,VE_BAI=null;
+function lesson({id,toCase}){curLesson=id;
  const L=LESSONS[id]; const qa=S.quiz[id]||{};
  let h=`<button type="button" class="back" id="bk">‹ Bài học</button>
  <div class="lhead"><div class="id">Bài ${L.id} · Tầng ${L.tang} ${TANG_NAMES[L.tang]}</div><h1>${L.title} <span class="han" style="color:var(--seal)">${L.han}</span></h1>
@@ -1389,7 +1633,7 @@ function lesson({id,toCase}){
  const qz=$("#quiz");
  L.quiz.forEach((q,qi)=>{const box=document.createElement("div");box.className="q";
   const order=shuffle(q.o.map((_,i)=>i));
-  box.innerHTML=`<div class="qt">${qi+1}. ${esc(q.q)}</div>`+order.map(oi=>`<button type="button" class="opt" data-i="${oi}">${esc(q.o[oi][0])}<span class="why">${esc(q.o[oi][1])}</span></button>`).join("")+`<div class="pg">Trang ${q.p}</div>`;
+  box.innerHTML=`<div class="qt">${qi+1}. ${esc(q.q)}</div>`+order.map(oi=>`<button type="button" class="opt" data-i="${oi}">${esc(q.o[oi][0])}<span class="why">${esc(q.o[oi][1])}</span></button>`).join("")+`<div class="pg">${/^\d/.test(String(q.p))?"Trang "+q.p:esc(String(q.p))}</div>`;
   const mark=pick=>{box.classList.add("answered");box.querySelectorAll(".opt").forEach(b=>{const i=+b.dataset.i;b.setAttribute("aria-disabled","true");if(i===q.a)b.classList.add("right");else if(i===pick)b.classList.add("wrong")})};
   box.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{if(box.classList.contains("answered"))return;const p=+b.dataset.i;qa[qi]=p;S.quiz[id]=qa;save();mark(p);score()});
   if(qa[qi]!==undefined)mark(qa[qi]); qz.appendChild(box)});
@@ -1399,9 +1643,10 @@ function lesson({id,toCase}){
  score();
  $("#qr").onclick=()=>{delete S.quiz[id];save();go("lesson",{id})};
  $("#cn").oninput=e=>{S.notes[id]=e.target.value;save()};
- $("#rv").onclick=()=>{$("#ans").innerHTML=`<div class="reveal">${L.case.ans}</div>`;$("#rv").remove()};
+ $("#rv").onclick=()=>{$("#ans").innerHTML=`<div class="reveal">${L.case.ans}</div>`;$("#rv").remove();dienAnhKho($("#ans"))};
  $("#fin").onclick=()=>{if(!S.done[id]){S.done[id]=today();logToday()}addCards(id);save();go("home")};
  if(toCase)setTimeout(()=>$("#casesec").scrollIntoView(),50);
+ dienAnhKho();
 }
 
 /* ---------- review ---------- */
@@ -1589,17 +1834,17 @@ function hocMot(c){const g=GIAI[c],l=LA[c]||["",""];
  const kep=tat.filter(a=>nhanCua(a).length>1&&!(a.q<nguong)).sort((x,y)=>(y.q||0)-(x.q||0));
  const mau=[...don.slice(0,6),...kep.slice(0,Math.max(0,6-don.length))].slice(0,6);
  const tc=TC_CUA[c]&&TONGUES.find(x=>x.p===TC_CUA[c]);
- app().innerHTML=`<button type="button" class="back" id="vehoc">‹ Học đặc điểm</button><h1>${esc(KHO.ten(c))}</h1>
+ app().innerHTML=`<button type="button" class="back" id="vehoc">‹ ${VE_BAI?"Quay lại bài "+VE_BAI:"Học đặc điểm"}</button><h1>${esc(KHO.ten(c))}</h1>
  <div class="giai"><p><span class="gt-k">Là gì:</span> ${esc(l[0])}</p><p><span class="gt-k">Nhìn vào đâu:</span> ${esc(g.nhin)}</p><p><span class="gt-k">Ý nghĩa:</span> ${esc(g.nghia)}</p><p><span class="gt-k">Dễ nhầm với:</span> ${esc(l[1])}</p><p class="src-note">Nguồn: ${esc(g.nguon)}; 中医诊断学 (十三五) mục 望舌.</p></div>
  <h2>Ảnh thật (${tat.length} ảnh có nhãn này)</h2><p class="src-note">Ưu tiên ảnh chỉ có đúng một đặc điểm này và nét nhất. Chạm ảnh để xem khung vị trí.</p>
  <div class="gal">${mau.map(a=>`<img loading="lazy" crossorigin="anonymous" src="${imgUrl(a.id)}" style="${tamLuoi(a)}" alt="Ảnh lưỡi ${a.id}, chạm để phóng to" tabindex="0" role="button" data-id="${a.id}">`).join("")}</div>
  ${tc?`<h2>Ảnh minh họa từ tài liệu</h2>${theTC(tc)}`:""}
  <button type="button" class="btn finish" id="luyen">Luyện riêng đặc điểm này</button>`;
- $("#vehoc").onclick=hoc;
+ $("#vehoc").onclick=()=>{if(VE_BAI){const id=VE_BAI;VE_BAI=null;go("lesson",{id})}else hoc()};
  app().querySelectorAll(".gal img").forEach(im=>im.onclick=()=>{const a=KHO.anh.find(x=>x.id===im.dataset.id);const d=$("#zoom");d.innerHTML=photo(a,true);d.showModal()});
  app().querySelectorAll(".tg img").forEach(im=>im.onclick=()=>{const d=$("#zoom");d.innerHTML='<img alt="" src="'+IMGS[im.dataset.p]+'">';d.showModal()});
  $("#luyen").onclick=()=>{TAP=c;qMot()};}
-function mat(){
+function mat(){VE_BAI=null;
  app().innerHTML=`<h1>Luyện mắt</h1><p class="muted" style="margin:6px 0 4px">Luyện nhìn lưỡi trên ảnh thật. Đang tải kho ảnh…</p>`;
  loadKho().then(()=>matHome()).catch(()=>{app().innerHTML=`<h1>Luyện mắt</h1><div class="empty"><p>Chưa kết nối được kho ảnh lưỡi.</p><p style="font-size:.88rem">Kiểm tra kết nối mạng rồi mở lại tab này. Lần đầu cần có mạng để tải danh mục ảnh; sau đó ảnh đã xem dùng được cả khi offline.</p></div>`});}
 function matHome(){const m=M(),p=pool(),nw=m.wrong.length;
