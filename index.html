@@ -160,6 +160,11 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 .bx-t i{background:#7FD3FF;transform-origin:0 100%}
 .ck{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .ck label{display:flex;gap:6px;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:7px 8px;font-size:.88rem}
+.ck label.unsure{border-color:#8E6FC9;border-style:dotted}
+.opt.unsure{border-color:#8E6FC9;border-style:dotted}
+.giai{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-top:12px}
+.giai h3{margin-bottom:6px}.giai ul{padding-left:18px}.giai li{margin-bottom:8px;font-size:.92rem}
+.gt-k{color:var(--jade);font-weight:600}
 .ck label.right{border-color:var(--ok)}.ck label.miss{border-color:var(--gold);border-style:dashed}.ck label.wrong{border-color:var(--bad)}
 .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .gal img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;background:var(--line);cursor:pointer}
@@ -1438,10 +1443,16 @@ $("#zoom").onclick=e=>e.currentTarget.close();
 $("#zoom").addEventListener("close",e=>{const d=e.currentTarget;if(!d.querySelector(":scope>img"))d.innerHTML='<img alt="Ảnh lưỡi phóng to" src="data:,">'});
 
 /* ---------- LUYỆN MẮT: kho ảnh TCM-Tongue (luong-y-pictures) ---------- */
-const KHO_URL=new URL("../luong-y-pictures/",location.href).href;
+// Nguồn kho ảnh: ưu tiên GitHub Pages; nếu Pages chưa bật hoặc lỗi thì lấy thẳng từ kho file của GitHub.
+const KHO_NGUON=[new URL("../luong-y-pictures/",location.href).href,
+ "https://raw.githubusercontent.com/linhmai101-dev/luong-y-pictures/main/"];
+let KHO_URL=KHO_NGUON[0];
 let KHO=null,_khoP=null;
+function layDanhMuc(){const thuTu=[];KHO_NGUON.forEach(n=>["danh-muc-app.json","danh-muc.json"].forEach(f=>thuTu.push([n,f])));
+ let i=0;const thu=()=>fetch(thuTu[i][0]+thuTu[i][1]).then(r=>{if(!r.ok)throw 0;KHO_URL=thuTu[i][0];return r.json()})
+ .catch(e=>{if(++i<thuTu.length)return thu();throw e});return thu()}
 function loadKho(){ if(KHO)return Promise.resolve(KHO); if(_khoP)return _khoP;
- _khoP=fetch(KHO_URL+"danh-muc.json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(m=>{
+ _khoP=layDanhMuc().then(m=>{
    const ma=m.ma_so, ten=c=>m.nhan[c].ten;
    m.anh=m.anh.filter(a=>!a.xung_dot);   // ảnh trùng mà nhãn mâu thuẫn: không dùng để hỏi, chấm
    m.anh.forEach(a=>{a.nh=[...new Set(a.khung.map(b=>ma[b[0]]).filter(Boolean))]});
@@ -1449,17 +1460,55 @@ function loadKho(){ if(KHO)return Promise.resolve(KHO); if(_khoP)return _khoP;
      codes:Object.values(ma)}; return KHO}).catch(e=>{_khoP=null;throw e});
  return _khoP;}
 const imgUrl=id=>KHO_URL+"anh/"+id.slice(0,2)+"/"+id+".webp";
+const luoiUrl=id=>KHO_URL+"luoi/"+id.slice(0,2)+"/"+id+".webp";   // bản cắt sát lưỡi từ ảnh gốc (nét hơn)
+const dungLuoi=a=>!!a.cat&&!M().full&&!a._loiLuoi;
 function M(){S.mat=S.mat||{seen:{},ok:{},wrong:[],conf:{},lv:"de",vung:false};return S.mat}
 const inScope=c=>M().vung||KHO.gt(c);
 const nhanCua=a=>a.nh.filter(inScope);
-function pool(){const m=M();return KHO.anh.filter(a=>{const n=nhanCua(a).length;
+function pool(){const m=M(),anMo=m.anMo!==false;return KHO.anh.filter(a=>{const n=nhanCua(a).length;
+ if(anMo&&a.q!==undefined&&a.q<20)return false;   // bỏ 20% ảnh kém nét nhất
  return n>0&&(m.lv==="de"?n===1:m.lv==="vua"?n<=2:true)})}
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 let _ke=null;   // ảnh kế tiếp đã tải sẵn
 function layAnh(){const p=pool();let a=_ke&&p.includes(_ke)?_ke:pick(p);_ke=pick(p);
- if(_ke){const im=new Image();im.src=imgUrl(_ke.id)} return a}
+ if(_ke){const im=new Image();im.crossOrigin="anonymous";im.src=dungLuoi(_ke)?luoiUrl(_ke.id):imgUrl(_ke.id)} return a}
+
+/* Giải thích từng đặc điểm: nhìn vào đâu + ý nghĩa (theo 中医诊断学 十三五 = ZD và tài liệu thiệt chẩn Sline = TC) */
+const GIAI={
+"binh-thuong":{nhin:"Chất lưỡi đỏ nhạt, tươi nhuận; rêu trắng mỏng, đều, nhìn xuyên qua rêu vẫn thấy chất lưỡi; lưỡi mềm, cử động linh hoạt.",nghia:"Khí huyết điều hòa, vị khí còn. Gặp trong bệnh thì đa phần bệnh nhẹ, ở biểu.",nguon:"ZD 淡红舌; TC"},
+"bac-thai":{nhin:"Tìm chỗ rêu MẤT, lộ chất lưỡi nhẵn, ranh giới rõ với vùng còn rêu. Ghi nhận vị trí bong: trước (đầu), giữa, cuống, hay nhiều chỗ loang lổ.",nghia:"Vị khí bất túc, vị âm tổn thương, hoặc khí huyết lưỡng hư. Lưỡi đỏ mà bong rêu: đa phần âm hư; lưỡi nhạt bong rêu: huyết hư, khí huyết hư. Vị trí bong thường tương ứng tạng phủ của vùng đó. Phần còn lại là rêu nhớt: chính khí hư mà đàm trọc chưa hóa, bệnh phức tạp.",nguon:"ZD 剥苔"},
+"hong-thiet":{nhin:"Nhìn màu CHẤT lưỡi (chỗ không có rêu: đầu, rìa), không nhìn màu rêu. Đỏ hơn đỏ nhạt bình thường, có khi đỏ tươi; có thể chỉ đỏ ở đầu hoặc rìa.",nghia:"Chủ nhiệt. Đỏ kèm rêu vàng dày: thực nhiệt; đỏ mà ít rêu, bong rêu: âm hư (hư nhiệt).",nguon:"ZD 红舌; TC"},
+"tu-thiet":{nhin:"Toàn lưỡi ánh tím, hoặc có chấm/mảng tím (ứ điểm, ứ ban). Xem thêm lạc mạch dưới lưỡi nếu có.",nghia:"Khí huyết ứ trệ. Tím nhạt mà ướt: hàn ngưng, dương hư. Tím đỏ khô: nhiệt độc vào dinh huyết. Có chấm tím: ứ huyết cục bộ.",nguon:"ZD 青紫舌; TC"},
+"ban-dai":{nhin:"Lưỡi to dày hơn bình thường, gần như đầy miệng; thường kèm dấu răng ở rìa.",nghia:"Thủy thấp, đàm ẩm nội đình. Nhạt bệu: tỳ thận dương hư. Đỏ bệu: tỳ vị thấp nhiệt, đàm nhiệt.",nguon:"ZD 胖大舌"},
+"sau-bac":{nhin:"Lưỡi nhỏ, mỏng hơn bình thường.",nghia:"Khí huyết lưỡng hư (nếu nhạt) hoặc âm hư hỏa vượng (nếu đỏ giáng, ít rêu).",nguon:"ZD 瘦薄舌"},
+"diem-do":{nhin:"Chấm đỏ nhô lên trên mặt lưỡi, hay gặp ở đầu và rìa lưỡi. Ghi nhận vị trí và mật độ.",nghia:"Nhiệt cực ở tạng phủ hoặc huyết nhiệt; càng nhiều càng nhiệt. Đầu lưỡi: tâm hỏa; rìa lưỡi: can đởm hỏa; giữa lưỡi: vị trường nhiệt.",nguon:"ZD 点刺舌"},
+"liet-van":{nhin:"Đường nứt, rãnh trên mặt lưỡi, nông sâu nhiều ít khác nhau. Phân biệt với nứt bẩm sinh: nông, có rêu phủ, không khó chịu.",nghia:"Âm huyết hư, tỳ hư thấp xâm. Đỏ giáng có nứt: nhiệt thịnh thương âm. Nhạt có nứt: huyết hư. Nhạt bệu dấu răng có nứt: tỳ hư thấp xâm.",nguon:"ZD 裂纹舌"},
+"xi-ngan":{nhin:"Hai rìa lưỡi có vết lõm theo hình răng.",nghia:"Tỳ hư, thấp thịnh. Nhạt bệu ướt có dấu răng: hàn thấp hoặc dương hư thủy thấp. Đỏ nhạt có dấu răng: tỳ khí hư.",nguon:"ZD 齿痕舌"},
+"bach-thai":{nhin:"Nhìn màu RÊU: trắng. Xem thêm dày hay mỏng (có thấy chất lưỡi qua rêu không), khô hay ướt.",nghia:"Có thể là rêu bình thường. Có bệnh thì chủ biểu chứng, hàn chứng, thấp; cũng gặp trong nhiệt chứng.",nguon:"TC; ZD 白苔"},
+"hoang-thai":{nhin:"Rêu vàng; nhạt hay đậm, khô hay nhớt.",nghia:"Chủ nhiệt, lý chứng. Vàng nhớt: thấp nhiệt, đàm nhiệt, thực tích. Vàng ở đầu lưỡi: nhiệt thượng tiêu; giữa: vị trường; cuống: hạ tiêu.",nguon:"ZD 黄苔; TC"},
+"hac-thai":{nhin:"Rêu tro đến đen, thường đậm ở cuống, nhạt dần ra đầu lưỡi. Quan trọng là khô hay ướt.",nghia:"Âm hàn nội thịnh (thường ướt trơn) hoặc lý nhiệt sí thịnh (thường khô). Thường xuất hiện khi bệnh đã kéo dài, nặng.",nguon:"ZD 灰黑苔; TC"},
+"hoat-thai":{nhin:"Mặt lưỡi nhiều nước, bóng ướt, có khi như sắp nhỏ giọt.",nghia:"Thủy thấp, đàm ẩm: hàn thấp xâm nhập hoặc dương khí hư không vận hóa thủy dịch.",nguon:"ZD 滑苔"}
+};
+function giaiThich(a){const ds=a.nh;const dong=ds.map(c=>{const g=GIAI[c];
+  if(!g)return `<li><b>${esc(KHO.ten(c))}</b> <span class="muted">(nhãn ngoài giáo trình – tham khảo; vị trí lõm/lồi theo phân vùng tạng phủ trên lưỡi)</span></li>`;
+  return `<li><b>${esc(KHO.ten(c))}</b><br><span class="gt-k">Nhìn:</span> ${esc(g.nhin)}<br><span class="gt-k">Ý nghĩa:</span> ${esc(g.nghia)} <span class="pg">${esc(g.nguon)}</span></li>`}).join("");
+ const co=c=>ds.includes(c),goi=[];
+ if(co("bac-thai")&&co("hong-thiet"))goi.push("Lưỡi đỏ kèm bong rêu → hướng âm hư.");
+ if(co("liet-van")&&co("hong-thiet"))goi.push("Lưỡi đỏ có vết nứt → nhiệt thịnh thương âm.");
+ if(co("liet-van")&&(co("ban-dai")||co("xi-ngan")))goi.push("Nứt kèm bệu, dấu răng → tỳ hư thấp xâm.");
+ if((co("ban-dai")||co("xi-ngan"))&&co("hoat-thai"))goi.push("Bệu, dấu răng, rêu trơn ướt → hàn thấp hoặc dương hư thủy thấp.");
+ if(co("hong-thiet")&&co("hoang-thai"))goi.push("Lưỡi đỏ rêu vàng → thực nhiệt.");
+ if(co("diem-do")&&co("hong-thiet"))goi.push("Lưỡi đỏ có điểm đỏ → nhiệt thịnh; xem điểm đỏ nằm ở đầu (tâm), rìa (can đởm) hay giữa (vị trường).");
+ return `<div class="giai"><h3>Đọc ảnh này</h3><ul>${dong}</ul>${goi.length?`<p><b>Gợi ý kết hợp:</b> ${goi.join(" ")}</p>`:""}
+ <p class="src-note">Bộ dữ liệu chỉ gán những đặc điểm nổi bật; ảnh có thể còn đặc điểm khác chưa gán nhãn (ví dụ rêu trắng). Một tấm ảnh chưa đủ để kết luận: cần đối chiếu vấn chẩn và mạch.</p></div>`}
+// Cặp đặc điểm loại trừ nhau: chỉ khi đó mới chắc chắn "sai"
+const LOAI_TRU=[["ban-dai","sau-bac"]];
+function chacKhongCo(a,c){if(c==="binh-thuong")return a.nh.some(x=>x!=="binh-thuong"&&KHO.gt(x));
+ if(a.nh.includes("binh-thuong")&&KHO.gt(c))return true;
+ return LOAI_TRU.some(([x,y])=>(c===x&&a.nh.includes(y))||(c===y&&a.nh.includes(x)))}
 const TOAN_THE=new Set(["toan-the","mau-luoi","hinh","mau-reu"]);   // nhãn toàn lưỡi: ghi tên ở đáy khung, xếp chồng
-function boxes(a){let g=0;return a.khung.map(b=>{const c=KHO.ma[b[0]];if(!c)return"";const [cx,cy,w,h]=b.slice(1),toan=TOAN_THE.has(KHO.nhom(c));
+function boxes(a,cat){let g=0;const [X,Y,Wc,Hc]=cat||[0,0,1,1];return a.khung.map(b=>{const c=KHO.ma[b[0]];if(!c)return"";
+ const toan=TOAN_THE.has(KHO.nhom(c));let [cx,cy,w,h]=b.slice(1);cx=(cx-X)/Wc;cy=(cy-Y)/Hc;w=w/Wc;h=h/Hc;
  const phai=cx+w/2>.7;   // khung sát mép phải: neo chữ bên phải để không bị cắt
  const st=(toan?`bottom:calc(${g++} * 1.5em * var(--k,1));top:auto;`:"")+(phai?`left:auto;right:0;transform-origin:${toan?"100% 100%":"100% 0"}`:"");
  return `<div class="bx${toan?" bx-t":""}" style="left:${(cx-w/2)*100}%;top:${(cy-h/2)*100}%;width:${w*100}%;height:${h*100}%"><i style="${st}">${esc(KHO.ten(c))}</i></div>`}).join("")}
@@ -1468,14 +1517,18 @@ function vungCat(a){let x0=1,y0=1,x1=0,y1=0;a.khung.forEach(([c,cx,cy,w,h])=>{x0
 function canAnh(img){const ph=img.closest(".ph");if(!ph||ph.dataset.toan==="1"){if(ph){ph.style.aspectRatio="";ph.firstElementChild.style.transform="";ph.style.setProperty("--k",1)}return}
  const [x,y,w,h]=JSON.parse(ph.dataset.cat),W=img.naturalWidth,H=img.naturalHeight;if(!W||w>=.98&&h>=.98)return;
  ph.style.aspectRatio=(w*W)/(h*H);ph.firstElementChild.style.transform=`scale(${1/w}) translate(${-x*100}%,${-y*100}%)`;ph.style.setProperty("--k",w)}
-function photo(a,show){return `<div class="phw"><div class="ph" data-cat='${JSON.stringify(vungCat(a))}' data-toan="${M().full?1:0}"><div class="phz"><img src="${imgUrl(a.id)}" alt="Ảnh lưỡi ${a.id}" onload="canAnh(this)">${show?boxes(a):""}</div></div><div class="src-note">Mã ảnh ${a.id} · TCM-Tongue (Dryad). Đáp án theo nhãn của bộ dữ liệu. <button type="button" class="linkbtn" data-nut-toan>${M().full?"Phóng vào lưỡi":"Xem toàn ảnh"}</button></div></div>`}
+function loiLuoi(img){const ph=img.closest(".ph");if(!ph)return;const a=KHO.anh.find(x=>x.id===ph.dataset.id);if(!a)return;
+ a._loiLuoi=true;ph.closest(".phw").outerHTML=photo(a,ph.dataset.show==="1")}
+function photo(a,show){const L=dungLuoi(a);
+ return `<div class="phw"><div class="ph" data-id="${a.id}" data-show="${show?1:0}" data-cat='${JSON.stringify(L?[0,0,1,1]:vungCat(a))}' data-toan="${M().full?1:0}"><div class="phz"><img src="${L?luoiUrl(a.id):imgUrl(a.id)}" crossorigin="anonymous" alt="Ảnh lưỡi ${a.id}" onload="canAnh(this)" ${L?'onerror="loiLuoi(this)"':""}>${show?boxes(a,L?a.cat:null):""}</div></div><div class="src-note">Mã ảnh ${a.id} · TCM-Tongue (Dryad). Đáp án theo nhãn của bộ dữ liệu. <button type="button" class="linkbtn" data-nut-toan>${M().full?"Phóng vào lưỡi":"Xem toàn ảnh"}</button></div></div>`}
 function mat(){
  app().innerHTML=`<h1>Luyện mắt</h1><p class="muted" style="margin:6px 0 4px">Luyện nhìn lưỡi trên ảnh thật. Đang tải kho ảnh…</p>`;
- loadKho().then(()=>matHome()).catch(()=>{app().innerHTML=`<h1>Luyện mắt</h1><div class="empty"><p>Chưa kết nối được kho ảnh lưỡi.</p><p style="font-size:.88rem">Kiểm tra mạng, hoặc kho <b>luong-y-pictures</b> đã được tạo chưa (Actions → Tạo kho ảnh lưỡi → Run workflow). Mục này chỉ chạy trên bản app ở GitHub.</p></div>`});}
+ loadKho().then(()=>matHome()).catch(()=>{app().innerHTML=`<h1>Luyện mắt</h1><div class="empty"><p>Chưa kết nối được kho ảnh lưỡi.</p><p style="font-size:.88rem">Kiểm tra kết nối mạng rồi mở lại tab này. Lần đầu cần có mạng để tải danh mục ảnh; sau đó ảnh đã xem dùng được cả khi offline.</p></div>`});}
 function matHome(){const m=M(),p=pool(),nw=m.wrong.length;
  app().innerHTML=`<h1>Luyện mắt</h1><p class="muted" style="margin:6px 0 10px">${KHO.anh.length.toLocaleString("vi")} ảnh lưỡi thật, có nhãn do bác sĩ YHCT xác nhận.</p>
  <div class="seg" role="group" aria-label="Độ khó">${[["de","Dễ: 1 đặc điểm"],["vua","Vừa: ≤ 2"],["kho","Khó: tất cả"]].map(([k,t])=>`<button type="button" class="chip" aria-pressed="${m.lv===k}" data-lv="${k}">${t}</button>`).join("")}</div>
  <label style="font-size:.85rem;display:flex;gap:8px;align-items:center"><input type="checkbox" id="vung" ${m.vung?"checked":""}> Gồm nhãn vùng lõm/lồi (tham khảo, ngoài giáo trình)</label>
+ <label style="font-size:.85rem;display:flex;gap:8px;align-items:center;margin-top:4px"><input type="checkbox" id="anmo" ${m.anMo!==false?"checked":""}> Ẩn ảnh kém nét (20% ảnh mờ nhất)</label>
  <p class="muted" style="font-size:.82rem">Số ảnh phù hợp: ${p.length.toLocaleString("vi")}</p>
  <div class="mode">
   <button type="button" data-m="mot"><b>Nhận diện</b><span>Chọn 1 đặc điểm có trong ảnh</span></button>
@@ -1486,6 +1539,7 @@ function matHome(){const m=M(),p=pool(),nw=m.wrong.length;
  <button type="button" class="btn ghost" id="tk">Thống kê điểm yếu</button>`;
  app().querySelectorAll("[data-lv]").forEach(b=>b.onclick=()=>{m.lv=b.dataset.lv;save();matHome()});
  $("#vung").onchange=e=>{m.vung=e.target.checked;save();matHome()};
+ $("#anmo").onchange=e=>{m.anMo=e.target.checked;save();matHome()};
  app().querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>({mot:qMot,tatca:qTatCa,sai:qSai,mau:xemMau})[b.dataset.m]());
  $("#tk").onclick=thongKe;}
 function ghiNhan(a,tested,okSet){const m=M();tested.forEach(c=>{m.seen[c]=(m.seen[c]||0)+1;if(okSet.has(c))m.ok[c]=(m.ok[c]||0)+1});
@@ -1494,39 +1548,41 @@ function ghiNhan(a,tested,okSet){const m=M();tested.forEach(c=>{m.seen[c]=(m.see
 function navMat(again){return `<div style="display:flex;gap:8px;margin-top:12px"><button type="button" class="btn" id="tiep">Ảnh tiếp</button><button type="button" class="btn ghost" id="ve">Về Luyện mắt</button></div>`}
 function bindNav(fn){$("#tiep").onclick=fn;$("#ve").onclick=matHome}
 document.addEventListener("click",e=>{if(e.target.closest("[data-back]"))matHome();
- const f=e.target.closest("[data-nut-toan]");if(f){const m=M();m.full=!m.full;save();document.querySelectorAll(".ph").forEach(ph=>{ph.dataset.toan=m.full?"1":"0";const im=ph.querySelector("img");if(im)canAnh(im)});document.querySelectorAll("[data-nut-toan]").forEach(b=>b.textContent=m.full?"Phóng vào lưỡi":"Xem toàn ảnh")}});
+ const f=e.target.closest("[data-nut-toan]");if(f){const m=M();m.full=!m.full;save();document.querySelectorAll(".ph").forEach(ph=>{const a=KHO.anh.find(x=>x.id===ph.dataset.id);if(a)ph.closest(".phw").outerHTML=photo(a,ph.dataset.show==="1")})}});
 function qMot(){const m=M();const a=layAnh();const dung=pick(nhanCua(a));
  const ngoai=KHO.codes.filter(c=>!a.nh.includes(c)&&inScope(c));
  const cung=ngoai.filter(c=>KHO.nhom(c)===KHO.nhom(dung)), khac=ngoai.filter(c=>KHO.nhom(c)!==KHO.nhom(dung));
  const nhieu=shuffle([...shuffle(cung).slice(0,2),...shuffle(khac)]).slice(0,3);
  const opts=shuffle([dung,...nhieu]);
- app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Nhận diện</h1><p class="muted" style="margin:6px 0">Ảnh này có đặc điểm nào sau đây?</p>${photo(a,false)}
+ app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Nhận diện</h1><p class="muted" style="margin:6px 0">Bộ dữ liệu gán cho ảnh này đặc điểm nào?</p>${photo(a,false)}
  <div id="op">${opts.map(c=>`<button type="button" class="opt" data-c="${c}">${esc(KHO.ten(c))}</button>`).join("")}</div><div id="kq"></div>`;
  app().querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const c=b.dataset.c;
-  app().querySelectorAll(".opt").forEach(x=>{x.setAttribute("aria-disabled","true");x.style.pointerEvents="none";if(x.dataset.c===dung)x.classList.add("right");else if(x===b)x.classList.add("wrong")});
-  if(c!==dung){m.conf[dung+"|"+c]=(m.conf[dung+"|"+c]||0)+1}
+  const chac=c!==dung&&chacKhongCo(a,c);
+  app().querySelectorAll(".opt").forEach(x=>{x.setAttribute("aria-disabled","true");x.style.pointerEvents="none";if(x.dataset.c===dung)x.classList.add("right");else if(x===b)x.classList.add(chac?"wrong":"unsure")});
+  if(chac){m.conf[dung+"|"+c]=(m.conf[dung+"|"+c]||0)+1}
   ghiNhan(a,[dung],new Set(c===dung?[dung]:[]));
   $(".phw").outerHTML=photo(a,true);
-  $("#kq").innerHTML=`<p class="qscore">${c===dung?"Đúng.":"Chưa đúng."} Ảnh có: ${a.nh.map(x=>esc(KHO.ten(x))+(KHO.gt(x)?"":" (tham khảo)")).join(", ")}.</p>`+navMat();bindNav(()=>qMot())});}
+  const tb=c===dung?"Đúng.":chac?"Chưa đúng: "+esc(KHO.ten(c))+" không thể cùng có với đặc điểm của ảnh.":"Bộ dữ liệu không gán “"+esc(KHO.ten(c))+"” cho ảnh này (có thể ảnh vẫn có, hãy tự đối chiếu), đặc điểm được gán là “"+esc(KHO.ten(dung))+"”.";
+  $("#kq").innerHTML=`<p class="qscore">${tb}</p>`+giaiThich(a)+navMat();bindNav(()=>qMot())});}
 function qTatCa(fixed,next){const m=M();const a=fixed||layAnh();const ds=KHO.codes.filter(inScope);const can=nhanCua(a);
  app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Chọn tất cả</h1><p class="muted" style="margin:6px 0">Tích mọi đặc điểm chị thấy trong ảnh.</p>${photo(a,false)}
  <div class="ck">${ds.map(c=>`<label data-c="${c}"><input type="checkbox" value="${c}"> ${esc(KHO.ten(c))}</label>`).join("")}</div>
  <button type="button" class="btn finish" id="cham">Chấm điểm</button><div id="kq"></div>`;
  $("#cham").onclick=()=>{const chon=new Set([...app().querySelectorAll(".ck input:checked")].map(i=>i.value));
   let dung=0;app().querySelectorAll(".ck label").forEach(l=>{const c=l.dataset.c,co=can.includes(c),ch=chon.has(c);
-   l.querySelector("input").disabled=true; if(co&&ch){l.classList.add("right");dung++} else if(co)l.classList.add("miss"); else if(ch)l.classList.add("wrong")});
-  const thuaDs=[...chon].filter(c=>!can.includes(c)),thua=thuaDs.length;
+   l.querySelector("input").disabled=true; if(co&&ch){l.classList.add("right");dung++} else if(co)l.classList.add("miss"); else if(ch)l.classList.add(chacKhongCo(a,c)?"wrong":"unsure")});
+  const thuaDs=[...chon].filter(c=>!can.includes(c)&&chacKhongCo(a,c)),thua=thuaDs.length,ngoai=[...chon].filter(c=>!can.includes(c)&&!chacKhongCo(a,c)).length;
   thuaDs.forEach(c=>can.forEach(d=>{if(!chon.has(d))m.conf[d+"|"+c]=(m.conf[d+"|"+c]||0)+1}));
   ghiNhan(a,can,new Set(can.filter(c=>chon.has(c))));
   $(".phw").outerHTML=photo(a,true);$("#cham").remove();
-  $("#kq").innerHTML=`<p class="qscore">Đúng ${dung}/${can.length} đặc điểm${thua?`, chọn thừa ${thua}`:""}. Viền xanh: đúng · viền vàng nét đứt: bỏ sót · viền đỏ: chọn thừa.</p>`+navMat();bindNav(next||(()=>qTatCa()))};}
+  $("#kq").innerHTML=`<p class="qscore">Nhận ra ${dung}/${can.length} đặc điểm được gán${thua?`, chọn sai ${thua}`:""}${ngoai?`, ${ngoai} đặc điểm ngoài nhãn (tự đối chiếu)`:""}.</p><p class="src-note">Viền xanh: đúng · vàng nét đứt: bỏ sót · tím nét chấm: ngoài nhãn, chưa chắc sai · đỏ: chắc chắn sai.</p>`+giaiThich(a)+navMat();bindNav(next||(()=>qTatCa()))};}
 function qSai(){const m=M();if(!m.wrong.length)return matHome();const id=m.wrong[0];const a=KHO.anh.find(x=>x.id===id);
  if(!a||!nhanCua(a).length){m.wrong.shift();save();return qSai()} qTatCa(a,qSai);}
 function xemMau(code){const ds=KHO.codes.filter(inScope);code=code||ds[0];
  const list=shuffle(KHO.anh.filter(a=>a.nh.includes(code))).slice(0,24);
  app().innerHTML=`<button type="button" class="back" data-back>‹ Luyện mắt</button><h1>Xem mẫu</h1><div class="chips">${ds.map(c=>`<button type="button" class="chip" aria-pressed="${c===code}" data-c="${c}">${esc(KHO.ten(c))}</button>`).join("")}</div>
  <p class="muted" style="font-size:.85rem">${KHO.anh.filter(a=>a.nh.includes(code)).length.toLocaleString("vi")} ảnh có “${esc(KHO.ten(code))}”. Chạm ảnh để xem khung vị trí. ${KHO.gt(code)?"":"<b>Nhãn ngoài giáo trình – tham khảo.</b>"}</p>
- <div class="gal">${list.map(a=>`<img loading="lazy" src="${imgUrl(a.id)}" alt="" data-id="${a.id}">`).join("")}</div>
+ <div class="gal">${list.map(a=>`<img loading="lazy" crossorigin="anonymous" src="${imgUrl(a.id)}" alt="" data-id="${a.id}">`).join("")}</div>
  <button type="button" class="btn ghost finish" id="ve">Về Luyện mắt</button>`;
  app().querySelectorAll(".chip").forEach(b=>b.onclick=()=>xemMau(b.dataset.c));
  app().querySelectorAll(".gal img").forEach(im=>im.onclick=()=>{const a=KHO.anh.find(x=>x.id===im.dataset.id);
