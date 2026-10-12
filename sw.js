@@ -1,6 +1,6 @@
 // YHCT 15 phút – service worker: chạy offline, ưu tiên bản mới khi có mạng,
 // ảnh từ kho luong-y-pictures chỉ giữ tối đa GIOI_HAN_ANH ảnh gần nhất để không làm đầy máy.
-const CACHE = "yhct15-v4";
+const CACHE = "yhct15-v5";   // v5: lịch ôn FSRS (dữ liệu schema 2)
 const CACHE_ANH = "yhct15-anh";
 const GIOI_HAN_ANH = 300;
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./apple-touch-icon.png"];
